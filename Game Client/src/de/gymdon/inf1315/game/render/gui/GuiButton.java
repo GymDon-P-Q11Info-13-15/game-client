@@ -19,7 +19,7 @@ public class GuiButton extends GuiControl {
     protected boolean drawBackground = true;
     protected int bgColor = 0x000000;
     protected int textColor = 0xFFFFFF;
-    protected Font font = Font.decode("Helvetica 14");
+    protected Font font = Font.decode("Helvetica 18");
     protected ButtonState lastState = ButtonState.NORMAL;
     protected ButtonState currentState = ButtonState.NORMAL;
     protected boolean enabled = true;

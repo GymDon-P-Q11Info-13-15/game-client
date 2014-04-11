@@ -13,11 +13,16 @@ public class Game implements Runnable, WindowListener {
     public static final boolean DEBUG = true;
     public static final String TITLE = "Game";
     public static final String VERSION = "Alpha 0.0.1";
+    public static Game instance;
     private boolean running = false;
     private JFrame frame;
     private GameCanvas canvas;
+    private int ticksRunning = 0;
+    private int tps = 0;
+    private int fps = 0;
 
     public Game() {
+	Game.instance = this;
 	frame = new JFrame("Game");
 	frame.setSize(1280, 720);
 	frame.setMinimumSize(new Dimension(800, 600));
@@ -49,6 +54,7 @@ public class Game implements Runnable, WindowListener {
 	    boolean shouldRender = true;
 	    while (unprocessed >= 1) {
 		ticks++;
+		ticksRunning++;
 		tick();
 		unprocessed -= 1;
 		shouldRender = true;
@@ -69,6 +75,8 @@ public class Game implements Runnable, WindowListener {
 		lastTimer1 += 1000;
 		if(DEBUG)
 		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames + "FPS");
+		this.tps = ticks;
+		this.fps = frames;
 		frames = 0;
 		ticks = 0;
 	    }
@@ -82,7 +90,7 @@ public class Game implements Runnable, WindowListener {
     }
     
     private void tick() {
-	
+	canvas.currentScreen.tick();
     }
     
     private void render() {
@@ -124,4 +132,16 @@ public class Game implements Runnable, WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {}
+    
+    public int getTicksRunning() {
+	return ticksRunning;
+    }
+    
+    public int getTPS() {
+	return tps;
+    }
+    
+    public int getFPS() {
+	return fps;
+    }
 }

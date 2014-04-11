@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.util.*;
 
 public class GuiScreen extends Gui {
-    protected List<GuiControl> controlList = new ArrayList<GuiControl>();
+    public List<GuiControl> controlList = new ArrayList<GuiControl>();
     protected int width;
     protected int height;
     
@@ -16,6 +16,10 @@ public class GuiScreen extends Gui {
 	this.height = height;
 	for(GuiControl c : controlList)
 	    c.render(g2d, width, height, scrollX, scrollY);
+    }
+    
+    public void tick() {
+	
     }
     
     protected void drawBackground(Graphics2D g2d) {
