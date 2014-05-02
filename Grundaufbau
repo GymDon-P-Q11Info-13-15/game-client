@@ -1,0 +1,8 @@
+Grundaufbau des Spiels in Klassen:
+Oberklasse: GameObject
+Darunter: Building, Unit
+Darunter die einzelnen Gebäude/Einheiten
+
+
+Aufbau der Karte:
+Einzelne Vierecke (70x70 px) mit Texturen, werden am Ende vom Spiel zusammengefügt
