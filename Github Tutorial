@@ -1,0 +1,32 @@
+Da ich glaube dass Github nicht allen bisher geläufig ist, versuch ich des hier mal kurz zu erläutern:
+
+Es gibt grundsätzlich immer zwei Versionen des Repositorys (kurz: Repo, eine Art Verzeichnis in dem die Dateien liegen):
+  * Die lokale Version, mit der man auf dem PC arbeitet
+  * Die Version auf dem Server(origin)
+Am Anfang jeder Stunde wird alles was auf dem Server ist ins lokale Repo kopiert, und man fängt dort an zu arbeiten.
+Am Ende der Stunde muss natürlich das erarbeitete wieder auf den Server, dass jeder den eigenen Fortschritt auch erhält.
+Mit folgender Vorgehensweise:
+    1.) Man muss Git sagen, welche Änderungen man hochladen möchte, man committed diese Dateien, dabei gibt man die Dateien,
+        die geändert werden sollen, an, und schreibt dazu eine Nachricht, dass der Commit für alle verständlich bleibt,
+        zB "Added Game Mechanism" etc.
+    2.) Dann schaut man, ob es während der eigenen Arbeitszeit Veränderungen am Server gegeben hat, und hol erstmal alle
+        neuen Commits vom Server
+    3.) Falls jemand anders in der Zwischenzeit andere Commits geschrieben hat, sollte man die Version des Servers mit der
+        Version auf dem PC vereinige (mergen), sodass man die aktuellen Version wieder auf Github laden kann
+    4.) Um dies zu machen, einen Klick beim Git-Tab auf Branches, dann Remote-Tracking, und ein Rechtsklick auf den dortigen
+        Master, dann "Merge".
+    5.) Wenn dann nicht zwei Leute an der gleichen Datei gearbeitet haben, geht das dann sofort (fast-forward oder einfach 
+        merged), wenn nicht kommt normal die Meldung die irgendwas auf die Art "Merge conflicts/conflicting" meldet
+    6.) Anschließend den lokale Version auf den Server pushen ("Push to upstream"), und das wars! :)
+    
+Sollten etwaige merge conflicts auftreten, wirds ein bisschen tricky, das ist dann nach folgendem Muster aufgeteilt:
+
+<<<<<HEAD
+
+[Eigener Code]              Da müsst ihr denn selber bisschen logisch denken und schauen, was jeweils geändert wurde,
+                            und wie ihr die beiden zusammenführen müsst dass alles passt.
+=======
+
+[Fremder Code]
+
+>>>>>>>
