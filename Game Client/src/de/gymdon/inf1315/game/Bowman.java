@@ -2,6 +2,14 @@ package de.gymdon.inf1315.game;
 
 public class Bowman extends Unit {
     
+    public Bowman()
+    {
+	speed = 0;
+	range = 0;
+	attack = 0;
+	defense = 0;
+	hp = 0;
+    }
     
     @Override
     public void move() {
@@ -24,7 +32,7 @@ public class Bowman extends Unit {
     @Override
     public int getSpeed() {
 	// TODO Auto-generated method stub
-	return 0;
+	return speed;
     }
 
 }
