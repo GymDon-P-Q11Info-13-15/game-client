@@ -16,18 +16,7 @@ public class Swordsman extends Unit {
 
     @Override
     public void move(int x, int y) {
-
-	if ((this.x = this.x + x) > 0)
-	    this.x = this.x + x;
-	else
-	    throw new IllegalArgumentException(
-		    "X - Coordinate must be greater than 0!");
-	if ((this.y = this.y + y) > 0)
-	    this.y = this.y + y;
-	else
-	    throw new IllegalArgumentException(
-		    "Y - Coordinate must be greater than 0!");
-
+	super.move(x, y);
     }
 
     @Override
