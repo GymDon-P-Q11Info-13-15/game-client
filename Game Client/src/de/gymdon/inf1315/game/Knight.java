@@ -1,9 +1,9 @@
 package de.gymdon.inf1315.game;
 
-public class Spearman extends Unit {
+public class Knight extends Unit {
     Player own;
 
-    public Spearman(Player owner, int x, int y) {
+    public Knight(Player owner, int x, int y) {
 	own = owner;
 	this.x = x;
 	this.y = y;
@@ -32,6 +32,7 @@ public class Spearman extends Unit {
 
     @Override
     public void attack() {
+	// TODO Auto-generated method stub
 
     }
 
@@ -44,7 +45,7 @@ public class Spearman extends Unit {
 
     @Override
     public int getSpeed() {
-	// TODO Auto-generated method stub
+
 	return speed;
     }
 
