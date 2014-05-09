@@ -4,9 +4,10 @@ public class Castle extends Building {
  Player own;
     
     public Castle(Player owner, int x, int y){
+	
+	own=owner;
 	this.x=x;
 	this.y=y;
-	own=owner;
 	this.hp=10000;
 	this.defense=80;
 	

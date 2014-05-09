@@ -1,8 +1,8 @@
 package de.gymdon.inf1315.game;
 
-public class Bowman extends Unit {
+public class Knight extends Unit {
     Player own;
-    public Bowman(Player owner,int x, int y)
+    public Knight(Player owner,int x, int y)
     {
 	own=owner;
 	this.x = x;
@@ -13,29 +13,29 @@ public class Bowman extends Unit {
 	defense = 0;
 	hp = 0;
     }
-    
+
     @Override
     public void move() {
-	
-	
+	// TODO Auto-generated method stub
+
     }
 
     @Override
     public void attack() {
-	
-	
+	// TODO Auto-generated method stub
+
     }
 
     @Override
     public void setHP(int health) {
-	
-	
+	// TODO Auto-generated method stub
+
     }
 
     @Override
     public int getSpeed() {
 	// TODO Auto-generated method stub
-	return speed;
+	return 0;
     }
 
 }

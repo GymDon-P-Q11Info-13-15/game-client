@@ -1,9 +1,12 @@
 package de.gymdon.inf1315.game;
 
 public class Swordsman extends Unit {
-
-    public Swordsman()
+    Player own;
+    public Swordsman(Player owner,int x, int y)
     {
+	own=owner;
+	this.x = x;
+	this.y = y;
 	speed = 0;
 	range = 0;
 	attack = 0;

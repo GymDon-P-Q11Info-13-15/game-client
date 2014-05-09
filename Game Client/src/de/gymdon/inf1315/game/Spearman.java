@@ -2,9 +2,12 @@ package de.gymdon.inf1315.game;
 
 public class Spearman extends Unit
 {
-
-    public Spearman()
+    Player own;
+    public Spearman(Player owner,int x, int y)
     {
+	own=owner;
+	this.x = x;
+	this.y = y;
 	speed = 0;
 	range = 0;
 	attack = 0;
