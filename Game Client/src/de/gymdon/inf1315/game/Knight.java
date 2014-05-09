@@ -2,9 +2,9 @@ package de.gymdon.inf1315.game;
 
 public class Knight extends Unit {
     Player own;
-    public Knight(Player owner,int x, int y)
-    {
-	own=owner;
+
+    public Knight(Player owner, int x, int y) {
+	own = owner;
 	this.x = x;
 	this.y = y;
 	speed = 0;
@@ -15,8 +15,18 @@ public class Knight extends Unit {
     }
 
     @Override
-    public void move() {
-	// TODO Auto-generated method stub
+    public void move(int x, int y) {
+
+	if ((this.x = this.x + x) > 0)
+	    this.x = this.x + x;
+	else
+	    throw new IllegalArgumentException(
+		    "X - Coordinate must be greater than 0!");
+	if ((this.y = this.y + y) > 0)
+	    this.y = this.y + y;
+	else
+	    throw new IllegalArgumentException(
+		    "Y - Coordinate must be greater than 0!");
 
     }
 
@@ -27,15 +37,16 @@ public class Knight extends Unit {
     }
 
     @Override
-    public void setHP(int health) {
-	// TODO Auto-generated method stub
+    public void setHP(int hp) {
+
+	this.hp = hp;
 
     }
 
     @Override
     public int getSpeed() {
-	// TODO Auto-generated method stub
-	return 0;
+
+	return speed;
     }
 
 }

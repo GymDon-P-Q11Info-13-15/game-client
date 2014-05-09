@@ -6,7 +6,7 @@ speed,
 attack, defense,  // 0-100
 range;
 
-public abstract void move();
+public abstract void move(int x, int y);
 public abstract void attack();
 public abstract void setHP(int health);
 public abstract int getSpeed();
