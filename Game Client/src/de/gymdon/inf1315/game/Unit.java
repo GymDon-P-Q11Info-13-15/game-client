@@ -1,9 +1,7 @@
 package de.gymdon.inf1315.game;
 
 public abstract class Unit extends GameObject {
-    int hp, // 0-100
-	    speed, attack, defense, // 0-100
-	    range;
+    int hp, speed, attack, defense, range;
 
     public void move(int x, int y) {
 	if (this.x + x < 0)

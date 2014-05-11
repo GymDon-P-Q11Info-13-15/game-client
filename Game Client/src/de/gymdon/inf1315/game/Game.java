@@ -34,7 +34,7 @@ public class Game implements Runnable, WindowListener {
 	frame.setVisible(true);
 	frame.addWindowListener(this);
     }
-    
+
     @Override
     public void run() {
 	running = true;
@@ -73,8 +73,9 @@ public class Game implements Runnable, WindowListener {
 
 	    if (System.currentTimeMillis() - lastTimer1 > 1000) {
 		lastTimer1 += 1000;
-		if(DEBUG)
-		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames + "FPS");
+		if (DEBUG)
+		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames
+			    + "FPS");
 		this.tps = ticks;
 		this.fps = frames;
 		frames = 0;
@@ -83,24 +84,24 @@ public class Game implements Runnable, WindowListener {
 	}
 	cleanUp();
     }
-    
+
     private void init() {
 	canvas.currentScreen = new GuiMainMenu();
 	System.out.println("Started \"" + TITLE + " " + VERSION + "\"");
     }
-    
+
     private void tick() {
 	canvas.currentScreen.tick();
     }
-    
+
     private void render() {
 	canvas.repaint();
     }
-    
+
     public void stop() {
 	running = false;
     }
-    
+
     private void cleanUp() {
 	System.out.println("Stopping");
 	System.exit(0);
@@ -111,7 +112,8 @@ public class Game implements Runnable, WindowListener {
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {}
+    public void windowOpened(WindowEvent e) {
+    }
 
     @Override
     public void windowClosing(WindowEvent e) {
@@ -119,28 +121,33 @@ public class Game implements Runnable, WindowListener {
     }
 
     @Override
-    public void windowClosed(WindowEvent e) {}
+    public void windowClosed(WindowEvent e) {
+    }
 
     @Override
-    public void windowIconified(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {
+    }
 
     @Override
-    public void windowDeiconified(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {
+    }
 
     @Override
-    public void windowActivated(WindowEvent e) {}
+    public void windowActivated(WindowEvent e) {
+    }
 
     @Override
-    public void windowDeactivated(WindowEvent e) {}
-    
+    public void windowDeactivated(WindowEvent e) {
+    }
+
     public int getTicksRunning() {
 	return ticksRunning;
     }
-    
+
     public int getTPS() {
 	return tps;
     }
-    
+
     public int getFPS() {
 	return fps;
     }

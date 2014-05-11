@@ -19,7 +19,7 @@ public class Bowman extends Unit {
     }
 
     @Override
-    public void attack() { 
+    public void attack() {
 
 	// TODO: Generate attack() method
 

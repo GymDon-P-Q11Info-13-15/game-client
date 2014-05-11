@@ -1,10 +1,9 @@
 package de.gymdon.inf1315.game;
 
 public class Knight extends Unit {
-    Player own;
 
     public Knight(Player owner, int x, int y) {
-	own = owner;
+	this.owner = owner;
 	this.x = x;
 	this.y = y;
 	speed = 0;
@@ -21,7 +20,6 @@ public class Knight extends Unit {
 
     @Override
     public void attack() {
-	// TODO Auto-generated method stub
 
     }
 
