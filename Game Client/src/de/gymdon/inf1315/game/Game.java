@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import de.gymdon.inf1315.game.render.GameCanvas;
 import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
+import de.gymdon.inf1315.game.render.gui.GuiScreen;
 
 public class Game implements Runnable, WindowListener {
     public static final boolean DEBUG = true;
@@ -20,6 +21,7 @@ public class Game implements Runnable, WindowListener {
     private int ticksRunning = 0;
     private int tps = 0;
     private int fps = 0;
+    public GuiScreen currentScreen;
 
     public Game() {
 	Game.instance = this;
@@ -86,12 +88,12 @@ public class Game implements Runnable, WindowListener {
     }
 
     private void init() {
-	canvas.currentScreen = new GuiMainMenu();
+	setGuiScreen(new GuiMainMenu());
 	System.out.println("Started \"" + TITLE + " " + VERSION + "\"");
     }
 
     private void tick() {
-	canvas.currentScreen.tick();
+	currentScreen.tick();
     }
 
     private void render() {
@@ -138,6 +140,18 @@ public class Game implements Runnable, WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+    }
+
+    public void setGuiScreen(GuiScreen newScreen) {
+	if(currentScreen != null) {
+	    canvas.removeMouseListener(currentScreen);
+	    canvas.removeMouseMotionListener(currentScreen);
+	}
+	currentScreen = newScreen;
+	if(currentScreen != null) {
+	    canvas.addMouseListener(currentScreen);
+	    canvas.addMouseMotionListener(currentScreen);
+	}
     }
 
     public int getTicksRunning() {
