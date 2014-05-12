@@ -3,7 +3,7 @@ package de.gymdon.inf1315.game.render.gui;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 
-import de.gymdon.inf1315.game.Client;
+import de.gymdon.inf1315.game.client.Client;
 
 public class GuiMainMenu extends GuiScreen{
 

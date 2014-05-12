@@ -1,8 +1,10 @@
 package de.gymdon.inf1315.game.render;
 
 import java.awt.*;
+
 import javax.swing.*;
-import de.gymdon.inf1315.game.Client;
+
+import de.gymdon.inf1315.game.client.Client;
 
 public class GameCanvas extends JPanel {
     private static final long serialVersionUID = 1L;

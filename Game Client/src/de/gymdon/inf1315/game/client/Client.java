@@ -1,4 +1,4 @@
-package de.gymdon.inf1315.game;
+package de.gymdon.inf1315.game.client;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
