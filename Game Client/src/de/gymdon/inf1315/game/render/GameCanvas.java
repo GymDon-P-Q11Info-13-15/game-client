@@ -2,7 +2,7 @@ package de.gymdon.inf1315.game.render;
 
 import java.awt.*;
 import javax.swing.*;
-import de.gymdon.inf1315.game.Game;
+import de.gymdon.inf1315.game.Client;
 
 public class GameCanvas extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -19,7 +19,7 @@ public class GameCanvas extends JPanel {
 	g2d.fillRect(0, 0, getWidth(), getHeight());
 	if (mapRenderer != null)
 	    mapRenderer.render(g2d, width, height, scrollX, scrollY);
-	if (Game.instance.currentScreen != null)
-	    Game.instance.currentScreen.render(g2d, width, height, scrollX,  scrollY);
+	if (Client.instance.currentScreen != null)
+	    Client.instance.currentScreen.render(g2d, width, height, scrollX,  scrollY);
     }
 }

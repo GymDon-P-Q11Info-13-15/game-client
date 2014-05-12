@@ -3,7 +3,7 @@ package de.gymdon.inf1315.game.render.gui;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 
-import de.gymdon.inf1315.game.Game;
+import de.gymdon.inf1315.game.Client;
 
 public class GuiMainMenu extends GuiScreen{
 
@@ -17,7 +17,7 @@ public class GuiMainMenu extends GuiScreen{
     public void render(Graphics2D g2d, int width, int height, int scrollX,
             int scrollY) {
         super.render(g2d, width, height, scrollX, scrollY);
-        int ticksRunning = Game.instance.getTicksRunning();
+        int ticksRunning = Client.instance.getTicksRunning();
         //Button 1
 	button.setX((int) (Math.sin(ticksRunning/20F)*20+100));
 	button.setY((int) (Math.cos(ticksRunning/20F)*20+100));

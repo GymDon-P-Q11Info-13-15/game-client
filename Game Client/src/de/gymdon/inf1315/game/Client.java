@@ -10,11 +10,11 @@ import de.gymdon.inf1315.game.render.GameCanvas;
 import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
 import de.gymdon.inf1315.game.render.gui.GuiScreen;
 
-public class Game implements Runnable, WindowListener {
+public class Client implements Runnable, WindowListener {
     public static final boolean DEBUG = true;
     public static final String TITLE = "Game";
     public static final String VERSION = "Alpha 0.0.1";
-    public static Game instance;
+    public static Client instance;
     private boolean running = false;
     private JFrame frame;
     private GameCanvas canvas;
@@ -23,8 +23,8 @@ public class Game implements Runnable, WindowListener {
     private int fps = 0;
     public GuiScreen currentScreen;
 
-    public Game() {
-	Game.instance = this;
+    public Client() {
+	Client.instance = this;
 	frame = new JFrame("Game");
 	frame.setSize(1280, 720);
 	frame.setMinimumSize(new Dimension(800, 600));
@@ -110,7 +110,7 @@ public class Game implements Runnable, WindowListener {
     }
 
     public static void main(String[] args) {
-	new Thread(new Game()).start();
+	new Thread(new Client()).start();
     }
 
     @Override
