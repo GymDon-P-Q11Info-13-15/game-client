@@ -5,6 +5,7 @@ public class GameMechanics {
     Tile[][] map;
     Building[][] buildings;
     Unit[][] units;
+    boolean[][] tempRange;
     boolean won;
     int round;
 
@@ -51,45 +52,45 @@ public class GameMechanics {
 	
     }
 	
-    /*
-    public int[][] getAccesableFields(Unit a){
-	
+    
+    public void getAccesableFields(Unit a){
+	 tempRange = new Tile[map.length][map.length];
+	  step(a.getSpeed(), a.x, a.y);
 	
 	
     }
 	
-    public boolean[][] step(int actualSpeed, int x, int y){
-	
+    public void step(int actualSpeed, int x, int y){
 	
 	if(map[x][y].isWalkable==true){
-	    boolean [][] position = new boolean[map.length][map.length];
-	int newSpeed = actualSpeed - map[x][y].groundFactor;
+	    int[] position = new int[2]; 
+	    int newSpeed = actualSpeed - map[x][y].groundFactor;
 	
 	
-	if(newSpeed>1){
-	    position[x][y]=true;
-	    return position;
+	    if(newSpeed>1){
+			tempRange[x][y]=true;
+	    }
+	    else if(newSpeed>0&&newSpeed<1){
+			newSpeed=1;
+			tempRange[x][y]=true;
+	    }
+	    else if(newSpeed<0){         //Movement-points used
+			
+	    }
+	
+	    step(newSpeed, x-1,y);
+	    step(newSpeed, x+1,y);
+	    step(newSpeed, x,y+1);
+	    step(newSpeed, x,y-1);
 	}
-	
-	else if(newSpeed>0&&newSpeed<1){
-	    newSpeed=1;
-	}
-	
-	else if(newSpeed<0){
-	    return null;
-	}
-	
-	
-	step(newSpeed, x-1,y);
-	step(newSpeed, x+1,y);
-	step(newSpeed, x,y+1);
-	step(newSpeed, x,y-1);
+	else{				//Field not walkable
+	   
 	}
 	
     }
 	
     
-    */
+    
     
 
 
