@@ -1,5 +1,6 @@
 package de.gymdon.inf1315.game.render.gui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -27,7 +28,7 @@ public class GuiOptions extends GuiScreen {
     
     @Override
     public void render(Graphics2D g2d, int width, int height, int scrollX, int scrollY) {
-        super.render(g2d, width, height, scrollX, scrollY);
+	drawBackground(g2d, width, height);
         
         Font f = Font.decode("Helvetica 80");
         g2d.setFont(f);
@@ -35,6 +36,7 @@ public class GuiOptions extends GuiScreen {
         Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(title, g2d);
         int titleX = (int) (width/2 - bounds.getCenterX());
         int titleY = (int) (80 + bounds.getMaxY());
+        g2d.setColor(Color.WHITE);
         g2d.drawString(title, titleX, titleY);
         
 	int buttonWidth = width - width/4;
@@ -59,6 +61,7 @@ public class GuiOptions extends GuiScreen {
 	    videoVsyncButton.setWidth(buttonWidthSmall);
 	    videoVsyncButton.setHeight(buttonHeight);
 	}
+        super.render(g2d, width, height, scrollX, scrollY);
     }
     
     public GuiOptions(GuiScreen last) {

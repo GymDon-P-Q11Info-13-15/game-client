@@ -22,7 +22,7 @@ public class GuiMainMenu extends GuiScreen{
     @Override
     public void render(Graphics2D g2d, int width, int height, int scrollX,
             int scrollY) {
-        super.render(g2d, width, height, scrollX, scrollY);
+	drawBackground(g2d, width, height);
         //int ticksRunning = Client.instance.getTicksRunning(); //not needed right now. Maybe later?
         
         Font f = Font.decode("Helvetica Bold 120");
@@ -58,6 +58,7 @@ public class GuiMainMenu extends GuiScreen{
 	options.setY(topMargin + (buttonHeight + buttonSpacing));
 	options.setWidth(buttonWidth);
 	options.setHeight(buttonHeight);
+        super.render(g2d, width, height, scrollX, scrollY);
     }
     
     @Override

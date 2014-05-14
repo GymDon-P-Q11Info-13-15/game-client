@@ -20,7 +20,6 @@ public abstract class GuiScreen extends Gui implements ActionListener,
 	    int scrollY) {
 	this.width = width;
 	this.height = height;
-	drawBackground(g2d);
 	for (GuiControl c : controlList)
 	    c.render(g2d, width, height, scrollX, scrollY);
     }
@@ -29,13 +28,13 @@ public abstract class GuiScreen extends Gui implements ActionListener,
 
     }
 
-    protected void drawBackground(Graphics2D g2d) {
+    protected void drawBackground(Graphics2D g2d, int width, int height) {
         LinearGradientPaint gradient = new LinearGradientPaint(width*0.7F, 0, width*0.3F, height, 
         	new float[]{0,1}, 
         	new Color[]{new Color(0xc69c6d), new Color(0x754c24)});
         g2d.setPaint(gradient);
         g2d.fillRect(0, 0, width, height);
-        g2d.setPaint(null);
+        g2d.setColor(Color.BLACK);
     }
 
     @Override
