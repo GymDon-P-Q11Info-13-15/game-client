@@ -15,6 +15,7 @@ public class GameCanvas extends JPanel {
     @Override
     public void paint(Graphics g) {
 	Graphics2D g2d = (Graphics2D) g;
+	g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	int width = getWidth();
 	int height = getHeight();
 	g2d.setColor(Color.BLACK);
