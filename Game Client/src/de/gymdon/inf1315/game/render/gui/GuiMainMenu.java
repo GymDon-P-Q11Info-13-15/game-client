@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 
 import de.gymdon.inf1315.game.client.Client;
 import de.gymdon.inf1315.game.render.StandardTexture;
-import de.gymdon.inf1315.game.render.gui.GuiButton.ButtonState;
 
 public class GuiMainMenu extends GuiScreen{
 
