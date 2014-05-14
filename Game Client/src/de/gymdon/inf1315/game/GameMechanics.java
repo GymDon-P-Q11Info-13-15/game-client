@@ -42,12 +42,53 @@ public class GameMechanics {
 
 	if (effspd < 1) {
 	    effspd = 1;
+	    
 	}
 
 	if (effspd <= spd) {
 
 	}
-
+	
+    }
+	
+    
+    public int[][] getAccesableFields(Unit a){
+	
+	
+	
+    }
+	
+    public boolean[][] step(int actualSpeed, int x, int y){
+	
+	
+	if(map[x][y].isWalkable==true){
+	    boolean [][] position = new boolean[map.length][map.length];
+	int newSpeed = actualSpeed - map[x][y].groundFactor;
+	
+	
+	if(newSpeed>1){
+	    position[x][y]=true;
+	    return position;
+	}
+	
+	else if(newSpeed>0&&newSpeed<1){
+	    newSpeed=1;
+	}
+	
+	else if(newSpeed<0){
+	    return null;
+	}
+	
+	
+	step(newSpeed, x-1,y);
+	step(newSpeed, x+1,y);
+	step(newSpeed, x,y+1);
+	step(newSpeed, x,y-1);
+	}
+	
+    }
+	
+    
+    
     }
 
-}
