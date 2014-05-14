@@ -8,3 +8,6 @@ Aufbau der Karte:
 Einzelne Vierecke (64x64 px) mit Texturen, werden am Ende vom Spiel zusammengefügt   !!!Achtung: Texturen auf 64x64
 Pro Kachel nur ein Typ
 Auf der Kachel steht die Figur als Figur/Symbol, unten rechts in nem Kreis die Nummer
+
+Grundeinheiten für HQ: Archer, (Scout?)
+Restliche Einheiten nur in Kaserne
