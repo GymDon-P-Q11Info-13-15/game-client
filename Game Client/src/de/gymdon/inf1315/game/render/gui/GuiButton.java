@@ -81,8 +81,8 @@ public class GuiButton extends GuiControl {
     }
 
     protected void stateChanged() {
-	if(lastState == ButtonState.HOVER && currentState == ButtonState.ACTIVE) {
-	    ActionEvent e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "click");
+	if(lastState == ButtonState.ACTIVE && currentState == ButtonState.HOVER) {
+	    ActionEvent e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, this.text);
 	    for(ActionListener l : actionListeners)
 		l.actionPerformed(e);
 	}
