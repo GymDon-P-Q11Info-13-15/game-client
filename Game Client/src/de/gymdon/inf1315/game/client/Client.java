@@ -53,7 +53,7 @@ public class Client implements Runnable, WindowListener {
 	    long now = System.nanoTime();
 	    unprocessed += (now - lastTime) / nsPerTick;
 	    lastTime = now;
-	    boolean shouldRender = true;
+	    boolean shouldRender = false;
 	    while (unprocessed >= 1) {
 		ticks++;
 		ticksRunning++;

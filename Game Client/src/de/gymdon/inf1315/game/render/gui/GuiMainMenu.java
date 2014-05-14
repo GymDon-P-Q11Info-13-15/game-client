@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import de.gymdon.inf1315.game.client.Client;
 import de.gymdon.inf1315.game.render.StandardTexture;
+import de.gymdon.inf1315.game.render.gui.GuiButton.ButtonState;
 
 public class GuiMainMenu extends GuiScreen{
 
@@ -34,17 +35,13 @@ public class GuiMainMenu extends GuiScreen{
     public void actionPerformed(ActionEvent e) {
 	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton)e.getSource();
-	    if(button == button1)
+	    if(button.getTexture() != null)
 	    {
-		button1.setTexture(StandardTexture.get("grass"));
+		button.setTexture(null);
 	    }
-	    else if(button == button2)
+	    else if(button.getTexture() == null)
 	    {
-		System.out.println(button2.getText());
-	    }
-	    else if(button.getTexture() == StandardTexture.get("grass"))
-	    {
-		
+		button.setTexture(StandardTexture.get("grass"));
 	    }
 	}
     }
