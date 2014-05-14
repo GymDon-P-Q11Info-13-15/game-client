@@ -1,7 +1,7 @@
 package de.gymdon.inf1315.game;
-
+import java.util.Random;
 public class GameMechanics {
-
+    Random r = new Random();
     Tile[][] map;
     Building[][] buildings;
     Unit[][] units;
@@ -51,7 +51,7 @@ public class GameMechanics {
 	
     }
 	
-    
+    /*
     public int[][] getAccesableFields(Unit a){
 	
 	
@@ -89,6 +89,24 @@ public class GameMechanics {
     }
 	
     
+    */
     
+
+
+    public void combat(Unit attacker,Unit defender,int round){             
+	if(round<3){
+	if(attacker.range > defender.range)  
+	{
+	defender.setHP(defender.hp-(int)attacker.attack*attacker.hp*(80+r.nextInt(41))/100-defender.defense*defender.hp); //angreifer bekommt eine runde ohne Gegenwehr
+	}
+	else{
+	defender.setHP(defender.hp-(int)attacker.attack*attacker.hp*(80+r.nextInt(41))/100-defender.defense*defender.hp); //setzt die Hp des Verteidigers gemäß der Werte herunter
+	attacker.setHP(attacker.hp-(int)defender.attack*defender.hp*(80+r.nextInt(41))/100-attacker.defense*attacker.hp); //setzt die Hp des Angreifers gemäß der Werte herunter
+	if(defender.hp > 0 && attacker.hp > 0){
+	combat(attacker,defender,round+1);
+	}
+	}
+	}
     }
+}
 
