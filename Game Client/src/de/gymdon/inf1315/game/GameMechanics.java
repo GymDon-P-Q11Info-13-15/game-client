@@ -9,12 +9,19 @@ public class GameMechanics {
     boolean won;
     int round;
 
-    public GameMechanics(int x, int y) {
+    public GameMechanics(int x, int y) {	//neue Welt mit Breite x und Höhe y
 	map = new Tile[x][y];
 	buildings = new Building[x][y];
 	units = new Unit[x][y];
 	won = false;
 	round = 0;
+    }
+    
+    public void setTile(Tile t, int x, int y){	//zum Map-Bauen
+    	map[x][y]=t;
+    }
+    public void setMap(Tile[][] t){
+    	map=t;
     }
 
     public void run() {
@@ -29,6 +36,14 @@ public class GameMechanics {
 
     public void move(Unit u, int x, int y) { // Abfrage, ob Bewegung moeglich
 					     // ist -> Aenderung der Position
+	getAccesableFields(u);
+	if (tempRange[x][y]==true){
+		u.x=x;
+		u.y=y;
+		
+	}
+	
+	/*
 	int xold = u.x; // Bisherige Koordinaten der Unit
 	int yold = u.y;
 	int spd = u.getSpeed(); // Speed der Unit
@@ -49,6 +64,7 @@ public class GameMechanics {
 	if (effspd <= spd) {
 
 	}
+	*/
 	
     }
 	
@@ -68,20 +84,26 @@ public class GameMechanics {
 	
 	
 	    if(newSpeed>1){
+	    	
 			tempRange[x][y]=true;
+			step(newSpeed, x-1,y);
+		 	step(newSpeed, x+1,y);
+		 	step(newSpeed, x,y+1);
+	    		step(newSpeed, x,y-1);
 	    }
 	    else if(newSpeed>0&&newSpeed<1){
 			newSpeed=1;
 			tempRange[x][y]=true;
+			step(newSpeed, x-1,y);
+	    		step(newSpeed, x+1,y);
+	    		step(newSpeed, x,y+1);
+	    		step(newSpeed, x,y-1);
 	    }
-	    else if(newSpeed<0){         //Movement-points used
+	    else if(newSpeed<0){         //Movement-points used -> field not accesable
 			
 	    }
 	
-	    step(newSpeed, x-1,y);
-	    step(newSpeed, x+1,y);
-	    step(newSpeed, x,y+1);
-	    step(newSpeed, x,y-1);
+	    
 	}
 	else{				//Field not walkable
 	   
