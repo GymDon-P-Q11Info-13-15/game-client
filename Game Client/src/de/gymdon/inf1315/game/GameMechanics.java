@@ -118,13 +118,14 @@ public class GameMechanics {
 
     public void combat(Unit attacker,Unit defender,int round){             
 	if(round<3){
-	if(attacker.range > defender.range)  
+	if(attacker.range > defender.range)   //Prüfen ob der Verteidiger sich wehren kann
 	{
-	defender.setHP(defender.hp-(int)attacker.attack*attacker.hp*(80+r.nextInt(41))/100-defender.defense*defender.hp); //angreifer bekommt eine runde ohne Gegenwehr
+	 if(attacker.attack+attacker.hp >= defender.defense*defender.hp*0.9)defender.setHP(defender.hp-(int)(attacker.attack*attacker.hp/10*(80+r.nextInt(41)/100)-defender.defense*defender.hp/10 *0.9));//Schadensberechnung(w.i.p)
 	}
 	else{
-	defender.setHP(defender.hp-(int)attacker.attack*attacker.hp*(80+r.nextInt(41))/100-defender.defense*defender.hp); //setzt die Hp des Verteidigers gemäß der Werte herunter
-	attacker.setHP(attacker.hp-(int)defender.attack*defender.hp*(80+r.nextInt(41))/100-attacker.defense*attacker.hp); //setzt die Hp des Angreifers gemäß der Werte herunter
+	 if(attacker.attack+attacker.hp >= defender.defense*defender.hp*0.9)defender.setHP(defender.hp-(int)(attacker.attack*attacker.hp/10*(80+r.nextInt(41)/100)-defender.defense*defender.hp/10 *0.9));   
+	 if(defender.attack+defender.hp >= attacker.defense*attacker.hp*0.9)attacker.setHP(attacker.hp-(int)(defender.attack*defender.hp/10*(80+r.nextInt(41)/100)-attacker.defense*attacker.hp/10 *0.9));   
+	    
 	if(defender.hp > 0 && attacker.hp > 0){
 	combat(attacker,defender,round+1);
 	}
