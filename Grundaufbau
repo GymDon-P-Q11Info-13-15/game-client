@@ -9,5 +9,6 @@ Einzelne Vierecke (64x64 px) mit Texturen, werden am Ende vom Spiel zusammengef�
 Pro Kachel nur ein Typ
 Auf der Kachel steht die Figur als Figur/Symbol, unten rechts in nem Kreis die Nummer
 
-Grundeinheiten für HQ: Archer, (Scout?)
-Restliche Einheiten nur in Kaserne
+Grundeinheiten für HQ: Scout, Spearman, Swordsman  - also Schere, Stein, Papier 
+Restliche Einheiten nur in Kaserne (also Knight und Archer)
+
