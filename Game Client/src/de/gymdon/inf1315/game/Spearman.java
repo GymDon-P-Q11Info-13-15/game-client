@@ -6,11 +6,12 @@ public class Spearman extends Unit {
 	this.owner = owner;
 	this.x = x;
 	this.y = y;
-	speed = 7;
+	speed = 6;
 	range = 1;
-	attack = 30;
-	defense = 30;
+	attack = 40;
+	defense = 20;
 	hp = 80;
+	cost = 80;
     }
 
     @Override

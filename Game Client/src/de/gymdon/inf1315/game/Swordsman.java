@@ -9,8 +9,9 @@ public class Swordsman extends Unit {
 	speed = 5;
 	range = -1;
 	attack = 40;
-	defense = 60;
-	hp = 100;
+	defense = 70;
+	hp = 110;
+	cost = 130;
     }
 
     @Override

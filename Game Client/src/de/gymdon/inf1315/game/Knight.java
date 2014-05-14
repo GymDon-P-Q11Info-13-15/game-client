@@ -6,11 +6,12 @@ public class Knight extends Unit {
 	this.owner = owner;
 	this.x = x;
 	this.y = y;
-	speed = 4;
+	speed = 7;
 	range = -1;
-	attack = 40;
+	attack = 70;
 	defense = 50;
-	hp = 120;
+	hp = 140;
+	cost = 200;
     }
 
     @Override

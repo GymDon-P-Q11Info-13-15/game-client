@@ -9,8 +9,9 @@ public class Archer extends Unit {
 	speed = 8;
 	range = 4;
 	attack = 20;
-	defense = 30;
+	defense = 20;
 	hp = 70;
+	cost = 60;
     }
 
     @Override
