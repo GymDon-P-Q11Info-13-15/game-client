@@ -1,16 +1,16 @@
 package de.gymdon.inf1315.game;
 
-public class Bowman extends Unit {
+public class Archer extends Unit {
 
-    public Bowman(Player owner, int x, int y) {
+    public Archer(Player owner, int x, int y) {
 	this.owner = owner;
 	this.x = x;
 	this.y = y;
-	speed = 0;
-	range = 0;
-	attack = 0;
-	defense = 0;
-	hp = 0;
+	speed = 8;
+	range = 4;
+	attack = 20;
+	defense = 30;
+	hp = 70;
     }
 
     @Override

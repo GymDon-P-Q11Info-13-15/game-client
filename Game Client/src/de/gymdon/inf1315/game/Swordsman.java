@@ -6,11 +6,11 @@ public class Swordsman extends Unit {
 	this.owner = owner;
 	this.x = x;
 	this.y = y;
-	speed = 0;
-	range = 0;
-	attack = 0;
-	defense = 0;
-	hp = 0;
+	speed = 5;
+	range = -1;
+	attack = 40;
+	defense = 60;
+	hp = 100;
     }
 
     @Override
