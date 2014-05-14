@@ -1,0 +1,15 @@
+{
+	"translation.missing": "Übersetzung für \"%s\" fehlt",
+	"client.left": "%s hat das Spiel verlassen",
+	"client.kicked": "Du wurdest gekicked: \"%s\"",
+	"protocol.version.incompatible": "Inkompatible Protokollversion (%2$d anstatt  %1$d erwartet)",
+	"updated.version": "Updatete %s auf Version %s",
+	"file.created": "Datei %s wurde erstellt",
+	"game.ended": "Spiel wurde beendet: %s",
+	"gui.game.new": "Neues Spiel",
+	"gui.options": "Optionen",
+	"gui.options.video": "Video Einstellungen",
+	"gui.options.video.vsync.on": "VSync: An",
+	"gui.options.video.vsync.off": "VSync: Aus",
+	"gui.back": "Zurück"
+}

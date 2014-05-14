@@ -3,16 +3,22 @@ package de.gymdon.inf1315.game.client;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import de.gymdon.inf1315.game.Translation;
 import de.gymdon.inf1315.game.render.GameCanvas;
 import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
 import de.gymdon.inf1315.game.render.gui.GuiScreen;
+import de.gymdon.inf1315.game.client.Preferences;
 
 public class Client implements Runnable, WindowListener {
     public static final boolean DEBUG = true;
-    public static final String TITLE = "Game";
+    public static final String TITLE = "Game Title";
     public static final String VERSION = "Alpha 0.0.1";
     public static Client instance;
     private boolean running = false;
@@ -22,10 +28,12 @@ public class Client implements Runnable, WindowListener {
     private int tps = 0;
     private int fps = 0;
     public GuiScreen currentScreen;
+    public Translation translation;
+    public Preferences preferences;
 
     public Client() {
 	Client.instance = this;
-	frame = new JFrame("Game");
+	frame = new JFrame(TITLE);
 	frame.setSize(1280, 720);
 	frame.setMinimumSize(new Dimension(800, 600));
 	frame.setPreferredSize(frame.getSize());
@@ -47,13 +55,17 @@ public class Client implements Runnable, WindowListener {
 	int ticks = 0;
 	long lastTimer1 = System.currentTimeMillis();
 
-	init();
+	new Thread(){
+	    public void run() {
+		init();
+	    }
+	}.start();
 
 	while (running) {
 	    long now = System.nanoTime();
 	    unprocessed += (now - lastTime) / nsPerTick;
 	    lastTime = now;
-	    boolean shouldRender = false;
+	    boolean shouldRender = preferences != null && !preferences.video.vsync;
 	    while (unprocessed >= 1) {
 		ticks++;
 		ticksRunning++;
@@ -88,12 +100,47 @@ public class Client implements Runnable, WindowListener {
     }
 
     private void init() {
+	translation = new Translation("en");
+	readPreferences();
+	if(!preferences.language.equals("en"))
+	    translation.load(preferences.language);
 	setGuiScreen(new GuiMainMenu());
 	System.out.println("Started \"" + TITLE + " " + VERSION + "\"");
     }
+    
+    public void reload() {
+	translation = new Translation("en");
+	readPreferences();
+	if(!preferences.language.equals("en"))
+	    translation.load(preferences.language);
+    }
+    
+    private void readPreferences() {
+	File f = new File("preferences.json");
+	try {
+	    if (f.exists())
+		preferences = Preferences.readNew(new FileReader(f));
+	    else {
+		preferences = new Preferences();
+		f.createNewFile();
+		preferences.write(new FileWriter(f));
+		System.out.println(translation.translate("file.created", "preferences.json"));
+	    }
+	    if(preferences.version != Preferences.CURRENT_VERSION) {
+		preferences.version = Preferences.CURRENT_VERSION;
+		preferences = new Preferences();
+		f.createNewFile();
+		preferences.write(new FileWriter(f));
+		System.out.println(translation.translate("updated.version","preferences.json", preferences.version));
+	    }
+	} catch (IOException e) {
+	    throw new RuntimeException("Preferences couldn't be loaded/saved", e);
+	}
+    }
 
     private void tick() {
-	currentScreen.tick();
+	if(currentScreen != null)
+	    currentScreen.tick();
     }
 
     private void render() {

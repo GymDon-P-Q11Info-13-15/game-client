@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.gymdon.inf1315.game.client.Client;
 import de.gymdon.inf1315.game.render.Texture;
 
 public class GuiButton extends GuiControl {
@@ -22,9 +23,12 @@ public class GuiButton extends GuiControl {
     protected String text;
     protected Texture texture;
     protected boolean drawBackground = true;
-    protected int bgColor = 0x000000;
+    protected int bgColor = 0x7B5C3D;
     protected int textColor = 0xFFFFFF;
-    protected Font font = Font.decode("Helvetica 18");
+    protected int borderColor = 0x6C4824;
+    protected int borderWidth = 5;
+    protected int borderRadius = 20;
+    protected Font font = Font.decode("Helvetica Bold 22");
     protected ButtonState lastState = ButtonState.NORMAL;
     protected ButtonState currentState = ButtonState.NORMAL;
     protected boolean enabled = true;
@@ -55,6 +59,14 @@ public class GuiButton extends GuiControl {
     @Override
     public void render(Graphics2D g2d, int width, int height, int scrollX,
 	    int scrollY) {
+	if(borderWidth > 0) {
+	    g2d.setColor(new Color(borderColor));
+	    if(borderRadius == 0) {
+		g2d.fillRect(this.x - borderWidth, this.y - borderWidth, this.width + 2*borderWidth, this.height + 2*borderWidth);
+	    }else {
+		g2d.fillRoundRect(this.x - borderWidth, this.y - borderWidth, this.width + 2*borderWidth, this.height + 2*borderWidth, borderRadius, borderRadius);
+	    }
+	}
 	if (texture != null) {
 	    if (drawBackground)
 		g2d.drawImage(texture.getImage(), x, y, x + this.width, y
@@ -69,13 +81,17 @@ public class GuiButton extends GuiControl {
 				+ texture.getHeight(), texture);
 	} else if (drawBackground) {
 	    g2d.setColor(new Color(bgColor));
-	    g2d.fillRect(x, y, this.width, this.height);
+	    if(borderRadius == 0)
+		g2d.fillRect(x, y, this.width, this.height);
+	    else
+		g2d.fillRoundRect(this.x, this.y, this.width, this.height, borderRadius - borderWidth, borderRadius - borderWidth);
 	}
 
 	g2d.setFont(font);
-	Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(text, g2d);
+	String translatedText = Client.instance.translation.translate(text);
+	Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(translatedText, g2d);
 	g2d.setColor(new Color(textColor));
-	g2d.drawString(text,
+	g2d.drawString(translatedText,
 		(float) (x + (this.width - bounds.getWidth()) / 2),
 		(float) (y + (this.height + bounds.getHeight()) / 2));
     }
@@ -138,6 +154,42 @@ public class GuiButton extends GuiControl {
 
     public ButtonState getState() {
 	return currentState;
+    }
+
+    public int getBorderColor() {
+        return borderColor;
+    }
+
+    public int getBorderWidth() {
+        return borderWidth;
+    }
+
+    public int getBorderRadius() {
+        return borderRadius;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public GuiButton setBorderColor(int borderColor) {
+        this.borderColor = borderColor;
+        return this;
+    }
+
+    public GuiButton setBorderWidth(int borderWidth) {
+        this.borderWidth = borderWidth;
+        return this;
+    }
+
+    public GuiButton setBorderRadius(int borderRadius) {
+        this.borderRadius = borderRadius;
+        return this;
+    }
+
+    public GuiButton setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        return this;
     }
 
     public GuiButton setParent(GuiScreen parent) {
