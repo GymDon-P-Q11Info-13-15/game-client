@@ -7,8 +7,8 @@ sonst wäre ja von Anfang an kein Truppenbau möglich -> langweiligere Anfangsph
 
 * Vorteil für Angreifer oder Verteidiger beim Angriff?
 
-  *Im Kampfalgorithmus hat der Angreifer den ersten Schlag -> "Rückschlag" der Verteidiger geschwächt, also bisher Vorteil für den Angreifer;<br>
-bestimmte Multiplikatoren sind jedoch leicht implementierbar*
+  *Erstschlagmechanik viel zu stark müssen schaun was da zu machen ist X_x<br>
+0.9 Malus für den Verteidiger eingefügt weil sonst kaum schaden gemacht wird.Verteidiger verliert aktuell 1000 von 1000 Gefechten.*
 
 * Name des Spiels?
 
