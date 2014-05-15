@@ -13,6 +13,7 @@ import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.gymdon.inf1315.game.Translation;
 import de.gymdon.inf1315.game.client.Client;
 
 public class GuiOptions extends GuiScreen {
