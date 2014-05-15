@@ -13,7 +13,7 @@ import de.gymdon.inf1315.game.client.Client;
 
 public class GuiMainMenu extends GuiScreen{
 
-    private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
+    private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new").setEnabled(false);
     private GuiButton options = new GuiButton(this, 0, 20, 20, "gui.options");
     private GuiButton exit = new GuiButton(this, 0, 20, 20, "gui.exit");
     public GuiMainMenu() {
@@ -51,6 +51,8 @@ public class GuiMainMenu extends GuiScreen{
 	int buttonHeight = height/10;
 	int buttonSpacing = buttonHeight/4;
 	int leftMargin = width/2 - buttonWidth/2;
+	int buttonWidthSmall = (buttonWidth - buttonSpacing)/2;
+	int buttonWidthVerySmall = (buttonWidthSmall - buttonSpacing)/2;
 	newGame.setX(leftMargin);
 	newGame.setY(topMargin);
 	newGame.setWidth(buttonWidth);
@@ -61,9 +63,9 @@ public class GuiMainMenu extends GuiScreen{
 	options.setWidth(buttonWidth);
 	options.setHeight(buttonHeight);
 	
-	exit.setX(leftMargin*6);
-	exit.setY(topMargin*2 + (buttonHeight + buttonSpacing));
-	exit.setWidth(buttonWidth/4);
+	exit.setX(width - leftMargin - buttonWidthVerySmall);
+	exit.setY(topMargin + (buttonHeight + buttonSpacing)*3);
+	exit.setWidth(buttonWidthVerySmall);
 	exit.setHeight(buttonHeight);
         super.render(g2d, width, height, scrollX, scrollY);
     }

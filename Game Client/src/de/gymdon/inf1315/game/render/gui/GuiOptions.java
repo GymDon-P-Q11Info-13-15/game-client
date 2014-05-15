@@ -76,7 +76,7 @@ public class GuiOptions extends GuiScreen {
 	    int i = 0;
 	    for(GuiButton b : languageButtons) {
 		b.setX(leftMargin);
-		b.setY(topMargin + i*(buttonHeight+buttonSpacing));
+		b.setY(topMargin + (i++)*(buttonHeight+buttonSpacing));
 		b.setWidth(buttonWidth);
 		b.setHeight(buttonHeight);
 	    }
@@ -114,6 +114,9 @@ public class GuiOptions extends GuiScreen {
 	    }else if(languageButtons.contains(button)) {
 		String lang = button.getText().substring(5);
 		Client.instance.preferences.language = lang;
+		Client.instance.translation.reload("en");
+		Client.instance.translation.load(lang);
+		setSection(Section.LANGUAGE);
 	    }
 	}
     }
@@ -130,13 +133,17 @@ public class GuiOptions extends GuiScreen {
 	    controlList.add(videoVsyncButton);
 	    break;
 	case LANGUAGE:
+	    languageButtons.clear();
 	    List<String> languages = new Gson().fromJson(new InputStreamReader(
 		    GuiOptions.class.getResourceAsStream("/lang/langs.json")),
 		    new TypeToken<List<String>>() {
 		    }.getType());
 	    int i = 0x100;
 	    for(String s1 : languages) {
-		languageButtons.add(new GuiButton(this, i, 0, 0, "lang."+s1));
+		GuiButton button = new GuiButton(this, i, 0, 0, "lang."+s1);
+		languageButtons.add(button);
+		if(s1.equals(Client.instance.preferences.language))
+		    button.setEnabled(false);
 	    }
 	    controlList.addAll(languageButtons);
 	    break;

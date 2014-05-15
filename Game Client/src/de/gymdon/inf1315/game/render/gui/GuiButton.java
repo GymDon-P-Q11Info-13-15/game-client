@@ -60,7 +60,12 @@ public class GuiButton extends GuiControl {
     public void render(Graphics2D g2d, int width, int height, int scrollX,
 	    int scrollY) {
 	if(borderWidth > 0) {
-	    g2d.setColor(new Color(borderColor));
+	    int c = borderColor;
+	    if(!enabled) {
+		float[] hsb = Color.RGBtoHSB((borderColor>>16)&0xFF, (borderColor>>8)&0xFF, borderColor&0xFF, null);
+		c = Color.HSBtoRGB(hsb[0], hsb[1]/2, Math.min(hsb[2]*1.2F, 1));
+	    }
+	    g2d.setColor(new Color(c));
 	    if(borderRadius == 0) {
 		g2d.fillRect(this.x - borderWidth, this.y - borderWidth, this.width + 2*borderWidth, this.height + 2*borderWidth);
 	    }else {
@@ -80,7 +85,12 @@ public class GuiButton extends GuiControl {
 			texture.getX() + texture.getWidth(), texture.getY()
 				+ texture.getHeight(), texture);
 	} else if (drawBackground) {
-	    g2d.setColor(new Color(bgColor));
+	    int c = bgColor;
+	    if(!enabled) {
+		float[] hsb = Color.RGBtoHSB((bgColor>>16)&0xFF, (bgColor>>8)&0xFF, bgColor&0xFF, null);
+		c = Color.HSBtoRGB(hsb[0], hsb[1]/2, Math.min(hsb[2]*1.2F, 1));
+	    }
+	    g2d.setColor(new Color(c));
 	    if(borderRadius == 0)
 		g2d.fillRect(x, y, this.width, this.height);
 	    else
@@ -248,6 +258,8 @@ public class GuiButton extends GuiControl {
     }
 
     public GuiButton setState(ButtonState state) {
+	if(!enabled)
+	    return this;
 	this.lastState = currentState;
 	this.currentState = state;
 	if (lastState != currentState)

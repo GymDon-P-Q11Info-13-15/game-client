@@ -2,6 +2,7 @@ package de.gymdon.inf1315.game;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.*;
 
 import com.google.gson.Gson;
@@ -21,7 +22,7 @@ public class Translation {
     
     public void load(String lang) {
 	try {
-	    load(new InputStreamReader(Translation.class.getResourceAsStream("/lang/" + lang + ".json")));
+	    load(new InputStreamReader(Translation.class.getResourceAsStream("/lang/" + lang + ".json"), Charset.forName("UTF-8")));
 	}catch(Exception e) {
 	    System.err.println("Couldn't load language \"" + lang + "\"");
 	}
