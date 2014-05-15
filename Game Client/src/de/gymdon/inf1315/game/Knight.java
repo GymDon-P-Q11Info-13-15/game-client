@@ -7,7 +7,7 @@ public class Knight extends Unit {
 	this.x = x;
 	this.y = y;
 	speed = 7;
-	range = -1;
+	range = 1;
 	attack = 70;
 	defense = 50;
 	hp = 140;

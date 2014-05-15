@@ -105,34 +105,60 @@ public class GameMechanics {
     }
 
     public void combat(Unit attacker, Unit defender, int round) {
-	if (round < 3) {
-	    if (attacker.range > defender.range) // Prüfen ob der Verteidiger
-						 // sich wehren kann
-	    {
-		if (attacker.attack + attacker.hp >= defender.defense
-			* defender.hp * 0.9)
-		    defender.setHP(defender.hp
-			    - (int) (attacker.attack * attacker.hp / 10
-				    * (80 + r.nextInt(41) / 100) - defender.defense
-				    * defender.hp / 10 * 0.9));// Schadensberechnung(w.i.p)
-	    } else {
-		if (attacker.attack + attacker.hp >= defender.defense
-			* defender.hp * 0.9)
-		    defender.setHP(defender.hp
-			    - (int) (attacker.attack * attacker.hp / 10
-				    * (80 + r.nextInt(41) / 100) - defender.defense
-				    * defender.hp / 10 * 0.9));
-		if (defender.attack + defender.hp >= attacker.defense
-			* attacker.hp * 0.9)
-		    attacker.setHP(attacker.hp
-			    - (int) (defender.attack * defender.hp / 10
-				    * (80 + r.nextInt(41) / 100) - attacker.defense
-				    * attacker.hp / 10 * 0.9));
+	int effhp1=attacker.hp;
+	int effhp2=defender.hp;
+	if (round < 20) {
+	    if (attacker.range > defender.range){
+		
+	    } 
+	    else {
+	     for(int i=0;i<10;i++){
+		if((attacker.attack+effhp1)*(80+r.nextInt(41)/100)>=defender.defense+effhp2){defender.setHP(defender.hp-1);}
+		if((defender.attack+effhp2)*(80+r.nextInt(41)/100)>=attacker.defense+effhp1){attacker.setHP(attacker.hp-1);}
+	     }
+		
 
-		if (defender.hp > 0 && attacker.hp > 0) {
-		    combat(attacker, defender, round + 1);
+            if (defender.hp > 0 && attacker.hp > 0) {
+	        combat(attacker, defender, round + 1);
 		}
 	    }
 	}
+    
+    
+    
+    
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
