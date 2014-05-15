@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import de.gymdon.inf1315.game.client.Client;
 
@@ -21,6 +26,9 @@ public class GuiOptions extends GuiScreen {
     // -- Video
     private GuiButton videoVsyncButton = new GuiButton(this, 0, 100, 200, 
 	    "gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+    // -- Language
+    private GuiButton languageButton = new GuiButton(this, 0, 100, 200, "gui.options.language");
+    private List<GuiButton> languageButtons = new ArrayList<GuiButton>();
     
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -55,11 +63,23 @@ public class GuiOptions extends GuiScreen {
 	    videoButton.setY(topMargin);
 	    videoButton.setWidth(buttonWidthSmall);
 	    videoButton.setHeight(buttonHeight);
+	    languageButton.setX(leftMargin + buttonWidthSmall + buttonSpacing);
+	    languageButton.setY(topMargin);
+	    languageButton.setWidth(buttonWidthSmall);
+	    languageButton.setHeight(buttonHeight);
 	} else if (section == Section.VIDEO) {
 	    videoVsyncButton.setX(leftMargin);
 	    videoVsyncButton.setY(topMargin);
 	    videoVsyncButton.setWidth(buttonWidthSmall);
 	    videoVsyncButton.setHeight(buttonHeight);
+	} else if (section == Section.LANGUAGE) {
+	    int i = 0;
+	    for(GuiButton b : languageButtons) {
+		b.setX(leftMargin);
+		b.setY(topMargin + i*(buttonHeight+buttonSpacing));
+		b.setWidth(buttonWidth);
+		b.setHeight(buttonHeight);
+	    }
 	}
         super.render(g2d, width, height, scrollX, scrollY);
     }
@@ -89,6 +109,11 @@ public class GuiOptions extends GuiScreen {
 	    }else if(button == videoVsyncButton) {
 		Client.instance.preferences.video.vsync = !Client.instance.preferences.video.vsync;
 		videoVsyncButton.setText("gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+	    }else if(button == languageButton) {
+		setSection(Section.LANGUAGE);
+	    }else if(languageButtons.contains(button)) {
+		String lang = button.getText().substring(5);
+		Client.instance.preferences.language = lang;
 	    }
 	}
     }
@@ -99,15 +124,27 @@ public class GuiOptions extends GuiScreen {
 	switch(s) {
 	case MAIN:
 	    controlList.add(videoButton);
+	    controlList.add(languageButton);
 	    break;
 	case VIDEO:
 	    controlList.add(videoVsyncButton);
+	    break;
+	case LANGUAGE:
+	    List<String> languages = new Gson().fromJson(new InputStreamReader(
+		    GuiOptions.class.getResourceAsStream("/lang/langs.json")),
+		    new TypeToken<List<String>>() {
+		    }.getType());
+	    int i = 0x100;
+	    for(String s1 : languages) {
+		languageButtons.add(new GuiButton(this, i, 0, 0, "lang."+s1));
+	    }
+	    controlList.addAll(languageButtons);
 	    break;
 	}
 	controlList.add(backButton);
     }
 
     private enum Section {
-	MAIN, VIDEO;
+	MAIN, VIDEO, LANGUAGE;
     }
 }
