@@ -13,6 +13,7 @@ import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.gymdon.inf1315.game.Translation;
 import de.gymdon.inf1315.game.client.Client;
 
 public class GuiOptions extends GuiScreen {
@@ -76,9 +77,10 @@ public class GuiOptions extends GuiScreen {
 	    int i = 0;
 	    for(GuiButton b : languageButtons) {
 		b.setX(leftMargin);
-		b.setY(topMargin + i*(buttonHeight+buttonSpacing));
-		b.setWidth(buttonWidth);
+		b.setY(topMargin + i*(buttonHeight + buttonSpacing));
+		b.setWidth(buttonWidthSmall);
 		b.setHeight(buttonHeight);
+		i++;
 	    }
 	}
         super.render(g2d, width, height, scrollX, scrollY);
@@ -112,8 +114,8 @@ public class GuiOptions extends GuiScreen {
 	    }else if(button == languageButton) {
 		setSection(Section.LANGUAGE);
 	    }else if(languageButtons.contains(button)) {
-		String lang = button.getText().substring(5);
-		Client.instance.preferences.language = lang;
+		String lang = button.getText().substring(21);
+		Client.instance.translation = new Translation(lang);
 	    }
 	}
     }
@@ -136,7 +138,7 @@ public class GuiOptions extends GuiScreen {
 		    }.getType());
 	    int i = 0x100;
 	    for(String s1 : languages) {
-		languageButtons.add(new GuiButton(this, i, 0, 0, "lang."+s1));
+		languageButtons.add(new GuiButton(this, i, 20, 20, "gui.options.language."+s1));
 	    }
 	    controlList.addAll(languageButtons);
 	    break;
