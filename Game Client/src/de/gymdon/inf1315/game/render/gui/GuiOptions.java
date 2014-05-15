@@ -13,7 +13,6 @@ import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import de.gymdon.inf1315.game.Translation;
 import de.gymdon.inf1315.game.client.Client;
 
 public class GuiOptions extends GuiScreen {
@@ -33,6 +32,11 @@ public class GuiOptions extends GuiScreen {
     
     public GuiOptions() {
 	setSection(Section.MAIN);
+    }
+    
+    public GuiOptions(GuiScreen last) {
+	this();
+	this.last = last;
     }
     
     @Override
@@ -83,11 +87,6 @@ public class GuiOptions extends GuiScreen {
 	    }
 	}
         super.render(g2d, width, height, scrollX, scrollY);
-    }
-    
-    public GuiOptions(GuiScreen last) {
-	this();
-	this.last = last;
     }
 
     @Override

@@ -64,7 +64,7 @@ public class GuiMainMenu extends GuiScreen{
 	options.setHeight(buttonHeight);
 	
 	exit.setX(width - leftMargin - buttonWidthVerySmall);
-	exit.setY(topMargin + (buttonHeight + buttonSpacing)*3);
+	exit.setY(height - buttonSpacing - buttonHeight);
 	exit.setWidth(buttonWidthVerySmall);
 	exit.setHeight(buttonHeight);
         super.render(g2d, width, height, scrollX, scrollY);
