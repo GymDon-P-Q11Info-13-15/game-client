@@ -11,5 +11,6 @@
 	"gui.options.video": "Video settings",
 	"gui.options.video.vsync.on": "VSync: On",
 	"gui.options.video.vsync.off": "VSync: Off",
-	"gui.back": "Back"
+	"gui.back": "Back",
+	"gui.exit": "Exit"
 }

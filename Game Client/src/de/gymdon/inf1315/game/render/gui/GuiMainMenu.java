@@ -15,9 +15,11 @@ public class GuiMainMenu extends GuiScreen{
 
     private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
     private GuiButton options = new GuiButton(this, 0, 20, 20, "gui.options");
+    private GuiButton exit = new GuiButton(this, 0, 20, 20, "gui.exit");
     public GuiMainMenu() {
 	controlList.add(newGame);
 	controlList.add(options);
+	controlList.add(exit);
     }
     @Override
     public void render(Graphics2D g2d, int width, int height, int scrollX,
@@ -58,6 +60,11 @@ public class GuiMainMenu extends GuiScreen{
 	options.setY(topMargin + (buttonHeight + buttonSpacing));
 	options.setWidth(buttonWidth);
 	options.setHeight(buttonHeight);
+	
+	exit.setX(leftMargin*6);
+	exit.setY(topMargin*2 + (buttonHeight + buttonSpacing));
+	exit.setWidth(buttonWidth/4);
+	exit.setHeight(buttonHeight);
         super.render(g2d, width, height, scrollX, scrollY);
     }
     
@@ -67,6 +74,8 @@ public class GuiMainMenu extends GuiScreen{
 	    GuiButton button = (GuiButton)e.getSource();
 	    if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
+	    else if(button == exit)
+		Client.instance.stop();
 	}
     }
 }

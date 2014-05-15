@@ -1,5 +1,5 @@
 {
-	"translation.missing": "†bersetzung fŸr \"%s\" fehlt",
+	"translation.missing": "ï¿½bersetzung fï¿½r \"%s\" fehlt",
 	"client.left": "%s hat das Spiel verlassen",
 	"client.kicked": "Du wurdest gekicked: \"%s\"",
 	"protocol.version.incompatible": "Inkompatible Protokollversion (%2$d anstatt  %1$d erwartet)",
@@ -11,5 +11,6 @@
 	"gui.options.video": "Video Einstellungen",
 	"gui.options.video.vsync.on": "VSync: An",
 	"gui.options.video.vsync.off": "VSync: Aus",
-	"gui.back": "ZurŸck"
+	"gui.back": "Zurï¿½ck",
+	"gui.exit": "Beenden"
 }
