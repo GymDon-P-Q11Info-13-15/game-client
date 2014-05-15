@@ -13,7 +13,7 @@ import de.gymdon.inf1315.game.client.Client;
 
 public class GuiMainMenu extends GuiScreen{
 
-    private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new").setEnabled(false);
+    private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
     private GuiButton options = new GuiButton(this, 0, 20, 20, "gui.options");
     private GuiButton exit = new GuiButton(this, 0, 20, 20, "gui.exit");
     public GuiMainMenu() {
@@ -74,7 +74,9 @@ public class GuiMainMenu extends GuiScreen{
     public void actionPerformed(ActionEvent e) {
 	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton)e.getSource();
-	    if(button == options)
+	    if(button == newGame)
+		Client.instance.setGuiScreen(new GuiSelectServer(this));
+	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
 	    else if(button == exit)
 		Client.instance.stop();

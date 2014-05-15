@@ -14,6 +14,7 @@
 	"gui.options.video.vsync.on": "VSync: An",
 	"gui.options.video.vsync.off": "VSync: Aus",
 	"gui.options.language" : "Spracheinstellungen",
+	"gui.server.select": "Serverauswahl",
 	"gui.back": "Zurück",
 	"gui.exit": "Beenden"
 }
