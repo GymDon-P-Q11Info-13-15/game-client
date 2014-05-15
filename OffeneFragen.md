@@ -7,8 +7,7 @@ sonst wäre ja von Anfang an kein Truppenbau möglich -> langweiligere Anfangsph
 
 * Vorteil für Angreifer oder Verteidiger beim Angriff?
 
-  *Erstschlagmechanik viel zu stark müssen schaun was da zu machen ist X_x<br>
-0.9 Malus für den Verteidiger eingefügt weil sonst kaum schaden gemacht wird.Verteidiger verliert aktuell 1000 von 1000 Gefechten.*
+  *Combat-Methode nochmal komplett neu gemacht,Faktoren sollten leich einprogramiert werden*
 
 * Name des Spiels?
 
