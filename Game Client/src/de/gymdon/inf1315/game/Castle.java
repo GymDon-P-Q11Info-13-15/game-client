@@ -2,6 +2,7 @@ package de.gymdon.inf1315.game;
 
 public class Castle extends Building {
     Player own;
+    
 
     public Castle(Player owner, int x, int y) {
 
