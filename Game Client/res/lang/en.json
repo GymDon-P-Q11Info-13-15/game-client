@@ -11,6 +11,9 @@
 	"gui.options.video": "Video settings",
 	"gui.options.video.vsync.on": "VSync: On",
 	"gui.options.video.vsync.off": "VSync: Off",
+	"gui.options.language" : "Language settings",
+	"gui.options.language.en" : "English",
+	"gui.options.language.de" : "German",
 	"gui.back": "Back",
 	"gui.exit": "Exit"
 }

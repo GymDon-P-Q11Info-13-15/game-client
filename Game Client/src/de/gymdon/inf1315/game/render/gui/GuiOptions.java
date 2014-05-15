@@ -18,9 +18,13 @@ public class GuiOptions extends GuiScreen {
     
     //Sections
     private GuiButton videoButton = new GuiButton(this, 0, 100, 200, "gui.options.video");
+    private GuiButton languageButton = new GuiButton(this, 0, 100, 200, "gui.options.language");
     // -- Video
     private GuiButton videoVsyncButton = new GuiButton(this, 0, 100, 200, 
 	    "gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+    // -- Language
+    private GuiButton ENButton = new GuiButton(this, 0, 100, 200, "gui.options.language.en");
+    private GuiButton DEButton = new GuiButton(this, 0, 100, 200, "gui.options.language.de");
     
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -55,11 +59,26 @@ public class GuiOptions extends GuiScreen {
 	    videoButton.setY(topMargin);
 	    videoButton.setWidth(buttonWidthSmall);
 	    videoButton.setHeight(buttonHeight);
+	    
+	    languageButton.setX(leftMargin + (buttonWidthSmall + buttonSpacing));
+	    languageButton.setY(topMargin);
+	    languageButton.setWidth(buttonWidthSmall);
+	    languageButton.setHeight(buttonHeight);
 	} else if (section == Section.VIDEO) {
 	    videoVsyncButton.setX(leftMargin);
 	    videoVsyncButton.setY(topMargin);
 	    videoVsyncButton.setWidth(buttonWidthSmall);
 	    videoVsyncButton.setHeight(buttonHeight);
+	} else if (section == Section.LANGUAGE) {
+	    ENButton.setX(leftMargin);
+	    ENButton.setY(topMargin);
+	    ENButton.setWidth(buttonWidthSmall);
+	    ENButton.setHeight(buttonHeight);
+	    
+	    DEButton.setX(leftMargin + (buttonWidthSmall + buttonSpacing));
+	    DEButton.setY(topMargin);
+	    DEButton.setWidth(buttonWidthSmall);
+	    DEButton.setHeight(buttonHeight);
 	}
         super.render(g2d, width, height, scrollX, scrollY);
     }
@@ -89,6 +108,13 @@ public class GuiOptions extends GuiScreen {
 	    }else if(button == videoVsyncButton) {
 		Client.instance.preferences.video.vsync = !Client.instance.preferences.video.vsync;
 		videoVsyncButton.setText("gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+		
+	    }else if(button == languageButton) {
+		setSection(Section.LANGUAGE);
+	    }else if(button == ENButton) {
+		
+	    }else if(button == DEButton) {
+		
 	    }
 	}
     }
@@ -99,15 +125,20 @@ public class GuiOptions extends GuiScreen {
 	switch(s) {
 	case MAIN:
 	    controlList.add(videoButton);
+	    controlList.add(languageButton);
 	    break;
 	case VIDEO:
 	    controlList.add(videoVsyncButton);
+	    break;
+	case LANGUAGE:
+	    controlList.add(ENButton);
+	    controlList.add(DEButton);
 	    break;
 	}
 	controlList.add(backButton);
     }
 
     private enum Section {
-	MAIN, VIDEO;
+	MAIN, VIDEO, LANGUAGE;
     }
 }
