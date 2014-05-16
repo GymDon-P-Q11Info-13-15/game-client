@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -30,6 +31,7 @@ public class Client implements Runnable, WindowListener {
     public GuiScreen currentScreen;
     public Translation translation;
     public Preferences preferences;
+    public Random random = new Random();
 
     public Client() {
 	Client.instance = this;

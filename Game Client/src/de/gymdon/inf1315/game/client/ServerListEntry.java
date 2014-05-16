@@ -1,6 +1,9 @@
 package de.gymdon.inf1315.game.client;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.LinearGradientPaint;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +21,17 @@ public class ServerListEntry {
 	    @Override
 	    public void render(Graphics2D g2d, int width, int height,
 		    int scrollX, int scrollY) {
-		// TODO Auto-generated method stub
-		
+		LinearGradientPaint gradient = new LinearGradientPaint(0, 0, 0, 100, new float[]{0,1}, new Color[]{new Color(0x666666),new Color(0x444444)});
+		g2d.setPaint(gradient);
+		g2d.fillRect(0, 0, width, 100);
+		g2d.setColor(new Color(0x666666));
+		g2d.fillRect(0, 100, width, height - 100);
+		g2d.setColor(Color.WHITE);
+		g2d.setFont(Font.decode("Helvetica Bold 35"));
+		g2d.drawString(name, 50, 50);
+		g2d.setFont(Font.decode("Helvetica Bold 18"));
+		g2d.setColor(Color.GRAY);
+		g2d.drawString(ip, 50, 75);
 	    }
 	    
 	};

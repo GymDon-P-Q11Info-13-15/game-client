@@ -8,15 +8,9 @@ import java.awt.Shape;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RectangularShape;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.gymdon.inf1315.game.render.Texture;
-import de.gymdon.inf1315.game.render.gui.GuiButton.ButtonState;
 
 public class GuiScrollList extends GuiControl {
 
@@ -34,7 +28,12 @@ public class GuiScrollList extends GuiControl {
     protected int borderWidth = 5;
     protected int borderRadius = 20;
     protected GuiAdapter adapter;
+    protected int startScrolling = 0;
+    protected float startScrollingPerc = 0;
+    protected boolean scrolling = false;
+    protected float scrollPerc = 0;
     protected int scroll = 0;
+    protected int scrollButtonHeight = 0;
     protected int totalHeight;
 
     public GuiScrollList(GuiScreen parent, GuiAdapter adapter, int id, int x, int y) {
@@ -73,7 +72,7 @@ public class GuiScrollList extends GuiControl {
 	//g2d.fillRect(0, 0, width, height);
 	AffineTransform tx = g2d.getTransform();
 	totalHeight = 0;
-	g2d.translate(0, -scroll);
+	g2d.translate(this.x, -scroll + this.y);
 	for(int i = 0; i < adapter.getLength(this); i++) {
 	    adapter.get(i, this).render(g2d, this.width, this.height, 0, 0);
 	    int h = adapter.getHeight(i, this);
@@ -81,15 +80,16 @@ public class GuiScrollList extends GuiControl {
 	    totalHeight += h;
 	}
 	g2d.setTransform(tx);
-	if(scroll > totalHeight - height)
-	    scroll = totalHeight - height;
-	int scrollButtonHeight = totalHeight > this.height ? height/totalHeight : 1;
-	float scrollPerc = (float)scroll/totalHeight;
-	RoundRectangle2D clipRightPart = new RoundRectangle2D.Float(this.x + this.width - 40 + 5, this.y + scrollPerc, 40 - 5, scrollButtonHeight, borderRadius - borderWidth, borderRadius - borderWidth);
-	g2d.setClip(clipRightPart);
-	g2d.setColor(new Color(borderColor));
-	g2d.fillRect(this.x + this.width - 40 + 5, (int) (this.y + scrollPerc - 1), 40 - 5, scrollButtonHeight + 1);
+	if(scroll > totalHeight - this.height) {
+	    scroll = totalHeight - this.height;
+	    scrollPerc = (float)scroll/(float)totalHeight;
+	}
+	if(scroll < 0)
+	    scroll = 0;
+	scrollButtonHeight = totalHeight > this.height ? (int)(((float)this.height/totalHeight)*this.height) : this.height;
 	g2d.setClip(clip);
+	g2d.setColor(new Color(borderColor));
+	g2d.fillRoundRect(this.x + this.width - 40 + 5 + 1, (int) (this.y + scrollPerc*this.height + borderWidth - 3), 40 - 5 - 2, scrollButtonHeight - borderWidth, borderRadius - borderWidth, borderRadius - borderWidth);
     }
     
     protected void drawBackground(Graphics2D g2d, int width, int height) {
@@ -210,31 +210,42 @@ public class GuiScrollList extends GuiControl {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-	int x = e.getX();
-	int y = e.getY();
-	/*if (x >= this.x && y >= this.y && x <= this.x + this.width && y <= this.y + this.height)
-	    setState(ButtonState.HOVER);
-	else if(currentState == ButtonState.HOVER)
-	    setState(ButtonState.NORMAL);*/
+    }
+    
+    @Override
+    public void mouseDragged(MouseEvent e) {
+	float y = e.getY();
+	if(scrolling) {
+	    scrollPerc = (y - startScrolling)/this.height + startScrollingPerc;
+	    scroll = (int) (scrollPerc * totalHeight);
+	    if(scrollPerc < 0)
+		scrollPerc = scroll = 0;
+	    else 
+		if(scroll > totalHeight - this.height) {
+		    scroll = totalHeight - this.height;
+		    scrollPerc = (float)scroll/(float)totalHeight;
+		}
+	}
     }
     
     @Override
     public void mousePressed(MouseEvent e) {
 	int x = e.getX();
 	int y = e.getY();
-	/*if (x >= this.x && y >= this.y && x <= this.x + this.width && y <= this.y + this.height)
-	    setState(ButtonState.ACTIVE);*/
+	if(this.x + this.width - 34 <= x && this.y + scrollPerc*this.height + borderWidth - 3 <= y && 
+		this.x + this.width - 1 > x && this.y + scrollPerc*this.height + borderWidth - 3 + scrollButtonHeight - borderWidth > y) {
+	    scrolling = true;
+	    startScrollingPerc = scrollPerc;
+	    startScrolling = y;
+	}
         
     }
     
     @Override
     public void mouseReleased(MouseEvent e) {
-	int x = e.getX();
-	int y = e.getY();
-	/*if (x >= this.x && y >= this.y && x <= this.x + this.width && y <= this.y + this.height)
-	    setState(ButtonState.HOVER);
-	else
-	    setState(ButtonState.NORMAL);*/
+	//int x = e.getX();
+	//int y = e.getY();
+	scrolling = false;
     }
 
     @Override
