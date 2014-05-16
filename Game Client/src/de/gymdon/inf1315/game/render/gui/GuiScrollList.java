@@ -81,6 +81,14 @@ public class GuiScrollList extends GuiControl {
 	    totalHeight += h;
 	}
 	g2d.setTransform(tx);
+	if(scroll > totalHeight - height)
+	    scroll = totalHeight - height;
+	int scrollButtonHeight = totalHeight > this.height ? height/totalHeight : 1;
+	float scrollPerc = (float)scroll/totalHeight;
+	RoundRectangle2D clipRightPart = new RoundRectangle2D.Float(this.x + this.width - 40 + 5, this.y + scrollPerc, 40 - 5, scrollButtonHeight, borderRadius - borderWidth, borderRadius - borderWidth);
+	g2d.setClip(clipRightPart);
+	g2d.setColor(new Color(borderColor));
+	g2d.fillRect(this.x + this.width - 40 + 5, (int) (this.y + scrollPerc - 1), 40 - 5, scrollButtonHeight + 1);
 	g2d.setClip(clip);
     }
     
