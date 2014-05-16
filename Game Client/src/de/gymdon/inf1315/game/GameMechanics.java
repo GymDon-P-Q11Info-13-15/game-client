@@ -150,8 +150,6 @@ public class GameMechanics {
 	    if (defender.hp > 0 && attacker.hp > 0) {
 		combat(attacker, defender, round + 1);
 	    }
-
 	}
     }
-
 }
