@@ -104,30 +104,46 @@ public class GameMechanics {
 
     }
 
-    public void combat(Unit attacker, Unit defender, int round) {
-	int effhp1=attacker.hp;
-	int effhp2=defender.hp;
-	if (round < 20) {
-	    if (attacker.range > defender.range){
-		
-	    } 
-	    else {
-	     for(int i=0;i<10;i++){
-		if((attacker.attack+effhp1)*(80+r.nextInt(41)/100)>=defender.defense+effhp2){defender.setHP(defender.hp-1);}
-		if((defender.attack+effhp2)*(80+r.nextInt(41)/100)>=attacker.defense+effhp1){attacker.setHP(attacker.hp-1);}
+    public int strikechance(Unit striker,Unit stroke){ //Berechnet eine zahl die der Rng überschreiten muss um zu treffen
+	    int attchance =80-(striker.attack+striker.hp/4-stroke.defense/2-stroke.hp/4);
+	    System.out.println(attchance);
+	    if(attchance<0)
+	    {
+	     return 0;
+	    }
+	    else if(attchance>75)
+	    {
+	     return 75;
+	    }
+	    else
+	    {
+	    return attchance;
+	    }
 	     }
+	    
+	    
+    public void combat(Unit attacker,Unit defender,int round){             
 		
-
-            if (defender.hp > 0 && attacker.hp > 0) {
-	        combat(attacker, defender, round + 1);
+	        if(round<100){
+		if(attacker.range > defender.range)   //Prüfen ob der Verteidiger sich wehren kann
+		{
+		 defender.setHP(defender.hp-r.nextInt(attacker.attack)*attacker.hp/100);//ranged Schadensberechnung wip
+		 System.out.println("defender hp "+defender.hp);
+	         return;
+	        }
+		else{  
+		 if(r.nextInt(81)>=strikechance(attacker,defender)){defender.setHP(defender.hp-1);} //Rng Wert muss ausgerechneten Wert überschreiten um für 1 zu striken  
+		 if(r.nextInt(81)>=strikechance(defender,attacker)){attacker.setHP(attacker.hp-1);}
+		 System.out.println("round "+round+" defhp "+defender.hp+" atkhp "+attacker.hp);    //Nur zu Testzwecken wird später noch entfernt
+	         }
+		if(defender.hp > 0 && attacker.hp > 0){
+		combat(attacker,defender,round+1);
+		}
+	       
+		}
 		}
 	    }
-	}
-    
-    
-    
-    
-    }
+	
 
 
 
