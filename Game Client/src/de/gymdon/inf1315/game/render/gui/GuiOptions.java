@@ -26,6 +26,8 @@ public class GuiOptions extends GuiScreen {
     // -- Video
     private GuiButton videoVsyncButton = new GuiButton(this, 0, 100, 200, 
 	    "gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+    private GuiButton videoFullscreenButton = new GuiButton(this, 0, 100, 200, 
+	    "gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
     // -- Language
     private GuiButton languageButton = new GuiButton(this, 0, 100, 200, "gui.options.language");
     private List<GuiButton> languageButtons = new ArrayList<GuiButton>();
@@ -77,6 +79,10 @@ public class GuiOptions extends GuiScreen {
 	    videoVsyncButton.setY(topMargin);
 	    videoVsyncButton.setWidth(buttonWidthSmall);
 	    videoVsyncButton.setHeight(buttonHeight);
+	    videoFullscreenButton.setX(leftMargin + buttonWidthSmall + buttonSpacing);
+	    videoFullscreenButton.setY(topMargin);
+	    videoFullscreenButton.setWidth(buttonWidthSmall);
+	    videoFullscreenButton.setHeight(buttonHeight);
 	} else if (section == Section.LANGUAGE) {
 	    int i = 0;
 	    for(GuiButton b : languageButtons) {
@@ -87,6 +93,12 @@ public class GuiOptions extends GuiScreen {
 	    }
 	}
         super.render(g2d, width, height, scrollX, scrollY);
+    }
+    
+    @Override
+    public void tick() {
+        super.tick();
+	videoFullscreenButton.setText("gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
     }
 
     @Override
@@ -109,6 +121,10 @@ public class GuiOptions extends GuiScreen {
 	    }else if(button == videoVsyncButton) {
 		Client.instance.preferences.video.vsync = !Client.instance.preferences.video.vsync;
 		videoVsyncButton.setText("gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+	    }else if(button == videoFullscreenButton) {
+		Client.instance.preferences.video.fullscreen = !Client.instance.preferences.video.fullscreen;
+		videoFullscreenButton.setText("gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
+		Client.instance.setFullscreen(Client.instance.preferences.video.fullscreen);
 	    }else if(button == languageButton) {
 		setSection(Section.LANGUAGE);
 	    }else if(languageButtons.contains(button)) {
@@ -131,6 +147,7 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case VIDEO:
 	    controlList.add(videoVsyncButton);
+	    controlList.add(videoFullscreenButton);
 	    break;
 	case LANGUAGE:
 	    languageButtons.clear();

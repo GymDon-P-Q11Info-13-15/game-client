@@ -1,6 +1,9 @@
 package de.gymdon.inf1315.game.client;
 
 import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -10,6 +13,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import de.gymdon.inf1315.game.Translation;
 import de.gymdon.inf1315.game.render.GameCanvas;
@@ -32,6 +36,7 @@ public class Client implements Runnable, WindowListener {
     public Translation translation;
     public Preferences preferences;
     public Random random = new Random();
+    private MacOSUtils macOsUtils;
 
     public Client() {
 	Client.instance = this;
@@ -89,9 +94,11 @@ public class Client implements Runnable, WindowListener {
 
 	    if (System.currentTimeMillis() - lastTimer1 > 1000) {
 		lastTimer1 += 1000;
-		if (DEBUG)
+		if (DEBUG) {
 		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames
 			    + "FPS");
+		    System.out.println(TITLE + " - " + ticks + "TPS " + frames + "FPS");
+		}
 		this.tps = ticks;
 		this.fps = frames;
 		frames = 0;
@@ -107,7 +114,37 @@ public class Client implements Runnable, WindowListener {
 	if(!preferences.language.equals("en"))
 	    translation.load(preferences.language);
 	setGuiScreen(new GuiMainMenu());
+	if(MacOSUtils.iMacOS())
+	    macOsUtils = new MacOSUtils(frame);
+	setFullscreen(preferences.video.fullscreen);
 	System.out.println("Started \"" + TITLE + " " + VERSION + "\"");
+    }
+    
+    public void setFullscreen(final boolean fullscreen) {
+	if(macOsUtils != null) {
+	    macOsUtils.setFullscreen(fullscreen);
+	    return;
+	}
+	SwingUtilities.invokeLater(new Runnable(){
+	    @Override
+	    public void run() {
+		GraphicsDevice screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		if(fullscreen) {
+		    screen.setFullScreenWindow(frame);
+		    DisplayMode[] modes = screen.getDisplayModes();
+		    DisplayMode current = screen.getDisplayMode();
+		    for(DisplayMode mode : modes) {
+			if(mode.getWidth() * mode.getHeight() > current.getWidth() * current.getHeight() && mode.getRefreshRate() > current.getRefreshRate())
+			    current = mode;
+		    }
+		    screen.setDisplayMode(current);
+		    System.out.println("DisplayMode: " + current.getWidth() + "x" + current.getHeight() + "x" + current.getBitDepth() + " @" + current.getRefreshRate() + "Hz");
+		    frame.setSize(current.getWidth(), current.getHeight());
+		}else {
+		    screen.setFullScreenWindow(null);
+		}
+	    }
+	});
     }
     
     public void reload() {
@@ -115,6 +152,7 @@ public class Client implements Runnable, WindowListener {
 	readPreferences();
 	if(!preferences.language.equals("en"))
 	    translation.load(preferences.language);
+	setFullscreen(preferences.video.fullscreen);
     }
     
     private void readPreferences() {
