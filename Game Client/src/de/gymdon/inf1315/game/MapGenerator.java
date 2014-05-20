@@ -1,9 +1,11 @@
 package de.gymdon.inf1315.game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -47,51 +49,79 @@ public class MapGenerator {
 	}
 
     }
-    
+
     public void generate() {
-	
-	for(int i = 1; i <= seas; i++) {
-	    
-	    int xWater = (int)(Math.random()*32+8);
-	    int yWater = (int)(Math.random()*22+5);
-	    
+
+	/**
+	 * This methode will basically generate the map for the game. All
+	 * generation parts create a field only one size big at the moment
+	 * Currently every random water/sand field will make the field to have
+	 * 'null' as a tile...
+	 */
+
+	for (int i = 1; i <= seas; i++) {
+
+	    int xWater = (int) (Math.random() * 32 + 8);
+	    int yWater = (int) (Math.random() * 22 + 5);
+
 	    map[xWater][yWater] = water;
-	    
+
 	}
-	
+
+	for (int i = 1; i <= sandbanks; i++) {
+
+	    int xSand = (int) (Math.random() * 32 + 8);
+	    int ySand = (int) (Math.random() * 22 + 5);
+
+	    map[xSand][ySand] = sand;
+
+	}
+
     }
-    
 
     public static void main(String[] args) {
-	
+
+	/**
+	 * This should generate a picture with the generated map, currently only
+	 * shows green fields with a black margin
+	 */
+
 	MapGenerator mapgen = new MapGenerator();
-	
-	BufferedImage bi = new BufferedImage(1536, 1024, BufferedImage.TYPE_INT_ARGB);
+
+	BufferedImage bi = new BufferedImage(1536, 1024,
+		BufferedImage.TYPE_INT_RGB);
+
+	int rd = 0;
+	int gd = 255;
+	int bd = 0;
+	int color = (rd << 16) | (gd << 8) | bd;
 
 	for (int i = 0; i < mapgen.x; i++) {
 
 	    for (int k = 0; k < mapgen.y; k++) {
 
-		if(map[i][k].groundFactor == 1) {
-		
-		    for (int g = 32*i+1; g < 32*(i+1); g++) {
-		    
-			for (int f = 32*k+1; f < 32*(k+1); f++) {
-			    
-			    bi.setRGB(g, f,  ((0 << 24) | (0 << 16) | (255 << 8) | 0));
-			    
+		if (mapgen.map[i][k].groundFactor == 1) {
+
+		    for (int g = 32 * i + 1; g < 32 * (i + 1); g++) {
+
+			for (int f = 32 * k + 1; f < 32 * (k + 1); f++) {
+
+			    bi.setRGB(g, f, color);
+
 			}
-		    
+
 		    }
-		    
+
 		}
-		if(map[i][k].groundFactor == 2) System.out.print("S");
-		if(map[i][k].groundFactor == 3) System.out.print("W");
+		if (map[i][k].groundFactor == 2)
+		    System.out.print("S");
+		if (map[i][k].groundFactor == 3)
+		    System.out.print("W");
 
 	    }
 
 	    System.out.println("");
-	    
+
 	    File f = new File("/home/simon/MapTileFile.png");
 	    try {
 		ImageIO.write(bi, "PNG", f);
@@ -99,7 +129,7 @@ public class MapGenerator {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
-	    
+
 	}
 
     }
