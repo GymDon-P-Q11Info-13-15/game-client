@@ -1,8 +1,10 @@
 package de.gymdon.inf1315.game;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class GameMechanics {
+public class GameMechanics implements ActionListener{
     Random r = new Random();
     Tile[][] map;
     Building[][] buildings;
@@ -35,7 +37,39 @@ public class GameMechanics {
 	}
 
     }
-
+    
+    
+    /**
+     * Build a new building if possible
+     * 
+     * @param b
+     *            Building (attention to building type)
+     * @param x
+     *            x-coordinate of the field to build on
+     * @param y
+     *            y-coordinate of the field to build on
+     * 
+     */
+    public void buildBuilding(Building b, int x, int y){
+	if(x>=0&&y>=0){
+	  //check player's gold!
+	    if(buildings[x][y]==null){
+		buildings[x][y]=b;
+	    }
+	}
+	else{
+	    throw new IllegalArgumentException("Field position must be positive");
+	}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Moves a unit to a field if possible
      * 
@@ -76,10 +110,10 @@ public class GameMechanics {
     public void getAccessibleFields(Unit a) {
 	tempRange = new boolean[map.length][map.length];
 	step(a.getSpeed(), a.x, a.y);
-
+		
     }
 
-    public void step(int actualSpeed, int x, int y) {
+    private void step(int actualSpeed, int x, int y) {
 
 	if (map[x][y].isWalkable) {
 	    int[] position = new int[2];
@@ -92,14 +126,15 @@ public class GameMechanics {
 		step(newSpeed, x + 1, y);
 		step(newSpeed, x, y + 1);
 		step(newSpeed, x, y - 1);
-	    } else if (newSpeed > 0) {
-		newSpeed = 1;
+	    } 
+	    else if (newSpeed > 0) {
 		tempRange[x][y] = true;
-		step(newSpeed, x - 1, y);
-		step(newSpeed, x + 1, y);
-		step(newSpeed, x, y + 1);
-		step(newSpeed, x, y - 1);
-	    } else { // Movement-points used -> field not accessible
+		step(1, x - 1, y);
+		step(1, x + 1, y);
+		step(1, x, y + 1);
+		step(1, x, y - 1);
+	    } 
+	    else { // Movement-points used -> field not accessible
 
 	    }
 
@@ -151,5 +186,11 @@ public class GameMechanics {
 		combat(attacker, defender, round + 1);
 	    }
 	}
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	String s= e.paramString();
+	
     }
 }

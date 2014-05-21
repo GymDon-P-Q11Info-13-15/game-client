@@ -13,6 +13,8 @@ public class Castle extends Building {
 	this.defense = 80;
 
     }
+    
+    
 
     @Override
     public void occupy(Player p) {
