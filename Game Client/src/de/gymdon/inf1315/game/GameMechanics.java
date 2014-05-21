@@ -143,7 +143,14 @@ public class GameMechanics implements ActionListener{
 	}
 
     }
-
+   /* public void buildUnit(Player p,Unit u,int number,Building b){
+	if(p.gold < u.cost*number)
+	{
+	    
+	}
+	
+	
+    }*/
     public int strikechance(Unit striker, Unit stroke) { // Berechnet eine zahl
 							 // die der Rng
 							 // überschreiten muss
