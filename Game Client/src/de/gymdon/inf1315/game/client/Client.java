@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 
 import de.gymdon.inf1315.game.Translation;
 import de.gymdon.inf1315.game.render.GameCanvas;
+import de.gymdon.inf1315.game.render.MapRenderer;
 import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
 import de.gymdon.inf1315.game.render.gui.GuiScreen;
 import de.gymdon.inf1315.game.client.Preferences;
@@ -239,6 +240,11 @@ public class Client implements Runnable, WindowListener {
 	    canvas.addMouseListener(currentScreen);
 	    canvas.addMouseMotionListener(currentScreen);
 	}
+    }
+    
+    public void activateMap(MapRenderer newMap) {
+	currentScreen = null;
+	canvas.mapRenderer = newMap;
     }
 
     public int getTicksRunning() {
