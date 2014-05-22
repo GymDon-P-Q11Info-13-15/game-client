@@ -23,17 +23,17 @@ public class MapGenerator {
 
     public static Tile[][] map;
     public Building[][] buildings;
-    Tile grass;
-    Tile sand;
-    Tile water;
+    public Tile grass;
+    public Tile sand;
+    public Tile water;
 
     public MapGenerator() {
 
-	grass = new Tile();
+	grass = new Tile("grass");
 	grass.groundFactor = 1;
-	sand = new Tile();
+	sand = new Tile("Castle_red_small");
 	sand.groundFactor = 3;
-	water = new Tile();
+	water = new Tile("Wasser_versuch");
 	water.groundFactor = 2;
 	map = new Tile[x][y];
 	buildings = new Building[x][y];
@@ -49,14 +49,18 @@ public class MapGenerator {
 	}
 
     }
+    
+    public Tile[][] getMap() {
+	
+	return map;
+	
+    }
 
     public void generate() {
 
 	/**
-	 * This methode will basically generate the map for the game. All
+	 * This method will basically generate the map for the game. All
 	 * generation parts create a field only one size big at the moment
-	 * Currently every random water/sand field will make the field to have
-	 * 'null' as a tile...
 	 */
 
 	for (int i = 1; i <= seas; i++) {
@@ -183,12 +187,7 @@ public class MapGenerator {
 
 			}
 		    }
-		}
-		
-
-	    
-
-	    System.out.println("");
+		}    
 
 	    File f = new File("/home/students/11q/klimassi/Home_auf_Server/MapFileTile.png");
 	    try {

@@ -12,6 +12,7 @@ import java.awt.image.*;
 
 import javax.swing.event.MouseInputListener;
 
+import de.gymdon.inf1315.game.MapGenerator;
 import de.gymdon.inf1315.game.Tile;
 import de.gymdon.inf1315.game.client.Client;
 import de.gymdon.inf1315.game.render.gui.GuiControl;
@@ -24,10 +25,9 @@ public class MapRenderer implements Renderable,ActionListener,MouseInputListener
     public int pixelSize = 32;
     public int x = 48;
     public int y = 32;
-    public Tile Koordinate[] [] = new Tile[x] [y];
-    public Tile grass = new Tile("grass");
-    //public Tile water = new Tile("water");
-    public BufferedImage map = new BufferedImage(pixelSize*x, pixelSize*y, BufferedImage.TYPE_INT_RGB);
+    public Tile map[] [] = new Tile[x] [y];
+    public BufferedImage imageMap = new BufferedImage(pixelSize*x, pixelSize*y, BufferedImage.TYPE_INT_RGB);
+    MapGenerator mapgen = new MapGenerator();
     
     @Override
     public void render(Graphics2D g2d, int width, int height, int scrollX,
@@ -36,24 +36,21 @@ public class MapRenderer implements Renderable,ActionListener,MouseInputListener
 	this.height = height;
 	for (GuiControl c : controlList)
 	    c.render(g2d, width, height, scrollX, scrollY);
-	g2d.setColor(Color.YELLOW);
-	grass.groundFactor = 1;
-	//water.groundFactor = 0;
-	for(int i = 0; i < x; i++)
-	{
-	    for(int j = 0; j < y; j++)
-	    {
-		Koordinate[i][j] = grass;
-	    }
-	}
+
+	mapgen.generate();
+	map = mapgen.getMap();
 	
 	for(int i = 0; i < x; i++)
 	{
 	    for(int j = 0; j < y; j++)
 	    {
-		if(true/*Koordinate[i] [j].groundFactor == 1*/)
+		if(map[i] [j].groundFactor == 1)
 		{
-		    g2d.drawImage(grass.texture.getImage(), i*pixelSize, j*pixelSize, pixelSize, pixelSize, grass.texture);
+		    g2d.drawImage(mapgen.grass.texture.getImage(), i*pixelSize, j*pixelSize, pixelSize, pixelSize, mapgen.grass.texture);
+		}
+		else if(map[i] [j].groundFactor == 2)
+		{
+		    g2d.drawImage(mapgen.water.texture.getImage(), i*pixelSize, j*pixelSize, pixelSize, pixelSize, mapgen.water.texture);
 		}
 	    }
 	}
