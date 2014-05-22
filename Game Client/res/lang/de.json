@@ -13,6 +13,8 @@
 	"gui.options.video": "Video Einstellungen",
 	"gui.options.video.vsync.on": "VSync: An",
 	"gui.options.video.vsync.off": "VSync: Aus",
+	"gui.options.video.fullscreen.on": "Vollbild: An",
+	"gui.options.video.fullscreen.off": "Vollbild: Aus",
 	"gui.options.language" : "Spracheinstellungen",
 	"gui.server.select": "Serverauswahl",
 	"gui.back": "Zurück",
