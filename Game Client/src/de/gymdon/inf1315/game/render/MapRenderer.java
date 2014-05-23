@@ -59,13 +59,11 @@ public class MapRenderer implements Renderable, ActionListener,
 		}
 	    }
 	}
-	g2d.setFont(Font.decode("Helvetica Bold 22"));
+	
+	g2d.drawImage(new StandardTexture("Castle_red_small").getImage(), pixelSize, y/2*pixelSize-pixelSize*2, pixelSize*2, pixelSize*2, new StandardTexture("Castle_red_small"));
+	g2d.drawImage(new StandardTexture("castle_blue_small").getImage(), x*pixelSize-pixelSize*3, y/2*pixelSize-pixelSize*2, pixelSize*2, pixelSize*2, new StandardTexture("castle_blue_small"));
     }
-
-    public void tick() {
-
-    }
-
+    
     @Override
     public void mouseClicked(MouseEvent e) {
 	List<GuiControl> controlList = new ArrayList<GuiControl>();
