@@ -10,6 +10,7 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 
 import de.gymdon.inf1315.game.client.Client;
+import de.gymdon.inf1315.game.render.MapRenderer;
 
 public class GuiMainMenu extends GuiScreen{
 
@@ -75,7 +76,7 @@ public class GuiMainMenu extends GuiScreen{
 	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton)e.getSource();
 	    if(button == newGame)
-		Client.instance.setGuiScreen(new GuiSelectServer(this));
+		Client.instance.activateMap(new MapRenderer());
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
 	    else if(button == exit)
