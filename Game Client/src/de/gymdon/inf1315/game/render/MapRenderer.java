@@ -12,6 +12,7 @@ import java.awt.image.*;
 
 import javax.swing.event.MouseInputListener;
 
+import de.gymdon.inf1315.game.*;
 import de.gymdon.inf1315.game.MapGenerator;
 import de.gymdon.inf1315.game.Tile;
 import de.gymdon.inf1315.game.client.Client;
@@ -27,6 +28,7 @@ public class MapRenderer implements Renderable, ActionListener,
     public int x = 48;
     public int y = 32;
     public Tile map[][] = new Tile[x][y];
+    public Building buildings[][] = new Building[x][y];
     public BufferedImage imageMap = new BufferedImage(pixelSize * x, pixelSize
 	    * y, BufferedImage.TYPE_INT_RGB);
     MapGenerator mapgen = new MapGenerator();
@@ -52,17 +54,17 @@ public class MapRenderer implements Renderable, ActionListener,
 		    g2d.drawImage(mapgen.grass.texture.getImage(), i
 			    * pixelSize, j * pixelSize, pixelSize, pixelSize,
 			    mapgen.grass.texture);
-		} else if (map[i][j].groundFactor == 2) {
+		} if (map[i][j].groundFactor == 2) {
 		    g2d.drawImage(mapgen.water.texture.getImage(), i
 			    * pixelSize, j * pixelSize, pixelSize, pixelSize,
 			    mapgen.water.texture);
+		} if (map[i][j].groundFactor == 3) {
+		    g2d.drawImage(mapgen.sand.texture.getImage(), i
+			    * pixelSize, j * pixelSize, pixelSize, pixelSize,
+			    mapgen.sand.texture);
 		}
 	    }
 	}
-	
-	g2d.drawImage(new StandardTexture("Castle_red_small").getImage(), pixelSize, y/2*pixelSize-pixelSize*2, pixelSize*2, pixelSize*2, new StandardTexture("Castle_red_small"));
-	g2d.drawImage(new StandardTexture("castle_blue_small").getImage(), x*pixelSize-pixelSize*3, y/2*pixelSize-pixelSize*2, pixelSize*2, pixelSize*2, new StandardTexture("castle_blue_small"));
-	// Generation of buildings will be done in MapGen, too!
     }
     
     @Override
