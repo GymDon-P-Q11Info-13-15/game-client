@@ -2,10 +2,13 @@ package de.gymdon.inf1315.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.List;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -20,6 +23,7 @@ public class MapGenerator {
     private int sandbanks = 3;
     private int averageSizeOfSeas = 10;
     private int averageSizeOfSandbanks = 14;
+    private int averageSideWater = 5;
 
     public static Tile[][] map;
     public Building[][] buildings;
@@ -31,7 +35,7 @@ public class MapGenerator {
 
 	grass = new Tile("grass");
 	grass.groundFactor = 1;
-	sand = new Tile("Castle_red_small");
+	sand = new Tile("sand");
 	sand.groundFactor = 3;
 	water = new Tile("Wasser_versuch");
 	water.groundFactor = 2;
@@ -49,14 +53,49 @@ public class MapGenerator {
 	}
 
     }
-    
+
     public Tile[][] getMap() {
-	
+
 	return map;
-	
+
     }
 
-    public void generate() {
+    public Building[][] getBuildings() {
+
+	return buildings;
+
+    }
+
+    public void generateAll() {
+
+	generateMapOutside();
+	generateMapInside();
+	generateBuildings();
+
+    }
+
+    public void generateMapOutside() {
+
+	ArrayList<Point> list = new ArrayList<Point>();
+
+	for (int i = 1; i <= averageSideWater; i++) {
+
+	    for (int k = 1; k <= i; k++) {
+
+		for (int l = i; l >= k; l--) {
+
+		    list.add(new Point(i - k, i - l));
+		    map[i - k][i - l] = water;
+
+		}
+
+	    }
+
+	}
+
+    }
+
+    public void generateMapInside() {
 
 	/**
 	 * This method will basically generate the map for the game. All
@@ -69,19 +108,23 @@ public class MapGenerator {
 	    int yWater = (int) (Math.random() * 22 + 5);
 
 	    map[xWater][yWater] = water;
-	    map[xWater+1][yWater] = water;
-	    map[xWater-1][yWater] = water;
-	    map[xWater][yWater+1] = water;
-	    map[xWater][yWater-1] = water;
-	    map[xWater+1][yWater+1] = water;
-	    map[xWater+2][yWater+1] = water;
-	    map[xWater+1][yWater+2] = water;
-	    map[xWater][yWater] = water;
-	    map[xWater][yWater] = water;
-	    map[xWater][yWater] = water;
-	    map[xWater][yWater] = water;
-	    map[xWater][yWater] = water;
-	    
+	    map[xWater + 1][yWater] = water;
+	    map[xWater + 1][yWater + 1] = water;
+	    map[xWater + 1][yWater - 1] = water;
+	    map[xWater + 2][yWater] = water;
+	    map[xWater + 2][yWater + 1] = water;
+	    map[xWater + 2][yWater + 2] = water;
+	    map[xWater + 2][yWater - 1] = water;
+	    map[xWater + 2][yWater - 2] = water;
+	    map[xWater + 3][yWater] = water;
+	    map[xWater + 3][yWater - 1] = water;
+	    map[xWater + 3][yWater - 2] = water;
+	    map[xWater + 3][yWater - 3] = water;
+	    map[xWater + 3][yWater + 1] = water;
+	    map[xWater + 4][yWater] = water;
+	    map[xWater + 4][yWater - 1] = water;
+	    map[xWater + 4][yWater - 2] = water;
+	    map[xWater + 5][yWater - 1] = water;
 
 	}
 
@@ -91,113 +134,29 @@ public class MapGenerator {
 	    int ySand = (int) (Math.random() * 22 + 5);
 
 	    map[xSand][ySand] = sand;
-	    map[xSand+1][ySand] = sand;
-	    map[xSand-1][ySand] = sand;
-	    map[xSand][ySand+1] = sand;
-	    map[xSand][ySand-1] = sand;
-
+	    map[xSand + 1][ySand] = sand;
+	    map[xSand + 1][ySand + 1] = sand;
+	    map[xSand + 1][ySand - 1] = sand;
+	    map[xSand + 2][ySand] = sand;
+	    map[xSand + 2][ySand + 1] = sand;
+	    map[xSand + 2][ySand + 2] = sand;
+	    map[xSand + 2][ySand - 1] = sand;
+	    map[xSand + 2][ySand - 2] = sand;
+	    map[xSand + 3][ySand] = sand;
+	    map[xSand + 3][ySand - 1] = sand;
+	    map[xSand + 3][ySand - 2] = sand;
+	    map[xSand + 3][ySand - 3] = sand;
+	    map[xSand + 3][ySand + 1] = sand;
+	    map[xSand + 4][ySand] = sand;
+	    map[xSand + 4][ySand - 1] = sand;
+	    map[xSand + 4][ySand - 2] = sand;
+	    map[xSand + 5][ySand - 1] = sand;
 	}
 
     }
 
-    public static void main(String[] args) {
-
-	/**
-	 * This should generate a picture with the generated map, currently only
-	 * shows green fields with a black margin
-	 */
-
-	MapGenerator mapgen = new MapGenerator();
-	
-	mapgen.generate();
-
-	BufferedImage bi = new BufferedImage(1536, 1024,
-		BufferedImage.TYPE_INT_RGB);
-
-	int rd = 0;
-	int gd = 255;
-	int bd = 0;
-	int color = (rd << 16) | (gd << 8) | bd;
-	
-	int rf = 0;
-	int gf = 0;
-	int bf = 255;
-	int blue = (rf << 16) | (gf << 8) | bf;
-	
-	int rh = 255;
-	int gh = 255;
-	int bh = 0;
-	int yellow = (rh << 16) | (gh << 8) | bh;
-
-	for (int i = 0; i < mapgen.x; i++) {
-
-	    for (int k = 0; k < mapgen.y; k++) {
-
-		if (mapgen.map[i][k].groundFactor == 1) {
-
-		    for (int g = 32 * i + 1; g < 32 * (i + 1); g++) {
-
-			for (int f = 32 * k + 1; f < 32 * (k + 1); f++) {
-
-			    bi.setRGB(g, f, color);
-
-			}
-
-		    }
-
-		}
-	    }
-	}
-		
-		for (int c = 0; c < mapgen.x; c++) {
-
-		    for (int n = 0; n < mapgen.y; n++) {
-
-			if (mapgen.map[c][n].groundFactor == 2) {
-
-			    for (int g = 32 * c + 1; g < 32 * (c + 1); g++) {
-
-				for (int f = 32 * n + 1; f < 32 * (n + 1); f++) {
-
-				    bi.setRGB(g, f, blue);
-
-				}
-
-			    }
-
-			}
-		    }
-		}
-		
-		for (int c = 0; c < mapgen.x; c++) {
-
-		    for (int n = 0; n < mapgen.y; n++) {
-
-			if (mapgen.map[c][n].groundFactor == 3) {
-
-			    for (int g = 32 * c + 1; g < 32 * (c + 1); g++) {
-
-				for (int f = 32 * n + 1; f < 32 * (n + 1); f++) {
-
-				    bi.setRGB(g, f, yellow);
-
-				}
-
-			    }
-
-			}
-		    }
-		}    
-
-	    File f = new File("/home/students/11q/klimassi/Home_auf_Server/MapFileTile.png");
-	    try {
-		ImageIO.write(bi, "PNG", f);
-	    } catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-
-	}
+    public void generateBuildings() {
 
     }
 
+}

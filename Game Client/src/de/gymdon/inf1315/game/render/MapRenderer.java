@@ -33,7 +33,7 @@ public class MapRenderer implements Renderable, ActionListener,
 
     public MapRenderer() {
 
-	mapgen.generate();
+	mapgen.generateAll();
 	map = mapgen.getMap();
 
     }
@@ -62,6 +62,7 @@ public class MapRenderer implements Renderable, ActionListener,
 	
 	g2d.drawImage(new StandardTexture("Castle_red_small").getImage(), pixelSize, y/2*pixelSize-pixelSize*2, pixelSize*2, pixelSize*2, new StandardTexture("Castle_red_small"));
 	g2d.drawImage(new StandardTexture("castle_blue_small").getImage(), x*pixelSize-pixelSize*3, y/2*pixelSize-pixelSize*2, pixelSize*2, pixelSize*2, new StandardTexture("castle_blue_small"));
+	// Generation of buildings will be done in MapGen, too!
     }
     
     @Override
