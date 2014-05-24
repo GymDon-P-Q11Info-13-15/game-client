@@ -1,21 +1,17 @@
 package de.gymdon.inf1315.game.render;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.image.*;
 
 import javax.swing.event.MouseInputListener;
 
 import de.gymdon.inf1315.game.*;
 import de.gymdon.inf1315.game.MapGenerator;
 import de.gymdon.inf1315.game.Tile;
-import de.gymdon.inf1315.game.client.Client;
 import de.gymdon.inf1315.game.render.gui.GuiControl;
 
 public class MapRenderer implements Renderable, ActionListener,
@@ -25,19 +21,16 @@ public class MapRenderer implements Renderable, ActionListener,
     protected int width;
     protected int height;
     public int pixelSize = 32;
-    public int x = 48;
-    public int y = 32;
-    public Tile map[][] = new Tile[x][y];
-    public Building buildings[][] = new Building[x][y];
-    public BufferedImage imageMap = new BufferedImage(pixelSize * x, pixelSize
-	    * y, BufferedImage.TYPE_INT_RGB);
+    public int pixelSizeBig = pixelSize * 2;
+    public Tile map[][];
+    public Building buildings[][];
     MapGenerator mapgen = new MapGenerator();
 
     public MapRenderer() {
 
 	mapgen.generateAll();
 	map = mapgen.getMap();
-
+	buildings = mapgen.getBuildings();
     }
 
     @Override
@@ -48,25 +41,56 @@ public class MapRenderer implements Renderable, ActionListener,
 	for (GuiControl c : controlList)
 	    c.render(g2d, width, height, scrollX, scrollY);
 
-	for (int i = 0; i < x; i++) {
-	    for (int j = 0; j < y; j++) {
+	// Maps
+	for (int i = 0; i < mapgen.getMapWidth(); i++) {
+	    for (int j = 0; j < mapgen.getMapHeight(); j++) {
 		if (map[i][j].groundFactor == 1) {
 		    g2d.drawImage(mapgen.grass.texture.getImage(), i
 			    * pixelSize, j * pixelSize, pixelSize, pixelSize,
 			    mapgen.grass.texture);
-		} if (map[i][j].groundFactor == 2) {
+		}
+		if (map[i][j].groundFactor == 2) {
 		    g2d.drawImage(mapgen.water.texture.getImage(), i
 			    * pixelSize, j * pixelSize, pixelSize, pixelSize,
 			    mapgen.water.texture);
-		} if (map[i][j].groundFactor == 3) {
-		    g2d.drawImage(mapgen.sand.texture.getImage(), i
-			    * pixelSize, j * pixelSize, pixelSize, pixelSize,
+		}
+		if (map[i][j].groundFactor == 3) {
+		    g2d.drawImage(mapgen.sand.texture.getImage(),
+			    i * pixelSize, j * pixelSize, pixelSize, pixelSize,
 			    mapgen.sand.texture);
 		}
 	    }
 	}
+	// Buildings
+	for (int i = 0; i < mapgen.getMapWidth(); i++) {
+	    for (int j = 0; j < mapgen.getMapHeight(); j++) {
+		if (buildings[i][j] != null) {
+		    // Castles
+		    if (buildings[i][j].getClass() == Castle.class) {
+			g2d.drawImage(new StandardTexture("Castle_neutral_big")
+				.getImage(), i * pixelSize, j * pixelSize,
+				pixelSizeBig, pixelSizeBig,
+				new StandardTexture("Castle_neutral_big"));
+		    }
+		    // Mines
+		    if (buildings[i][j].getClass() == Mine.class) {
+			g2d.drawImage(new StandardTexture("mine_neutral")
+				.getImage(), i * pixelSize, j * pixelSize,
+				pixelSizeBig, pixelSizeBig,
+				new StandardTexture("mine_neutral"));
+		    }
+		    // Barracks
+		    if (buildings[i][j].getClass() == Barracks.class) {
+			g2d.drawImage(new StandardTexture("mine_superior")
+				.getImage(), i * pixelSize, j * pixelSize,
+				pixelSizeBig, pixelSizeBig,
+				new StandardTexture("mine_superior"));
+		    }
+		}
+	    }
+	}
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
 	List<GuiControl> controlList = new ArrayList<GuiControl>();
@@ -125,7 +149,7 @@ public class MapRenderer implements Renderable, ActionListener,
 
     public void actionPerformed(ActionEvent e) {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
-	    // GuiButton button = (GuiButton)e.getSource();
+
 	}
     }
 }

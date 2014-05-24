@@ -1,16 +1,7 @@
 package de.gymdon.inf1315.game;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.List;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class MapGenerator {
 
@@ -64,6 +55,14 @@ public class MapGenerator {
 
 	return buildings;
 
+    }
+
+    public int getMapWidth() {
+	return x;
+    }
+
+    public int getMapHeight() {
+	return y;
     }
 
     public void generateAll() {
