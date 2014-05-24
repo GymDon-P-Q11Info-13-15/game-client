@@ -13,8 +13,15 @@ public class GameMechanics implements ActionListener {
     boolean won;
     int round;
 
+    /**
+     * Map, Buildings etc wird alle im MapGenerator generiert
+     * Da braucht ihr hier in den GameMechanics nichts machen
+     * Ich denk mal ein Objekt von GameMechanics wird im Client erzeugt,
+     * dann wird da die Karte etc gleich übergeben. (?)
+     */
+    
     public GameMechanics(int x, int y) { // neue Welt mit Breite x und Höhe y
-	map = new Tile[x][y];
+	this.map = new Tile[x][y];
 	buildings = new Building[x][y];
 	units = new Unit[x][y];
 	won = false;
