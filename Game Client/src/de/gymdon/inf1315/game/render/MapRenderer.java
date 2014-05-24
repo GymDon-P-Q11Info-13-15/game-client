@@ -10,8 +10,6 @@ import java.util.List;
 import javax.swing.event.MouseInputListener;
 
 import de.gymdon.inf1315.game.*;
-import de.gymdon.inf1315.game.MapGenerator;
-import de.gymdon.inf1315.game.Tile;
 import de.gymdon.inf1315.game.render.gui.GuiControl;
 
 public class MapRenderer implements Renderable, ActionListener,
@@ -74,17 +72,17 @@ public class MapRenderer implements Renderable, ActionListener,
 		    }
 		    // Mines
 		    if (buildings[i][j].getClass() == Mine.class) {
-			g2d.drawImage(new StandardTexture("mine_neutral")
-				.getImage(), i * pixelSize, j * pixelSize,
-				pixelSizeBig, pixelSizeBig,
-				new StandardTexture("mine_neutral"));
+			g2d.drawImage(
+				new StandardTexture("mine_neutral").getImage(),
+				i * pixelSize, j * pixelSize, pixelSize,
+				pixelSize, new StandardTexture("mine_neutral"));
 		    }
 		    // Barracks
 		    if (buildings[i][j].getClass() == Barracks.class) {
-			g2d.drawImage(new StandardTexture("mine_superior")
-				.getImage(), i * pixelSize, j * pixelSize,
-				pixelSizeBig, pixelSizeBig,
-				new StandardTexture("mine_superior"));
+			g2d.drawImage(
+				new StandardTexture("mine_superior").getImage(),
+				i * pixelSize, j * pixelSize, pixelSize,
+				pixelSize, new StandardTexture("mine_superior"));
 		    }
 		}
 	    }

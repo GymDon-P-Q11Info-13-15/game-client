@@ -155,7 +155,37 @@ public class MapGenerator {
     }
 
     public void generateBuildings() {
+	
+	for (int i = 1; i <= mines; i++) {
 
+	    int xMine = (int) (Math.random() * 32 + 8);
+	    int yMine = (int) (Math.random() * 22 + 5);
+	    
+	    if(map[xMine][yMine].groundFactor != 1 || marginBuildings(xMine, yMine, 5))
+	    {
+		i--;
+	    }
+	    else
+	    {
+		buildings[xMine][yMine] = new Mine(xMine, yMine);
+	    }
+	}
+	
+	buildings[1][y/2-1] = new Castle(null, 1, y/2-1);
+	buildings[x-3][y/2-1] = new Castle(null, x-3, y/2-1);
+    }
+    
+    private boolean marginBuildings(int x, int y, int m)
+    {
+	for(int dx = x - m; dx < x + m; dx++)
+	{
+	    for (int dy = y - m; dy < y + m; dy++) {
+		if (buildings[dx][dy] != null) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
 }
