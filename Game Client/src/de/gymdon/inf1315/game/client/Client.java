@@ -243,7 +243,7 @@ public class Client implements Runnable, WindowListener {
     }
     
     public void activateMap(MapRenderer newMap) {
-	currentScreen = null;
+	setGuiScreen(null);
 	canvas.mapRenderer = newMap;
     }
 
