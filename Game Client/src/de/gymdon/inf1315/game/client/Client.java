@@ -37,7 +37,7 @@ public class Client implements Runnable, WindowListener {
     public Translation translation;
     public Preferences preferences;
     public Random random = new Random();
-    private MacOSUtils macOsUtils;
+    public MacOSUtils macOsUtils;
 
     public Client() {
 	Client.instance = this;
@@ -122,10 +122,10 @@ public class Client implements Runnable, WindowListener {
     }
     
     public void setFullscreen(final boolean fullscreen) {
-	if(macOsUtils != null) {
+	/*if(macOsUtils != null) {
 	    macOsUtils.setFullscreen(fullscreen);
 	    return;
-	}
+	}*/
 	SwingUtilities.invokeLater(new Runnable(){
 	    @Override
 	    public void run() {
@@ -245,6 +245,8 @@ public class Client implements Runnable, WindowListener {
     public void activateMap(MapRenderer newMap) {
 	setGuiScreen(null);
 	canvas.mapRenderer = newMap;
+	canvas.addMouseListener(canvas.mapRenderer);
+	canvas.addMouseMotionListener(canvas.mapRenderer);
     }
 
     public int getTicksRunning() {

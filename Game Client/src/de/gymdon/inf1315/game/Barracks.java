@@ -1,5 +1,8 @@
 package de.gymdon.inf1315.game;
 
+import de.gymdon.inf1315.game.render.StandardTexture;
+import de.gymdon.inf1315.game.render.Texture;
+
 public class Barracks extends Building {
     Player own;
     
@@ -17,8 +20,12 @@ public class Barracks extends Building {
     }
     @Override
     public void occupy(Player p) {
-	// TODO Auto-generated method stub
 
+    }
+    @Override
+    public Texture getTexture() {
+	//TODO Texture
+	return new StandardTexture("grass_old");
     }
 
     

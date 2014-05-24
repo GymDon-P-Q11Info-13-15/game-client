@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class GameMechanics implements ActionListener{
+public class GameMechanics implements ActionListener {
     Random r = new Random();
     Tile[][] map;
     Building[][] buildings;
@@ -37,8 +37,7 @@ public class GameMechanics implements ActionListener{
 	}
 
     }
-    
-    
+
     /**
      * Build a new building if possible
      * 
@@ -50,26 +49,17 @@ public class GameMechanics implements ActionListener{
      *            y-coordinate of the field to build on
      * 
      */
-    public void buildBuilding(Building b, int x, int y){
-	if(x>=0&&y>=0){
-	  //check player's gold!
-	    if(buildings[x][y]==null){
-		buildings[x][y]=b;
+    public void buildBuilding(Building b, int x, int y) {
+	if (x >= 0 && y >= 0) {
+	    // check player's gold!
+	    if (buildings[x][y] == null) {
+		buildings[x][y] = b;
 	    }
-	}
-	else{
+	} else {
 	    throw new IllegalArgumentException("Field position must be positive");
 	}
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * Moves a unit to a field if possible
      * 
@@ -110,14 +100,14 @@ public class GameMechanics implements ActionListener{
     public void getAccessibleFields(Unit a) {
 	tempRange = new boolean[map.length][map.length];
 	step(a.getSpeed(), a.x, a.y);
-		
+
     }
 
     private void step(int actualSpeed, int x, int y) {
 
-	if (map[x][y].isWalkable) {
+	if (map[x][y].isWalkable()) {
 	    int[] position = new int[2];
-	    int newSpeed = actualSpeed - map[x][y].groundFactor;
+	    int newSpeed = actualSpeed - map[x][y].getGroundFactor();
 
 	    if (newSpeed >= 1) {
 
@@ -126,15 +116,13 @@ public class GameMechanics implements ActionListener{
 		step(newSpeed, x + 1, y);
 		step(newSpeed, x, y + 1);
 		step(newSpeed, x, y - 1);
-	    } 
-	    else if (newSpeed > 0) {
+	    } else if (newSpeed > 0) {
 		tempRange[x][y] = true;
 		step(1, x - 1, y);
 		step(1, x + 1, y);
 		step(1, x, y + 1);
 		step(1, x, y - 1);
-	    } 
-	    else { // Movement-points used -> field not accessible
+	    } else { // Movement-points used -> field not accessible
 
 	    }
 
@@ -143,20 +131,19 @@ public class GameMechanics implements ActionListener{
 	}
 
     }
-   /* public void buildUnit(Player p,Unit u,int number,Building b){
-	if(p.gold < u.cost*number)
-	{
-	    
-	}
-	
-	
-    }*/
-    public int strikechance(Unit striker, Unit stroke) { // Berechnet eine zahl
-							 // die der Rng
-							 // überschreiten muss
-							 // um zu treffen
-	int attchance = 80 - (striker.attack + striker.hp / 4 - stroke.defense
-		/ 2 - stroke.hp / 4);
+
+    /*
+     * public void buildUnit(Player p,Unit u,int number,Building b){ if(p.gold <
+     * u.cost*number) {
+     * 
+     * }
+     * 
+     * 
+     * }
+     */
+    public int strikechance(Unit striker, Unit stroke) {
+	// Berechnet eine zahl die der Rng überschreiten muss um zu treffen
+	int attchance = 80 - (striker.attack + striker.hp / 4 - stroke.defense / 2 - stroke.hp / 4);
 	System.out.println(attchance);
 	if (attchance < 0) {
 	    return 0;
@@ -170,24 +157,24 @@ public class GameMechanics implements ActionListener{
     public void combat(Unit attacker, Unit defender, int round) {
 
 	if (round < 100) {
-	    if (attacker.range > defender.range) // Prüfen ob der Verteidiger
-						 // sich wehren kann
+	    if (attacker.range > defender.range)
+	    // Prüfen ob der Verteidiger sich wehren kann
 	    {
-		defender.setHP(defender.hp - r.nextInt(attacker.attack)
-			* attacker.hp / 100);// ranged Schadensberechnung wip
+		defender.setHP(defender.hp - r.nextInt(attacker.attack) * attacker.hp / 100);
+		// ranged Schadensberechnung wip
 		System.out.println("defender hp " + defender.hp);
 		return;
 	    } else {
 		if (r.nextInt(81) >= strikechance(attacker, defender)) {
 		    defender.setHP(defender.hp - 1);
-		} // Rng Wert muss ausgerechneten Wert überschreiten um für 1
-		  // zu striken
+		}
+		// Rng Wert muss ausgerechneten Wert überschreiten um für 1 zu
+		// striken
 		if (r.nextInt(81) >= strikechance(defender, attacker)) {
 		    attacker.setHP(attacker.hp - 1);
 		}
-		System.out.println("round " + round + " defhp " + defender.hp
-			+ " atkhp " + attacker.hp); // Nur zu Testzwecken wird
-						    // später noch entfernt
+		System.out.println("round " + round + " defhp " + defender.hp + " atkhp " + attacker.hp);
+		// Nur zu Testzwecken wird später noch entfernt
 	    }
 	    if (defender.hp > 0 && attacker.hp > 0) {
 		combat(attacker, defender, round + 1);
@@ -197,7 +184,7 @@ public class GameMechanics implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	String s= e.paramString();
-	
+	String s = e.paramString();
+
     }
 }
