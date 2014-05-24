@@ -19,8 +19,7 @@ public class ServerListEntry {
 	return new Gui() {
 
 	    @Override
-	    public void render(Graphics2D g2d, int width, int height,
-		    int scrollX, int scrollY) {
+	    public void render(Graphics2D g2d, int width, int height) {
 		LinearGradientPaint gradient = new LinearGradientPaint(0, 0, 0, 100, new float[]{0,1}, new Color[]{new Color(0x666666),new Color(0x444444)});
 		g2d.setPaint(gradient);
 		g2d.fillRect(0, 0, width, 100);

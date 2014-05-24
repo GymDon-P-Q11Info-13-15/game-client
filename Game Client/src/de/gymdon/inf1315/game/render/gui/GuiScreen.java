@@ -16,12 +16,11 @@ public abstract class GuiScreen extends Gui implements ActionListener,
     protected int height;
 
     @Override
-    public void render(Graphics2D g2d, int width, int height, int scrollX,
-	    int scrollY) {
+    public void render(Graphics2D g2d, int width, int height) {
 	this.width = width;
 	this.height = height;
 	for (GuiControl c : controlList)
-	    c.render(g2d, width, height, scrollX, scrollY);
+	    c.render(g2d, width, height);
     }
 
     public void tick() {

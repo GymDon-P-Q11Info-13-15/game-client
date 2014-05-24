@@ -24,9 +24,9 @@ public class GameCanvas extends JPanel {
 	g2d.setColor(Color.BLACK);
 	g2d.fillRect(0, 0, getWidth(), getHeight());
 	if (mapRenderer != null)
-	    mapRenderer.render(g2d, width, height, scrollX, scrollY);
+	    mapRenderer.render(g2d, width, height);
 	if (Client.instance.currentScreen != null)
-	    Client.instance.currentScreen.render(g2d, width, height, scrollX,  scrollY);
+	    Client.instance.currentScreen.render(g2d, width, height);
 	g2d.dispose();
 	
 	g.drawImage(image, 0, 0, null);

@@ -57,8 +57,7 @@ public class GuiButton extends GuiControl {
     }
 
     @Override
-    public void render(Graphics2D g2d, int width, int height, int scrollX,
-	    int scrollY) {
+    public void render(Graphics2D g2d, int width, int height) {
 	if(borderWidth > 0) {
 	    int c = borderColor;
 	    if(!enabled) {

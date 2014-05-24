@@ -42,7 +42,7 @@ public class GuiOptions extends GuiScreen {
     }
     
     @Override
-    public void render(Graphics2D g2d, int width, int height, int scrollX, int scrollY) {
+    public void render(Graphics2D g2d, int width, int height) {
 	drawBackground(g2d, width, height);
         
         Font f = Font.decode("Helvetica 80");
@@ -92,7 +92,7 @@ public class GuiOptions extends GuiScreen {
 		b.setHeight(buttonHeight);
 	    }
 	}
-        super.render(g2d, width, height, scrollX, scrollY);
+        super.render(g2d, width, height);
     }
     
     @Override

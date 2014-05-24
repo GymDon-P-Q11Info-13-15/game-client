@@ -53,7 +53,7 @@ public class GuiScrollList extends GuiControl {
     }
 
     @Override
-    public void render(Graphics2D g2d, int width, int height, int scrollX, int scrollY) {
+    public void render(Graphics2D g2d, int width, int height) {
 	if(borderWidth > 0) {
 	    g2d.setColor(new Color(borderColor));
 	    if(borderRadius == 0) {
@@ -74,7 +74,7 @@ public class GuiScrollList extends GuiControl {
 	totalHeight = 0;
 	g2d.translate(this.x, -scroll + this.y);
 	for(int i = 0; i < adapter.getLength(this); i++) {
-	    adapter.get(i, this).render(g2d, this.width, this.height, 0, 0);
+	    adapter.get(i, this).render(g2d, this.width, this.height);
 	    int h = adapter.getHeight(i, this);
 	    g2d.translate(0, h);
 	    totalHeight += h;
