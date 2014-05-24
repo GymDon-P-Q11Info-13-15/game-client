@@ -1,7 +1,5 @@
 package de.gymdon.inf1315.game;
 
-import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class MapGenerator {
@@ -25,20 +23,20 @@ public class MapGenerator {
     public MapGenerator() {
 	this(new Random().nextLong());
     }
-    
+
     public MapGenerator(long seed) {
 	this.seed = seed;
 	this.random = new Random(seed);
     }
 
     public Tile[][] getMap() {
-	if(map == null)
+	if (map == null)
 	    generateAll();
 	return map;
     }
 
     public Building[][] getBuildings() {
-	if(buildings == null)
+	if (buildings == null)
 	    generateAll();
 	return buildings;
     }
@@ -60,18 +58,20 @@ public class MapGenerator {
 		map[i][k] = Tile.grass;
 	    }
 	}
-	generateMapOutside();
+	//generateMapOutside();
 	generateMapInside();
 	generateBuildings();
     }
 
     public void generateMapOutside() {
-	ArrayList<Point> list = new ArrayList<Point>();
-
+	/**
+	 * This method is not finished yet
+	 * It is to create the outline of the map
+	 */
+	
 	for (int i = 1; i <= averageSideWater; i++) {
 	    for (int k = 1; k <= i; k++) {
 		for (int l = i; l >= k; l--) {
-		    list.add(new Point(i - k, i - l));
 		    map[i - k][i - l] = Tile.water;
 		}
 	    }
@@ -86,29 +86,29 @@ public class MapGenerator {
 	int[] yLakes = new int[lakes];
 	int tries = 0;
 	for (int i = 0; i < lakes; i++) {
-	    int xLake = random.nextInt(mapWidth - avgLakeSize) + avgLakeSize/2;
-	    int yLake = random.nextInt(mapHeight - avgLakeSize) + avgLakeSize/2;
-	    for(;;) {
+	    int xLake = random.nextInt(mapWidth - avgLakeSize) + avgLakeSize / 2;
+	    int yLake = random.nextInt(mapHeight - avgLakeSize) + avgLakeSize / 2;
+	    for (;;) {
 		boolean near = false;
-		for(int j = 0; j < i; j++) {
+		for (int j = 0; j < i; j++) {
 		    int a = xLake - xLakes[j];
 		    int b = yLake - yLakes[j];
-		    near |= a*a + b*b < avgLakeSize*avgLakeSize;
+		    near |= a * a + b * b < avgLakeSize * avgLakeSize;
 		}
-		if(!near || tries++ > 4)
+		if (!near || tries++ > 4)
 		    break;
-		xLake = random.nextInt(mapWidth - avgLakeSize) + avgLakeSize/2;
-		yLake = random.nextInt(mapHeight - avgLakeSize) + avgLakeSize/2;
+		xLake = random.nextInt(mapWidth - avgLakeSize) + avgLakeSize / 2;
+		yLake = random.nextInt(mapHeight - avgLakeSize) + avgLakeSize / 2;
 	    }
 	    xLakes[i] = xLake;
 	    yLakes[i] = yLake;
 	    int xDir, yDir;
 
-	    for (int j = 0; j < avgLakeSize/4; j++) {
-		do  {
+	    for (int j = 0; j < avgLakeSize / 4; j++) {
+		do {
 		    xDir = random.nextInt(2) - 1;
 		    yDir = random.nextInt(2) - 1;
-		} while(xDir == 0 && yDir == 0);
+		} while (xDir == 0 && yDir == 0);
 		try {
 		    for (int k = 0; k < random.nextGaussian() * avgLakeSize; k++) {
 			map[xLake][yLake] = Tile.water;
@@ -127,7 +127,8 @@ public class MapGenerator {
 			xLake += xDir;
 			yLake += yDir;
 		    }
-		}catch(ArrayIndexOutOfBoundsException e) {}
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
 	    }
 	}
 
@@ -135,34 +136,34 @@ public class MapGenerator {
 	int[] ySands = new int[sandbanks];
 	tries = 0;
 	for (int i = 0; i < sandbanks; i++) {
-	    int xSand = random.nextInt(mapWidth - avgSandbankSize) + avgSandbankSize/2;
-	    int ySand = random.nextInt(mapHeight - avgSandbankSize) + avgSandbankSize/2;
-	    for(;;) {
+	    int xSand = random.nextInt(mapWidth - avgSandbankSize) + avgSandbankSize / 2;
+	    int ySand = random.nextInt(mapHeight - avgSandbankSize) + avgSandbankSize / 2;
+	    for (;;) {
 		boolean near = false;
-		for(int j = 0; j < i; j++) {
+		for (int j = 0; j < i; j++) {
 		    int a = xSand - xSands[j];
 		    int b = ySand - ySands[j];
-		    near |= a*a + b*b < avgSandbankSize*avgSandbankSize;
+		    near |= a * a + b * b < avgSandbankSize * avgSandbankSize;
 		}
-		for(int j = 0; j < i; j++) {
+		for (int j = 0; j < i; j++) {
 		    int a = xSand - xLakes[j];
 		    int b = ySand - yLakes[j];
-		    near |= a*a + b*b < avgSandbankSize*avgSandbankSize;
+		    near |= a * a + b * b < avgSandbankSize * avgSandbankSize;
 		}
-		if(!near || tries++ > 4)
+		if (!near || tries++ > 4)
 		    break;
-		xSand = random.nextInt(mapWidth - avgSandbankSize) + avgSandbankSize/2;
-		ySand = random.nextInt(mapHeight - avgSandbankSize) + avgSandbankSize/2;
+		xSand = random.nextInt(mapWidth - avgSandbankSize) + avgSandbankSize / 2;
+		ySand = random.nextInt(mapHeight - avgSandbankSize) + avgSandbankSize / 2;
 	    }
 	    xSands[i] = xSand;
 	    ySands[i] = ySand;
 	    int xDir, yDir;
 
-	    for (int j = 0; j < avgSandbankSize/4; j++) {
-		do  {
+	    for (int j = 0; j < avgSandbankSize / 4; j++) {
+		do {
 		    xDir = random.nextInt(2) - 1;
 		    yDir = random.nextInt(2) - 1;
-		} while(xDir == 0 && yDir == 0);
+		} while (xDir == 0 && yDir == 0);
 		try {
 		    for (int k = 0; k < random.nextGaussian() * avgSandbankSize; k++) {
 			map[xSand][ySand] = Tile.sand;
@@ -181,7 +182,8 @@ public class MapGenerator {
 			xSand += xDir;
 			ySand += yDir;
 		    }
-		}catch(ArrayIndexOutOfBoundsException e) {}
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
 	    }
 	}
     }
