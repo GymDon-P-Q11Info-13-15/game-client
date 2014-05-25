@@ -12,12 +12,14 @@ import de.gymdon.inf1315.game.Translation;
 
 public abstract class Remote {
 
-    private Socket socket;
-    private DataInputStream in;
-    private DataOutputStream out;
-    private long lastPacket;
-    private boolean left = false;
+    public static boolean isServer;
+    protected Socket socket;
+    protected DataInputStream in;
+    protected DataOutputStream out;
+    protected long lastPacket;
+    protected boolean left = false;
     public Map<String,Object> properties = new HashMap<String,Object>();
+    protected boolean ping;
 
     public Remote(Socket s) throws IOException {
 	this.socket = s;
@@ -93,4 +95,8 @@ public abstract class Remote {
     public abstract boolean isServer();
 
     public abstract boolean isClient();
+
+    public void setPing(boolean ping) {
+	this.ping = ping;
+    }
 }
