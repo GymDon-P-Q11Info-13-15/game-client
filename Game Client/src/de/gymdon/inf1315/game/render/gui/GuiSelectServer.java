@@ -99,6 +99,8 @@ public class GuiSelectServer extends GuiScreen {
 	    }
 	};
 	serverList = new GuiScrollList(this, adapter, 1, 0, 0);
+	for(ServerListEntry e : servers)
+	    e.ping();
 	controlList.add(serverList);
     }
     

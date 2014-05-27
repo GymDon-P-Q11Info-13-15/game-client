@@ -10,12 +10,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import de.gymdon.inf1315.game.Translation;
+import de.gymdon.inf1315.game.packet.Remote;
 import de.gymdon.inf1315.game.render.GameCanvas;
 import de.gymdon.inf1315.game.render.MapRenderer;
 import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
@@ -38,6 +44,8 @@ public class Client implements Runnable, WindowListener {
     public Preferences preferences;
     public Random random = new Random();
     public MacOSUtils macOsUtils;
+    public List<Remote> remotes = new ArrayList<Remote>();
+    public Map<Remote, Thread> remoteThreads = new HashMap<Remote, Thread>();
 
     public Client() {
 	Client.instance = this;
@@ -180,6 +188,37 @@ public class Client implements Runnable, WindowListener {
     }
 
     private void tick() {
+	for(Iterator<Remote> it = remotes.iterator(); it.hasNext();) {
+	    final Remote r = it.next();
+	    if (r instanceof Server && !remoteThreads.containsKey(r)) {
+		Thread t = new Thread() {
+		    public void run() {
+			while (true) {
+			    ((Server) r).processPackets();
+			    
+			    try {
+				Thread.sleep(10);
+			    } catch (InterruptedException e) {
+				e.printStackTrace();
+			    }
+			}
+		    }
+		};
+		remoteThreads.put(r, t);
+		t.start();
+	    }
+	    if(r.left() || r.getSocket().isClosed()) {
+		try {
+		    remoteThreads.get(r).join(10);
+		} catch (InterruptedException e) {
+		}
+		remoteThreads.remove(r);
+	    }
+	}
+	for(Iterator<Remote> it = remotes.iterator(); it.hasNext();) {
+	    if(it.next().left())
+		it.remove();
+	}
 	if(currentScreen != null)
 	    currentScreen.tick();
     }

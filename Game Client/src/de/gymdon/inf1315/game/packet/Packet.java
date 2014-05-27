@@ -17,12 +17,12 @@ public abstract class Packet {
     }
 
     public void handlePacket() throws IOException {
-	remote.notifyPacket();
+	remote.notifyPacket(this, true);
     }
 
     public void send() throws IOException {
 	remote.getOutputStream().flush();
-	remote.notifyPacket();
+	remote.notifyPacket(this, false);
     }
 
     public static Packet newPacket(short id, Remote r) {

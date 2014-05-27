@@ -3,6 +3,7 @@
 	"client.left": "%s left",
 	"client.kicked": "You were kicked: \"%s\"",
 	"protocol.version.incompatible": "Protocol version incompatible (expected %2$d and got %1$d)",
+	"protocol.timeout": "Timeout",
 	"updated.version": "Updated %s to version %s",
 	"file.created": "Created file %s",
 	"game.ended": "Game ended: %s",
@@ -17,6 +18,7 @@
 	"gui.options.video.fullscreen.off": "Fullscreen: Off",
 	"gui.options.language" : "Language settings",
 	"gui.server.select": "Server selection",
+	"gui.test": "Test",
 	"gui.back": "Back",
 	"gui.exit": "Exit"
 }

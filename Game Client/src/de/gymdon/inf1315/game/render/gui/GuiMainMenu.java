@@ -15,11 +15,13 @@ import de.gymdon.inf1315.game.render.MapRenderer;
 public class GuiMainMenu extends GuiScreen{
 
     private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
-    private GuiButton options = new GuiButton(this, 0, 20, 20, "gui.options");
-    private GuiButton exit = new GuiButton(this, 0, 20, 20, "gui.exit");
+    private GuiButton options = new GuiButton(this, 1, 20, 20, "gui.options");
+    private GuiButton test = new GuiButton(this, 2, 20, 20, "gui.test");
+    private GuiButton exit = new GuiButton(this, -1, 20, 20, "gui.exit");
     public GuiMainMenu() {
 	controlList.add(newGame);
 	controlList.add(options);
+	controlList.add(test);
 	controlList.add(exit);
     }
     @Override
@@ -62,6 +64,11 @@ public class GuiMainMenu extends GuiScreen{
 	options.setY(topMargin + (buttonHeight + buttonSpacing));
 	options.setWidth(buttonWidth);
 	options.setHeight(buttonHeight);
+
+	test.setX(leftMargin);
+	test.setY(height - buttonSpacing - buttonHeight);
+	test.setWidth(buttonWidthVerySmall);
+	test.setHeight(buttonHeight);
 	
 	exit.setX(width - leftMargin - buttonWidthVerySmall);
 	exit.setY(height - buttonSpacing - buttonHeight);
@@ -75,6 +82,8 @@ public class GuiMainMenu extends GuiScreen{
 	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton)e.getSource();
 	    if(button == newGame)
+		Client.instance.setGuiScreen(new GuiSelectServer(this));
+	    else if(button == test)
 		Client.instance.activateMap(new MapRenderer());
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));

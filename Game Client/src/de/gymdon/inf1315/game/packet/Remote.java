@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.*;
 
 import de.gymdon.inf1315.game.Translation;
+import de.gymdon.inf1315.game.client.Client;
 
 public abstract class Remote {
 
@@ -19,6 +20,7 @@ public abstract class Remote {
     protected long lastPacket;
     protected boolean left = false;
     public Map<String,Object> properties = new HashMap<String,Object>();
+    private Set<PacketListener> listeners = new HashSet<PacketListener>();
     protected boolean ping;
 
     public Remote(Socket s) throws IOException {
@@ -51,7 +53,7 @@ public abstract class Remote {
 	if (left)
 	    return;
 	left = true;
-	if(properties.containsKey("translation")) {
+	if(properties.containsKey("translation") && !ping) {
 	    Translation t = (Translation)properties.get("translation");
 	    System.out.println(t.translate("client.left", message));
 	}
@@ -61,6 +63,7 @@ public abstract class Remote {
 	    socket.close();
 	} catch (IOException e) {
 	}
+	Client.instance.remotes.remove(this);
     }
     
     public void kick(String message, Object... args) {
@@ -84,12 +87,22 @@ public abstract class Remote {
 	left = true;
     }
     
-    public void notifyPacket() {
+    public void notifyPacket(Packet p, boolean in) {
 	lastPacket = System.currentTimeMillis();
+	for(PacketListener l : listeners)
+	    l.handlePacket(this, p, in);
     }
     
     public long getLastPacketTime() {
 	return lastPacket;
+    }
+    
+    public void addPacketListener(PacketListener l) {
+	listeners.add(l);
+    }
+    
+    public void removePacketListener(PacketListener l) {
+	listeners.remove(l);
     }
 
     public abstract boolean isServer();
