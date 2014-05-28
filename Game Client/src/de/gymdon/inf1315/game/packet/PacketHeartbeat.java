@@ -16,6 +16,7 @@ public class PacketHeartbeat extends Packet {
 
     @Override
     public void handlePacket() throws IOException {
+	super.handlePacket();
 	DataInputStream in = remote.getInputStream();
 	response = in.readBoolean();
 	payload = new byte[in.readShort()];
@@ -35,10 +36,6 @@ public class PacketHeartbeat extends Packet {
 	out.writeBoolean(response);
 	out.writeShort(payload.length);
 	out.write(payload);
-    }
-
-    @Override
-    public short getId() {
-	return ID;
+	super.send();
     }
 }

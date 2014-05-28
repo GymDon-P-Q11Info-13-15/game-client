@@ -52,5 +52,5 @@ cleanup.use_this_for_non_static_method_access_only_if_necessary=true
 cleanup_profile=org.eclipse.jdt.ui.default.eclipse_clean_up_profile
 cleanup_settings_version=2
 eclipse.preferences.version=1
-formatter_profile=org.eclipse.jdt.ui.default.sun_profile
+formatter_profile=_Java Conventions [custom]
 formatter_settings_version=12

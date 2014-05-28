@@ -7,13 +7,15 @@ Gebäude:
 
 Einheiten:
   Infanterie:
-     *Bowman
+     *Archer
      *Spearman
      *Swordsman
   
   
   Kavallerie:
+     *Knight
+     *Scouts (light Horses)
   
   
-  
-  Sonstige (Katapulte, Rammen, etc.):
+Sonstige (Katapulte, Rammen, etc.):
+     *Miner
