@@ -9,6 +9,7 @@
 	"game.ended": "Game ended: %s",
 	"lang.en" : "English",
 	"lang.de" : "German",
+	"lang.la" : "Latin",
 	"gui.game.new": "New Game",
 	"gui.options": "Options",
 	"gui.options.video": "Video settings",
