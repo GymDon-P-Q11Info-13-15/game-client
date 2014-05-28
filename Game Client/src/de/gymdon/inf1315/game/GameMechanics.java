@@ -27,11 +27,14 @@ public class GameMechanics implements ActionListener {
 	won = false;
 	round = 0;
     }
-
-    public void setTile(Tile t, int x, int y) { // zum Map-Bauen
-	map[x][y] = t;
-    }
-
+    
+    
+    /**
+     * Set a Map as internal Tile Array
+     * 
+     * @param t 
+     * 		Tile Array as new Map
+     */
     public void setMap(Tile[][] t) {
 	map = t;
     }
@@ -192,6 +195,7 @@ public class GameMechanics implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 	String s = e.paramString();
+	if (s)
 
     }
 }

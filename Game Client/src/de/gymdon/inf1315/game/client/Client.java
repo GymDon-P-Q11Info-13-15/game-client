@@ -20,13 +20,11 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import de.gymdon.inf1315.game.Translation;
-import de.gymdon.inf1315.game.packet.Remote;
-import de.gymdon.inf1315.game.render.GameCanvas;
-import de.gymdon.inf1315.game.render.MapRenderer;
-import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
-import de.gymdon.inf1315.game.render.gui.GuiScreen;
-import de.gymdon.inf1315.game.client.Preferences;
+import de.gymdon.inf1315.game.*;
+import de.gymdon.inf1315.game.client.*;
+import de.gymdon.inf1315.game.packet.*;
+import de.gymdon.inf1315.game.render.*;
+import de.gymdon.inf1315.game.render.gui.*;
 
 public class Client implements Runnable, WindowListener {
     public static final boolean DEBUG = true;
@@ -46,8 +44,14 @@ public class Client implements Runnable, WindowListener {
     public MacOSUtils macOsUtils;
     public List<Remote> remotes = new ArrayList<Remote>();
     public Map<Remote, Thread> remoteThreads = new HashMap<Remote, Thread>();
+    public MapRenderer mapren;
+    public MapGenerator mapgen;
+    public final Tile[][] map;
 
     public Client() {
+	mapgen = new MapGenerator();
+	mapgen.generateAll();
+	map = mapgen.getMap();
 	Client.instance = this;
 	frame = new JFrame(TITLE);
 	frame.setSize(1280, 720);
