@@ -6,7 +6,7 @@ import de.gymdon.inf1315.game.render.Texture;
 public class Mine extends Building {
 
     int income;
-    public boolean superior;
+    public boolean superior = true;
 
     public Mine(int x, int y) {
 	this.x = x;
