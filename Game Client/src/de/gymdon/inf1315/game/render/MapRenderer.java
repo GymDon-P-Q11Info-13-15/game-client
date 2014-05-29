@@ -30,7 +30,10 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     private BufferedImage map = null;
     private Tile[][] mapCache = null;
     public Point p;
-    
+    private int hoverX = 0;
+    private int hoverY = 0;
+    private StandardTexture[][] hover = new StandardTexture[Client.instance.mapgen.getMapWidth()][Client.instance.mapgen.getMapHeight()];
+
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 	this.width = width;
@@ -66,13 +69,22 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		}
 	    }
 	}
+
+	for (int x = 0; x < hover.length; x++) {
+	    for (int y = 0; y < hover[x].length; y++) {
+		if (hover[x][y] != null) {
+		    g2d.drawImage(hover[x][y].getImage(), x * tileSize, y * tileSize + tileSize / 4, tileSize / 2, tileSize / 2, hover[x][y]);
+		}
+	    }
+	}
     }
-    
-    public Point punktAusgeben()
-    {
-	return p;
-	//System.out.println("X: " + p.x);
-	//System.out.println("Y: " + p.y);
+
+    public Point punktAusgeben() {
+	if (p.x == 53600 || p.y == 536000) {
+	    return null;
+	} else {
+	    return p;
+	}
     }
 
     @Override
@@ -81,10 +93,47 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	controlList.addAll(this.controlList);
 	for (GuiControl c : controlList)
 	    c.mouseClicked(e);
-	actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "X/Y Koordinaten"));
-	
-	p = new Point(e.getX()/tileSize, e.getY()/tileSize);
+
+	int x = e.getX() / tileSize;
+	int y = e.getY() / tileSize;
+	if (0 < x && x < Client.instance.mapgen.getMapWidth() && 0 < y && y < Client.instance.mapgen.getMapHeight()) {
+	    p = new Point(x, y);
+	    actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, ("Punkt (" + x + "|" + y + ") angeklickt")));
+	} else {
+	    p = new Point(53600, 53600);
+	}
 	punktAusgeben();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+	List<GuiControl> controlList = new ArrayList<GuiControl>();
+	controlList.addAll(this.controlList);
+	for (GuiControl c : controlList)
+	    c.mouseMoved(e);
+
+	int x = e.getX() / tileSize;
+	int y = e.getY() / tileSize;
+	Building[][] buildings = Client.instance.buildings;
+	if (0 < x && x < buildings.length && 0 < y && y < buildings[x].length) {
+	    if (buildings[x][y] != null) {
+		if (hoverX != x || hoverY != y) {
+		    System.out.println(buildings[x][y].getClass().getSimpleName() + " an Punkt (" + x + "|" + y + ")");
+		    hoverX = x;
+		    hoverY = y;
+		}
+		hover[x + 1][y - 1] = new StandardTexture("sand");
+		hover[x + 1][y + 1] = new StandardTexture("water");
+	    } else {
+		hoverX = x;
+		hoverY = y;
+		for (int a = 0; a < hover.length; a++) {
+		    for (int b = 0; b < hover[a].length; b++) {
+			hover[a][b] = null;
+		    }
+		}
+	    }
+	}
     }
 
     @Override
@@ -112,14 +161,6 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-	List<GuiControl> controlList = new ArrayList<GuiControl>();
-	controlList.addAll(this.controlList);
-	for (GuiControl c : controlList)
-	    c.mouseMoved(e);
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
 	List<GuiControl> controlList = new ArrayList<GuiControl>();
 	controlList.addAll(this.controlList);
@@ -142,23 +183,22 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-	//actionPerformed(new ActionEvent(e, KeyEvent.KEY_PRESSED, (KeyEvent.getKeyText(e.getKeyCode())) + " pressed"));
-    }
-
-    @Override
     public void keyReleased(KeyEvent e) {
 	actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, (KeyEvent.getKeyText(e.getKeyCode())) + " released"));
 	int key = e.getKeyCode();
-	
-	if (key == KeyEvent.VK_ESCAPE)
-	{
+
+	if (key == KeyEvent.VK_ESCAPE) {
 	    Client.instance.setGuiScreen(new GuiMainMenu());
 	}
     }
 
     @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
     public void keyTyped(KeyEvent e) {
-	//actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, (KeyEvent.getKeyText(e.getKeyCode()))+ " typed"));
+
     }
 }

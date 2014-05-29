@@ -77,7 +77,7 @@ public class Client implements Runnable, WindowListener {
 	int ticks = 0;
 	long lastTimer1 = System.currentTimeMillis();
 
-	new Thread(){
+	new Thread() {
 	    public void run() {
 		init();
 	    }
@@ -110,8 +110,7 @@ public class Client implements Runnable, WindowListener {
 	    if (System.currentTimeMillis() - lastTimer1 > 1000) {
 		lastTimer1 += 1000;
 		if (DEBUG) {
-		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames
-			    + "FPS");
+		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames + "FPS");
 		    System.out.println(TITLE + " - " + ticks + "TPS " + frames + "FPS");
 		}
 		this.tps = ticks;
@@ -126,50 +125,50 @@ public class Client implements Runnable, WindowListener {
     private void init() {
 	translation = new Translation("en");
 	readPreferences();
-	if(!preferences.language.equals("en"))
+	if (!preferences.language.equals("en"))
 	    translation.load(preferences.language);
 	setGuiScreen(new GuiMainMenu());
-	if(MacOSUtils.iMacOS())
+	if (MacOSUtils.iMacOS())
 	    macOsUtils = new MacOSUtils(frame);
 	setFullscreen(preferences.video.fullscreen);
 	System.out.println("Started \"" + TITLE + " " + VERSION + "\"");
     }
-    
+
     public void setFullscreen(final boolean fullscreen) {
-	/*if(macOsUtils != null) {
-	    macOsUtils.setFullscreen(fullscreen);
-	    return;
-	}*/
-	SwingUtilities.invokeLater(new Runnable(){
+	/*
+	 * if(macOsUtils != null) { macOsUtils.setFullscreen(fullscreen);
+	 * return; }
+	 */
+	SwingUtilities.invokeLater(new Runnable() {
 	    @Override
 	    public void run() {
 		GraphicsDevice screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		if(fullscreen) {
+		if (fullscreen) {
 		    screen.setFullScreenWindow(frame);
 		    DisplayMode[] modes = screen.getDisplayModes();
 		    DisplayMode current = screen.getDisplayMode();
-		    for(DisplayMode mode : modes) {
-			if(mode.getWidth() * mode.getHeight() > current.getWidth() * current.getHeight() && mode.getRefreshRate() > current.getRefreshRate())
+		    for (DisplayMode mode : modes) {
+			if (mode.getWidth() * mode.getHeight() > current.getWidth() * current.getHeight() && mode.getRefreshRate() > current.getRefreshRate())
 			    current = mode;
 		    }
 		    screen.setDisplayMode(current);
 		    System.out.println("DisplayMode: " + current.getWidth() + "x" + current.getHeight() + "x" + current.getBitDepth() + " @" + current.getRefreshRate() + "Hz");
 		    frame.setSize(current.getWidth(), current.getHeight());
-		}else {
+		} else {
 		    screen.setFullScreenWindow(null);
 		}
 	    }
 	});
     }
-    
+
     public void reload() {
 	translation = new Translation("en");
 	readPreferences();
-	if(!preferences.language.equals("en"))
+	if (!preferences.language.equals("en"))
 	    translation.load(preferences.language);
 	setFullscreen(preferences.video.fullscreen);
     }
-    
+
     private void readPreferences() {
 	File f = new File("preferences.json");
 	try {
@@ -181,12 +180,12 @@ public class Client implements Runnable, WindowListener {
 		preferences.write(new FileWriter(f));
 		System.out.println(translation.translate("file.created", "preferences.json"));
 	    }
-	    if(preferences.version != Preferences.CURRENT_VERSION) {
+	    if (preferences.version != Preferences.CURRENT_VERSION) {
 		preferences.version = Preferences.CURRENT_VERSION;
 		preferences = new Preferences();
 		f.createNewFile();
 		preferences.write(new FileWriter(f));
-		System.out.println(translation.translate("updated.version","preferences.json", preferences.version));
+		System.out.println(translation.translate("updated.version", "preferences.json", preferences.version));
 	    }
 	} catch (IOException e) {
 	    throw new RuntimeException("Preferences couldn't be loaded/saved", e);
@@ -194,14 +193,14 @@ public class Client implements Runnable, WindowListener {
     }
 
     private void tick() {
-	for(Iterator<Remote> it = remotes.iterator(); it.hasNext();) {
+	for (Iterator<Remote> it = remotes.iterator(); it.hasNext();) {
 	    final Remote r = it.next();
 	    if (r instanceof Server && !remoteThreads.containsKey(r)) {
 		Thread t = new Thread() {
 		    public void run() {
 			while (true) {
 			    ((Server) r).processPackets();
-			    
+
 			    try {
 				Thread.sleep(10);
 			    } catch (InterruptedException e) {
@@ -213,7 +212,7 @@ public class Client implements Runnable, WindowListener {
 		remoteThreads.put(r, t);
 		t.start();
 	    }
-	    if(r.left() || r.getSocket().isClosed()) {
+	    if (r.left() || r.getSocket().isClosed()) {
 		try {
 		    remoteThreads.get(r).join(10);
 		} catch (InterruptedException e) {
@@ -221,11 +220,11 @@ public class Client implements Runnable, WindowListener {
 		remoteThreads.remove(r);
 	    }
 	}
-	for(Iterator<Remote> it = remotes.iterator(); it.hasNext();) {
-	    if(it.next().left())
+	for (Iterator<Remote> it = remotes.iterator(); it.hasNext();) {
+	    if (it.next().left())
 		it.remove();
 	}
-	if(currentScreen != null)
+	if (currentScreen != null)
 	    currentScreen.tick();
     }
 
@@ -276,24 +275,22 @@ public class Client implements Runnable, WindowListener {
     }
 
     public void setGuiScreen(GuiScreen newScreen) {
-	if(currentScreen != null) {
+	if (currentScreen != null) {
 	    canvas.removeMouseListener(currentScreen);
 	    canvas.removeMouseMotionListener(currentScreen);
-	}
-	else
-	{
+	} else {
 	    canvas.removeMouseListener(canvas.mapRenderer);
 	    canvas.removeMouseMotionListener(canvas.mapRenderer);
 	    frame.removeKeyListener(canvas.mapRenderer);
 	    canvas.mapRenderer = null;
 	}
 	currentScreen = newScreen;
-	if(currentScreen != null) {
+	if (currentScreen != null) {
 	    canvas.addMouseListener(currentScreen);
 	    canvas.addMouseMotionListener(currentScreen);
 	}
     }
-    
+
     public void activateMap(MapRenderer newMap) {
 	setGuiScreen(null);
 	canvas.mapRenderer = newMap;
