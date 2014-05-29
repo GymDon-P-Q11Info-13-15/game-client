@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import de.gymdon.inf1315.game.*;
-import de.gymdon.inf1315.game.client.*;
 import de.gymdon.inf1315.game.packet.*;
 import de.gymdon.inf1315.game.render.*;
 import de.gymdon.inf1315.game.render.gui.*;
@@ -47,11 +46,14 @@ public class Client implements Runnable, WindowListener {
     public MapRenderer mapren;
     public MapGenerator mapgen;
     public final Tile[][] map;
+    public Building[][] buildings;
+    public Unit[][] units;
 
     public Client() {
 	mapgen = new MapGenerator();
 	mapgen.generateAll();
 	map = mapgen.getMap();
+	buildings = mapgen.getBuildings();
 	Client.instance = this;
 	frame = new JFrame(TITLE);
 	frame.setSize(1280, 720);
@@ -278,6 +280,13 @@ public class Client implements Runnable, WindowListener {
 	    canvas.removeMouseListener(currentScreen);
 	    canvas.removeMouseMotionListener(currentScreen);
 	}
+	else
+	{
+	    canvas.removeMouseListener(canvas.mapRenderer);
+	    canvas.removeMouseMotionListener(canvas.mapRenderer);
+	    frame.removeKeyListener(canvas.mapRenderer);
+	    canvas.mapRenderer = null;
+	}
 	currentScreen = newScreen;
 	if(currentScreen != null) {
 	    canvas.addMouseListener(currentScreen);
@@ -290,6 +299,7 @@ public class Client implements Runnable, WindowListener {
 	canvas.mapRenderer = newMap;
 	canvas.addMouseListener(canvas.mapRenderer);
 	canvas.addMouseMotionListener(canvas.mapRenderer);
+	frame.addKeyListener(canvas.mapRenderer);
     }
 
     public int getTicksRunning() {

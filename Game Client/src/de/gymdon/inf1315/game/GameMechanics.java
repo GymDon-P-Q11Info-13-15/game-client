@@ -195,7 +195,6 @@ public class GameMechanics implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 	String s = e.paramString();
-	if (s)
 
     }
 }
