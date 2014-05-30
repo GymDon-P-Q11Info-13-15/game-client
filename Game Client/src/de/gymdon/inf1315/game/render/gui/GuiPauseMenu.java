@@ -16,23 +16,24 @@ public class GuiPauseMenu extends GuiScreen{
 
     private GuiButton continueGame = new GuiButton(this, 0, 20, 20, "gui.game.continue");
     private GuiButton options = new GuiButton(this, 1, 20, 20, "gui.options");
-    private GuiButton MainMenu = new GuiButton(this, -1, 20, 20, "gui.MainMenu");
+    private GuiButton mainMenu = new GuiButton(this, -1, 20, 20, "gui.back.mainmenu");
     public GuiPauseMenu() {
 	controlList.add(continueGame);
 	controlList.add(options);
-	controlList.add(MainMenu);
+	controlList.add(mainMenu);
     }
     @Override
     public void render(Graphics2D g2d, int width, int height) {
+	
 	drawBackground(g2d, width, height);
         //int ticksRunning = Client.instance.getTicksRunning(); //not needed right now. Maybe later?
         
-        Font f = Font.decode("Helvetica Bold 120");
+        /*Font f = Font.decode("Helvetica Bold 120");
         g2d.setFont(f);
-        Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.TITLE, g2d);
+        Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.instance.translation.translate("game.title"), g2d);
         int titleX = (int) (width/2 - bounds.getCenterX());
         int titleY = (int) (height/3 - 50 + bounds.getCenterY());
-        GlyphVector gv = f.createGlyphVector(g2d.getFontRenderContext(), Client.TITLE);
+        GlyphVector gv = f.createGlyphVector(g2d.getFontRenderContext(), Client.instance.translation.translate("game.title"));
         Shape outline = gv.getOutline();
         g2d.translate(titleX, titleY);
         {
@@ -43,7 +44,7 @@ public class GuiPauseMenu extends GuiScreen{
 	    g2d.setStroke(new BasicStroke(1));
 	    g2d.fill(outline);
         }
-        g2d.translate(-titleX, -titleY);
+        g2d.translate(-titleX, -titleY);*/
         
         
         int topMargin = height/3;
@@ -63,10 +64,10 @@ public class GuiPauseMenu extends GuiScreen{
 	options.setWidth(buttonWidth);
 	options.setHeight(buttonHeight);
 	
-	MainMenu.setX(leftMargin);
-	MainMenu.setY(topMargin + (buttonHeight + buttonSpacing)*2);
-	MainMenu.setWidth(buttonWidth);
-	MainMenu.setHeight(buttonHeight);
+	mainMenu.setX(leftMargin);
+	mainMenu.setY(topMargin + (buttonHeight + buttonSpacing)*2);
+	mainMenu.setWidth(buttonWidth);
+	mainMenu.setHeight(buttonHeight);
         super.render(g2d, width, height);
     }
     
@@ -78,7 +79,7 @@ public class GuiPauseMenu extends GuiScreen{
 		Client.instance.activateMap(new MapRenderer());
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
-	    else if(button == MainMenu)
+	    else if(button == mainMenu)
 		Client.instance.setGuiScreen(new GuiMainMenu());
 	}
     }

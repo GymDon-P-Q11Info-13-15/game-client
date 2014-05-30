@@ -31,10 +31,10 @@ public class GuiMainMenu extends GuiScreen{
         
         Font f = Font.decode("Helvetica Bold 120");
         g2d.setFont(f);
-        Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.TITLE, g2d);
+        Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.instance.translation.translate("game.title"), g2d);
         int titleX = (int) (width/2 - bounds.getCenterX());
         int titleY = (int) (height/3 - 50 + bounds.getCenterY());
-        GlyphVector gv = f.createGlyphVector(g2d.getFontRenderContext(), Client.TITLE);
+        GlyphVector gv = f.createGlyphVector(g2d.getFontRenderContext(), Client.instance.translation.translate("game.title"));
         Shape outline = gv.getOutline();
         g2d.translate(titleX, titleY);
         {

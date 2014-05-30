@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,16 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     public Point p;
     private int hoverX = 0;
     private int hoverY = 0;
+    private int scrollX = 0;
+    private int scrollY = 0;
     private StandardTexture[][] hover = new StandardTexture[Client.instance.mapgen.getMapWidth()][Client.instance.mapgen.getMapHeight()];
 
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 	this.width = width;
 	this.height = height;
+	AffineTransform tx = g2d.getTransform();
+	tx.translate(-scrollX, -scrollY);
 	for (GuiControl c : controlList)
 	    c.render(g2d, width, height);
 
@@ -78,14 +83,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		}
 	    }
 	}
-    }
-
-    public Point punktAusgeben() {
-	if (p.x == 53600 || p.y == 53600) {
-	    return null;
-	} else {
-	    return p;
-	}
+	g2d.setTransform(tx);
     }
 
     @Override
@@ -97,13 +95,12 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
 	int x = e.getX() / tileSize;
 	int y = e.getY() / tileSize;
-	if (0 < x && x < Client.instance.mapgen.getMapWidth() && 0 < y && y < Client.instance.mapgen.getMapHeight()) {
+	if (x >= 0 && x < Client.instance.mapgen.getMapWidth() && y >= 0 && y < Client.instance.mapgen.getMapHeight()) {
 	    p = new Point(x, y);
-	    actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, ("Punkt (" + x + "|" + y + ") angeklickt")));
+	    actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, ("Punkt (" + x + "|" + y + ")")));
 	} else {
-	    p = new Point(53600, 53600);
+	    p = new Point(-1, -1);
 	}
-	punktAusgeben();
     }
 
     @Override
@@ -179,13 +176,13 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
     public void actionPerformed(ActionEvent e) {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
-	    System.out.println(e.getActionCommand());
+	    //System.out.println(e.getActionCommand());
 	}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, (KeyEvent.getKeyText(e.getKeyCode())) + " released"));
+	actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, (KeyEvent.getKeyText(e.getKeyCode()))));
 	int key = e.getKeyCode();
 
 	if (key == KeyEvent.VK_ESCAPE) {
@@ -195,11 +192,19 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+	int key = e.getKeyCode();
+	System.out.println(e);
+	if(key == KeyEvent.VK_LEFT)
+	    scrollX -= 10;
+	if(key == KeyEvent.VK_RIGHT)
+	    scrollX += 10;
+	if(key == KeyEvent.VK_UP)
+	    scrollY -= 10;
+	if(key == KeyEvent.VK_DOWN)
+	    scrollY += 10;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 }
