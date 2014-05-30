@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import de.gymdon.inf1315.game.client.Client;
+
 public class GameMechanics implements ActionListener {
     Random r = new Random();
     Tile[][] map;
@@ -20,10 +22,10 @@ public class GameMechanics implements ActionListener {
      * dann wird da die Karte etc gleich übergeben. (?)
      */
     
-    public GameMechanics(int x, int y) { // neue Welt mit Breite x und Höhe y
-	this.map = new Tile[x][y];
-	buildings = new Building[x][y];
-	units = new Unit[x][y];
+    public GameMechanics() { // neue Welt mit Breite x und Höhe y
+	this.map = Client.instance.map;
+	buildings = Client.instance.buildings;
+	units = Client.instance.units;
 	won = false;
 	round = 0;
     }
@@ -46,6 +48,15 @@ public class GameMechanics implements ActionListener {
 	    round++;
 	}
 
+    }
+    
+    public void clicked(int x, int y){
+	if(x>=0 && y>=0){
+	    if(units[x][y]!=null){
+		//units[x][y].clicked();
+	    }
+	    
+	}
     }
 
     /**

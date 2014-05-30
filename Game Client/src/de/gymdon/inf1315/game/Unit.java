@@ -19,5 +19,7 @@ public abstract class Unit extends GameObject {
     public abstract void setHP(int health);
 
     public abstract int getSpeed();
+    
+   // public abstract void clicked();
 
 }
