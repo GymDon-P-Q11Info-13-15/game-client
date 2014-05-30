@@ -11,6 +11,7 @@
 	"lang.de" : "German",
 	"lang.la" : "Latin",
 	"gui.game.new": "New Game",
+	"gui.game.continue": "Continue Game",
 	"gui.options": "Options",
 	"gui.options.video": "Video settings",
 	"gui.options.video.vsync.on": "VSync: On",
@@ -19,7 +20,8 @@
 	"gui.options.video.fullscreen.off": "Fullscreen: Off",
 	"gui.options.language" : "Language settings",
 	"gui.server.select": "Server selection",
-	"gui.test": "Test",
+	"gui.MainMenu": "Back to Mainmenu",
 	"gui.back": "Back",
+	"gui.test": "Test",
 	"gui.exit": "Exit"
 }

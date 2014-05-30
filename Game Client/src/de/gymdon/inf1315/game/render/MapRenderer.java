@@ -17,6 +17,7 @@ import de.gymdon.inf1315.game.*;
 import de.gymdon.inf1315.game.client.*;
 import de.gymdon.inf1315.game.render.gui.GuiControl;
 import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
+import de.gymdon.inf1315.game.render.gui.GuiPauseMenu;
 
 public class MapRenderer implements Renderable, ActionListener, MouseInputListener, KeyListener {
 
@@ -80,7 +81,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     }
 
     public Point punktAusgeben() {
-	if (p.x == 53600 || p.y == 536000) {
+	if (p.x == 53600 || p.y == 53600) {
 	    return null;
 	} else {
 	    return p;
@@ -188,7 +189,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	int key = e.getKeyCode();
 
 	if (key == KeyEvent.VK_ESCAPE) {
-	    Client.instance.setGuiScreen(new GuiMainMenu());
+	    Client.instance.setGuiScreen(new GuiPauseMenu());
 	}
     }
 

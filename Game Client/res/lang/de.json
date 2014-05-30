@@ -9,7 +9,9 @@
 	"game.ended": "Spiel wurde beendet: %s",
 	"lang.en" : "Englisch",
 	"lang.de" : "Deutsch",
+	"lang.la" : "Latein",
 	"gui.game.new": "Neues Spiel",
+	"gui.game.continue": "Zurück zum Spiel",
 	"gui.options": "Optionen",
 	"gui.options.video": "Video Einstellungen",
 	"gui.options.video.vsync.on": "VSync: An",
@@ -18,6 +20,7 @@
 	"gui.options.video.fullscreen.off": "Vollbild: Aus",
 	"gui.options.language" : "Spracheinstellungen",
 	"gui.server.select": "Serverauswahl",
+	"gui.MainMenu": "Zurück zum Hauptmenü",
 	"gui.back": "Zurück",
 	"gui.test": "Test",
 	"gui.exit": "Beenden"

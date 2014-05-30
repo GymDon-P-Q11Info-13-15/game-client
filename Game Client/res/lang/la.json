@@ -9,7 +9,9 @@
 	"game.ended": "Alea finiebat: %s",
 	"lang.en" : "Britannicus",
 	"lang.de" : "Germanicus",
+	"lang.la" : "",
 	"gui.game.new": "Alea nova",
+	"gui.game.continue": "",
 	"gui.options": "Instrumenta",
 	"gui.options.video": "Instrumentae Videntae",
 	"gui.options.video.vsync.on": "P-Aequatio : Excitatus",
@@ -18,6 +20,7 @@
 	"gui.options.video.fullscreen.off": "Imago solitus",
 	"gui.options.language" : "Instrumentae linguae",
 	"gui.server.select": "Selectio Serverorum",
+	"gui.MainMenu": "",
 	"gui.back": "Redire",
 	"gui.test": "Abdication",
 	"gui.exit": "Exire"
