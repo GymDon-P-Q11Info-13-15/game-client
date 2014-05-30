@@ -190,7 +190,7 @@ public class MapGenerator {
 
     public void generateBuildings() {
 	buildings = new Building[mapWidth][mapHeight];
-	for (int i = 0; i < mines + superiorMines; i++) {
+	for (int i = 0; i < mines; i++) {
 
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
@@ -199,10 +199,15 @@ public class MapGenerator {
 		i--;
 	    } else {
 		Mine m = new Mine(xMine, yMine);
-		m.superior = i >= mines;
+		m.superior = false;
 		buildings[xMine][yMine] = m;
 	    }
 	}
+	
+	//Generate superior mine
+	Mine m = new Mine(mapWidth / 2, mapHeight / 2);
+	m.superior = true;
+	buildings[mapWidth / 2][mapHeight / 2] = m;
 
 	buildings[1][mapHeight / 2 - 1] = new Castle(null, 1, mapHeight / 2 - 1);
 	buildings[mapWidth - 3][mapHeight / 2 - 1] = new Castle(null, mapWidth - 3, mapHeight / 2 - 1);
