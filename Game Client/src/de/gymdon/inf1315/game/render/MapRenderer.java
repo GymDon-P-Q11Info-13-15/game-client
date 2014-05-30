@@ -17,7 +17,6 @@ import javax.swing.event.MouseInputListener;
 import de.gymdon.inf1315.game.*;
 import de.gymdon.inf1315.game.client.*;
 import de.gymdon.inf1315.game.render.gui.GuiControl;
-import de.gymdon.inf1315.game.render.gui.GuiMainMenu;
 import de.gymdon.inf1315.game.render.gui.GuiPauseMenu;
 
 public class MapRenderer implements Renderable, ActionListener, MouseInputListener, KeyListener {
@@ -37,6 +36,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     private int scrollX = 0;
     private int scrollY = 0;
     private StandardTexture[][] hover = new StandardTexture[Client.instance.mapgen.getMapWidth()][Client.instance.mapgen.getMapHeight()];
+    private boolean[][] fieldHover = new boolean[Client.instance.mapgen.getMapWidth()][Client.instance.mapgen.getMapHeight()];
 
     @Override
     public void render(Graphics2D g2d, int width, int height) {
@@ -83,6 +83,31 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		}
 	    }
 	}
+
+	for (int x = 0; x < fieldHover.length; x++) {
+	    for (int y = 0; y < fieldHover[x].length; y++) {
+		if (fieldHover[x][y]) {
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize, y * tileSize, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*1/8, y * tileSize, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*2/8, y * tileSize, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize, y * tileSize + tileSize*1/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize, y * tileSize + tileSize*2/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*7/8, y * tileSize, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*6/8, y * tileSize, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*5/8, y * tileSize, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*7/8, y * tileSize + tileSize*1/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*7/8, y * tileSize + tileSize*2/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*7/8, y * tileSize + tileSize*7/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*7/8, y * tileSize + tileSize*6/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*7/8, y * tileSize + tileSize*5/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*6/8, y * tileSize + tileSize*7/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		    g2d.drawImage(new StandardTexture("sand_new").getImage(), x * tileSize + tileSize*5/8, y * tileSize + tileSize*7/8, tileSize/8, tileSize/8, new StandardTexture("sand_new"));
+		}
+	    }
+	}
+
 	g2d.setTransform(tx);
     }
 
@@ -113,13 +138,14 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	int x = e.getX() / tileSize;
 	int y = e.getY() / tileSize;
 	Building[][] buildings = Client.instance.buildings;
-	if (0 < x && x < buildings.length && 0 < y && y < buildings[x].length) {
+	if (0 <= x && x < buildings.length && 0 <= y && y < buildings[x].length) {
 	    if (buildings[x][y] != null) {
 		if (hoverX != x || hoverY != y) {
 		    System.out.println(buildings[x][y].getClass().getSimpleName() + " an Punkt (" + x + "|" + y + ")");
 		    hoverX = x;
 		    hoverY = y;
 		}
+		fieldHover[x][y] = true;
 		hover[x + 1][y - 1] = new StandardTexture("sand");
 		hover[x + 1][y + 1] = new StandardTexture("water");
 	    } else {
@@ -128,6 +154,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		for (int a = 0; a < hover.length; a++) {
 		    for (int b = 0; b < hover[a].length; b++) {
 			hover[a][b] = null;
+			fieldHover[a][b] = false;
 		    }
 		}
 	    }
@@ -176,32 +203,28 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
     public void actionPerformed(ActionEvent e) {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
-	    //System.out.println(e.getActionCommand());
+
 	}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, (KeyEvent.getKeyText(e.getKeyCode()))));
-	int key = e.getKeyCode();
-
-	if (key == KeyEvent.VK_ESCAPE) {
-	    Client.instance.setGuiScreen(new GuiPauseMenu());
-	}
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-	System.out.println(e);
-	if(key == KeyEvent.VK_LEFT)
+	System.out.println(KeyEvent.getKeyText(key));
+	if (key == KeyEvent.VK_LEFT)
 	    scrollX -= 10;
-	if(key == KeyEvent.VK_RIGHT)
+	if (key == KeyEvent.VK_RIGHT)
 	    scrollX += 10;
-	if(key == KeyEvent.VK_UP)
+	if (key == KeyEvent.VK_UP)
 	    scrollY -= 10;
-	if(key == KeyEvent.VK_DOWN)
+	if (key == KeyEvent.VK_DOWN)
 	    scrollY += 10;
+	if (key == KeyEvent.VK_ESCAPE)
+	    Client.instance.setGuiScreen(new GuiPauseMenu());
     }
 
     @Override
