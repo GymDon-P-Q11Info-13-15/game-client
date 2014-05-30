@@ -110,8 +110,8 @@ public class Client implements Runnable, WindowListener {
 	    if (System.currentTimeMillis() - lastTimer1 > 1000) {
 		lastTimer1 += 1000;
 		if (DEBUG) {
-		    frame.setTitle(TITLE + " - " + ticks + "TPS " + frames + "FPS");
-		    System.out.println(TITLE + " - " + ticks + "TPS " + frames + "FPS");
+		    frame.setTitle(translation.translate("game.title") + " - " + ticks + "TPS " + frames + "FPS");
+		    System.out.println(translation.translate("game.title") + " - " + ticks + "TPS " + frames + "FPS");
 		}
 		this.tps = ticks;
 		this.fps = frames;
@@ -131,7 +131,7 @@ public class Client implements Runnable, WindowListener {
 	if (MacOSUtils.iMacOS())
 	    macOsUtils = new MacOSUtils(frame);
 	setFullscreen(preferences.video.fullscreen);
-	System.out.println("Started \"" + TITLE + " " + VERSION + "\"");
+	System.out.println("Started \"" + translation.translate("game.title") + " " + VERSION + "\"");
     }
 
     public void setFullscreen(final boolean fullscreen) {
@@ -166,6 +166,7 @@ public class Client implements Runnable, WindowListener {
 	readPreferences();
 	if (!preferences.language.equals("en"))
 	    translation.load(preferences.language);
+	frame.setTitle(Client.instance.translation.translate("game.title"));
 	setFullscreen(preferences.video.fullscreen);
     }
 

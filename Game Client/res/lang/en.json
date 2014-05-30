@@ -6,6 +6,7 @@
 	"protocol.timeout": "Timeout",
 	"updated.version": "Updated %s to version %s",
 	"file.created": "Created file %s",
+	"game.title": "Game Title",
 	"game.ended": "Game ended: %s",
 	"lang.en" : "English",
 	"lang.de" : "German",
@@ -20,7 +21,7 @@
 	"gui.options.video.fullscreen.off": "Fullscreen: Off",
 	"gui.options.language" : "Language settings",
 	"gui.server.select": "Server selection",
-	"gui.MainMenu": "Back to Mainmenu",
+	"gui.back.mainmenu": "Back to main menu",
 	"gui.back": "Back",
 	"gui.test": "Test",
 	"gui.exit": "Exit"
