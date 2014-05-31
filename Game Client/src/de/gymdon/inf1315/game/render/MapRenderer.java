@@ -125,15 +125,14 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    if (0 <= x && x < field.length && 0 <= y && y < field[x].length) {
 		p = new Point(x, y);
 		actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, ("(" + x + "|" + y + ")")));
-
-		if (buildings[x][y] != null) {
-		    field[x][y] = true;
-		} else {
-		    for (int a = 0; a < field.length; a++) {
+		
+		for (int a = 0; a < field.length; a++) {
 			for (int b = 0; b < field[a].length; b++) {
 			    field[a][b] = false;
 			}
 		    }
+		if (buildings[x][y] != null) {
+		    field[x][y] = true;
 		}
 	    } else {
 		p = new Point(-1, -1);
