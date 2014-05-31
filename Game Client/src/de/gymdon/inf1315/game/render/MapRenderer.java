@@ -39,7 +39,6 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     private int scrollY = 0;
     private int diffX = 0;
     private int diffY = 0;
-    private boolean firstClick = true;
     private boolean[][] fieldHover;
     private boolean[][] field;
 
@@ -52,16 +51,15 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	for (GuiControl c : controlList)
 	    c.render(g2d, width, height);
 
-
 	Tile[][] map = Client.instance.map;
 	int mapWidth = map.length;
 	int mapHeight = map[0].length;
-	double w = (mapWidth*tileSize*zoom);
-	if(w < width)
-	    zoom /= w/width;
-	double h = (mapHeight*tileSize*zoom);
-	if(h < height)
-	    zoom /= h/height;
+	double w = (mapWidth * tileSize * zoom);
+	if (w < width)
+	    zoom /= w / width;
+	double h = (mapHeight * tileSize * zoom);
+	if (h < height)
+	    zoom /= h / height;
 	AffineTransform tx = g2d.getTransform();
 	g2d.translate(-scrollX, -scrollY);
 	g2d.scale(zoom, zoom);
@@ -125,11 +123,11 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    Texture tex = StandardTexture.get("arrow_up");
 	    g2d.drawImage(tex.getImage(), width / 2, tileSize / 2, tileSize, tileSize, tex);
 	}
-	if (this.width < this.map.getWidth()) {
+	if (scrollX < (int) (mapWidth * tileSize * zoom - width)) {
 	    Texture tex = StandardTexture.get("arrow_right");
 	    g2d.drawImage(tex.getImage(), width - tileSize * 3 / 2, height / 2, tileSize, tileSize, tex);
 	}
-	if (this.height < this.map.getHeight()) {
+	if (scrollY < (int) (mapHeight * tileSize * zoom - height)) {
 	    Texture tex = StandardTexture.get("arrow_down");
 	    g2d.drawImage(tex.getImage(), width / 2, height - tileSize * 3 / 2, tileSize, tileSize, tex);
 	}
@@ -148,15 +146,15 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	for (GuiControl c : controlList)
 	    c.mouseClicked(e);
 
-	if(mapCache == null)
+	if (mapCache == null)
 	    return;
 	int mapWidth = mapCache.length;
 	int mapHeight = mapCache[0].length;
 	if (field == null || field.length != mapWidth || field[0].length != mapHeight)
 	    field = new boolean[mapWidth][mapHeight];
-	if (e.getButton() == MouseEvent.BUTTON1 && !firstClick) {
-	    int x = (e.getX() / tileSize) + scrollX;
-	    int y = (e.getY() / tileSize) + scrollY;
+	if (e.getButton() == MouseEvent.BUTTON1) {
+	    int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
+	    int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
 	    Building[][] buildings = Client.instance.buildings;
 
 	    if (0 <= x && x < field.length && 0 <= y && y < field[x].length) {
@@ -175,7 +173,6 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		p = new Point(-1, -1);
 	    }
 	}
-	firstClick = false;
     }
 
     @Override
@@ -189,8 +186,8 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	int mapHeight = mapCache[0].length;
 	if (fieldHover == null || fieldHover.length != mapWidth || fieldHover[0].length != mapHeight)
 	    fieldHover = new boolean[mapWidth][mapHeight];
-	int x = (e.getX() / tileSize) + scrollX;
-	int y = (e.getY() / tileSize) + scrollY;
+	int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
+	int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
 	Building[][] buildings = Client.instance.buildings;
 
 	if (0 <= x && x < fieldHover.length && 0 <= y && y < fieldHover[x].length) {
@@ -225,7 +222,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	controlList.addAll(this.controlList);
 	for (GuiControl c : controlList)
 	    c.mouseDragged(e);
-	if (e.getButton() == MouseEvent.BUTTON3) {
+	if (e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK) {
 	    scrollX -= e.getX() - diffX;
 	    scrollY -= e.getY() - diffY;
 	    if (scrollX < 0)
@@ -234,10 +231,10 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		scrollY = 0;
 	    int mapWidth = mapCache.length;
 	    int mapHeight = mapCache[0].length;
-	    if (scrollX > mapWidth * tileSize - width)
-		scrollX = mapWidth * tileSize - width;
-	    if (scrollY > mapHeight * tileSize - height)
-		scrollY = mapHeight * tileSize - height;
+	    if (scrollX > (int) (mapWidth * tileSize * zoom - width))
+		scrollX = (int) (mapWidth * tileSize * zoom - width);
+	    if (scrollY > (int) (mapHeight * tileSize * zoom - height))
+		scrollY = (int) (mapHeight * tileSize * zoom - height);
 	    diffX = e.getX();
 	    diffY = e.getY();
 	}
@@ -269,7 +266,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
     public void actionPerformed(ActionEvent e) {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
-	    //System.out.println(e.getActionCommand());
+	    System.out.println(e.getActionCommand());
 	}
     }
 
@@ -282,13 +279,13 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	int key = e.getKeyCode();
 	System.out.println(KeyEvent.getKeyText(key));
 	if (key == KeyEvent.VK_LEFT)
-	    scrollX -= tileSize/4;
+	    scrollX -= tileSize / 4;
 	else if (key == KeyEvent.VK_RIGHT)
-	    scrollX += tileSize/4;
+	    scrollX += tileSize / 4;
 	else if (key == KeyEvent.VK_UP)
-	    scrollY -= tileSize/4;
+	    scrollY -= tileSize / 4;
 	else if (key == KeyEvent.VK_DOWN)
-	    scrollY += tileSize/4;
+	    scrollY += tileSize / 4;
 	else if (key == KeyEvent.VK_ESCAPE)
 	    Client.instance.setGuiScreen(new GuiPauseMenu());
 	if (scrollX < 0)
@@ -297,11 +294,10 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    scrollY = 0;
 	int mapWidth = mapCache.length;
 	int mapHeight = mapCache[0].length;
-	if (scrollX > mapWidth * tileSize - width)
-	    scrollX = mapWidth * tileSize - width;
-	if (scrollY > mapHeight * tileSize - height)
-	    scrollY = mapHeight * tileSize - height;
-	firstClick = true;
+	if (scrollX > (int) (mapWidth * tileSize * zoom - width))
+	    scrollX = (int) (mapWidth * tileSize * zoom - width);
+	if (scrollY > (int) (mapHeight * tileSize * zoom - height))
+	    scrollY = (int) (mapHeight * tileSize * zoom - height);
     }
 
     @Override
@@ -311,9 +307,9 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
 	zoom *= Math.pow(1.1, e.getWheelRotation());
-	if(zoom < 0.2)
+	if (zoom < 0.2)
 	    zoom = 0.2;
-	if(zoom > 5)
+	if (zoom > 5)
 	    zoom = 5;
     }
 }
