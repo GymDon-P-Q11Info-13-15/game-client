@@ -79,7 +79,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    for (int x = 0; x < fieldHover.length; x++) {
 		for (int y = 0; y < fieldHover[x].length; y++) {
 		    if (fieldHover[x][y]) {
-			g2d.drawImage(new StandardTexture("Hover").getImage(), x * tileSize - tileSize * scrollX, y * tileSize - tileSize * scrollY, tileSize*2, tileSize*2, new StandardTexture("Hover"));
+			g2d.drawImage(new StandardTexture("Hover").getImage(), x * tileSize - tileSize * scrollX, y * tileSize - tileSize * scrollY, tileSize, tileSize, new StandardTexture("Hover"));
 		    }
 		}
 	    }

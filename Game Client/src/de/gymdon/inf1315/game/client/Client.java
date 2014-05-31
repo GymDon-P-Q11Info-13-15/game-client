@@ -53,6 +53,7 @@ public class Client implements Runnable, WindowListener {
 	mapgen = new MapGenerator();
 	mapgen.generateAll();
 	map = mapgen.getMap();
+	mapren = new MapRenderer();
 	buildings = mapgen.getBuildings();
 	Client.instance = this;
 	frame = new JFrame(TITLE);
@@ -284,6 +285,7 @@ public class Client implements Runnable, WindowListener {
 	} else {
 	    canvas.removeMouseListener(canvas.mapRenderer);
 	    canvas.removeMouseMotionListener(canvas.mapRenderer);
+	    canvas.removeMouseWheelListener(canvas.mapRenderer);
 	    frame.removeKeyListener(canvas.mapRenderer);
 	    canvas.mapRenderer = null;
 	}
@@ -294,11 +296,12 @@ public class Client implements Runnable, WindowListener {
 	}
     }
 
-    public void activateMap(MapRenderer newMap) {
+    public void activateMap() {
 	setGuiScreen(null);
-	canvas.mapRenderer = newMap;
+	canvas.mapRenderer = mapren;
 	canvas.addMouseListener(canvas.mapRenderer);
 	canvas.addMouseMotionListener(canvas.mapRenderer);
+	canvas.addMouseWheelListener(canvas.mapRenderer);
 	frame.addKeyListener(canvas.mapRenderer);
     }
 

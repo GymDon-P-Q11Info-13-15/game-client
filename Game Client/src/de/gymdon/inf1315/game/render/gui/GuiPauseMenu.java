@@ -1,16 +1,9 @@
 package de.gymdon.inf1315.game.render.gui;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
-import java.awt.font.GlyphVector;
-import java.awt.geom.Rectangle2D;
 
 import de.gymdon.inf1315.game.client.Client;
-import de.gymdon.inf1315.game.render.MapRenderer;
 
 public class GuiPauseMenu extends GuiScreen{
 
@@ -52,8 +45,6 @@ public class GuiPauseMenu extends GuiScreen{
 	int buttonHeight = height/10;
 	int buttonSpacing = buttonHeight/4;
 	int leftMargin = width/2 - buttonWidth/2;
-	int buttonWidthSmall = (buttonWidth - buttonSpacing)/2;
-	int buttonWidthVerySmall = (buttonWidthSmall - buttonSpacing)/2;
 	continueGame.setX(leftMargin);
 	continueGame.setY(topMargin);
 	continueGame.setWidth(buttonWidth);
@@ -76,7 +67,7 @@ public class GuiPauseMenu extends GuiScreen{
 	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton)e.getSource();
 	    if(button == continueGame)
-		Client.instance.activateMap(new MapRenderer());
+		Client.instance.activateMap();
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
 	    else if(button == mainMenu)

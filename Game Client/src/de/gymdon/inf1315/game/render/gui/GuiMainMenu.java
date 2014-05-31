@@ -10,7 +10,6 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 
 import de.gymdon.inf1315.game.client.Client;
-import de.gymdon.inf1315.game.render.MapRenderer;
 
 public class GuiMainMenu extends GuiScreen{
 
