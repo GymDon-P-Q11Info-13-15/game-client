@@ -31,7 +31,6 @@ public class GuiOptions extends GuiScreen {
     private List<GuiButton> languageButtons = new ArrayList<GuiButton>();
     // -- Game Options
     private GuiButton gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
-    private GuiButton gameCornerScrollButton = new GuiButton(this, 0, 100, 200, "gui.options.game.CornerScroll." + (Client.instance.preferences.game.CornerScroll ? "on" : "off"));
 
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -97,10 +96,6 @@ public class GuiOptions extends GuiScreen {
 		b.setHeight(buttonHeight);
 	    }
 	} else if (section == Section.GAME) {
-	    gameCornerScrollButton.setX(leftMargin);
-	    gameCornerScrollButton.setY(topMargin);
-	    gameCornerScrollButton.setWidth(buttonWidthSmall);
-	    gameCornerScrollButton.setHeight(buttonHeight);
 	}
 	super.render(g2d, width, height);
     }
@@ -145,9 +140,6 @@ public class GuiOptions extends GuiScreen {
 		setSection(Section.LANGUAGE);
 	    } else if (button == gameButton) {
 		setSection(Section.GAME);
-	    } else if (button == gameCornerScrollButton) {
-		Client.instance.preferences.game.CornerScroll = !Client.instance.preferences.game.CornerScroll;
-		gameCornerScrollButton.setText("gui.options.game.CornerScroll." + (Client.instance.preferences.game.CornerScroll ? "on" : "off"));
 	    }
 	}
     }
@@ -179,7 +171,6 @@ public class GuiOptions extends GuiScreen {
 	    controlList.addAll(languageButtons);
 	    break;
 	case GAME:
-	    controlList.add(gameCornerScrollButton);
 	    break;
 	}
 	controlList.add(backButton);

@@ -20,7 +20,6 @@ public class Preferences {
     }
     
     public class GameSettings {
-	public boolean CornerScroll = true;
     }
 
     public void write(Writer writer) throws IOException {
