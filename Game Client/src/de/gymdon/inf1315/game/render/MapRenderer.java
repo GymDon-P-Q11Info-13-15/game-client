@@ -35,6 +35,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     private BufferedImage cache = null;
     private Tile[][] mapCache = null;
     public Point p;
+    private boolean firstClick = false;
     private int scrollX = 0;
     private int scrollY = 0;
     private int diffX = 0;
@@ -152,7 +153,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	int mapHeight = mapCache[0].length;
 	if (field == null || field.length != mapWidth || field[0].length != mapHeight)
 	    field = new boolean[mapWidth][mapHeight];
-	if (e.getButton() == MouseEvent.BUTTON1) {
+	if (e.getButton() == MouseEvent.BUTTON1 && !firstClick) {
 	    int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
 	    int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
 	    Building[][] buildings = Client.instance.buildings;
@@ -173,6 +174,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		p = new Point(-1, -1);
 	    }
 	}
+	firstClick = false;
     }
 
     @Override
@@ -266,7 +268,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
     public void actionPerformed(ActionEvent e) {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
-	    System.out.println(e.getActionCommand());
+	    // System.out.println(e.getActionCommand());
 	}
     }
 
@@ -286,8 +288,10 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    scrollY -= tileSize / 4;
 	else if (key == KeyEvent.VK_DOWN)
 	    scrollY += tileSize / 4;
-	else if (key == KeyEvent.VK_ESCAPE)
+	else if (key == KeyEvent.VK_ESCAPE) {
 	    Client.instance.setGuiScreen(new GuiPauseMenu());
+	    firstClick = true;
+	}
 	if (scrollX < 0)
 	    scrollX = 0;
 	if (scrollY < 0)
