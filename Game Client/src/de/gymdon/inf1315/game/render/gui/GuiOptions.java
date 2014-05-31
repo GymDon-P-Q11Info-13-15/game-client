@@ -16,55 +16,56 @@ import com.google.gson.reflect.TypeToken;
 import de.gymdon.inf1315.game.client.Client;
 
 public class GuiOptions extends GuiScreen {
-    
+
     private GuiScreen last;
     private Section section;
     private GuiButton backButton = new GuiButton(this, 0, 300, 550, "gui.back");
-    
-    //Sections
+
+    // Sections
     private GuiButton videoButton = new GuiButton(this, 0, 100, 200, "gui.options.video");
     // -- Video
-    private GuiButton videoVsyncButton = new GuiButton(this, 0, 100, 200, 
-	    "gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
-    private GuiButton videoFullscreenButton = new GuiButton(this, 0, 100, 200, 
-	    "gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
+    private GuiButton videoVsyncButton = new GuiButton(this, 0, 100, 200, "gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+    private GuiButton videoFullscreenButton = new GuiButton(this, 0, 100, 200, "gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
     // -- Language
     private GuiButton languageButton = new GuiButton(this, 0, 100, 200, "gui.options.language");
     private List<GuiButton> languageButtons = new ArrayList<GuiButton>();
-    
+    // -- Game Options
+    private GuiButton gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
+    private GuiButton gameCornerScrollButton = new GuiButton(this, 0, 100, 200, "gui.options.game.CornerScroll." + (Client.instance.preferences.game.CornerScroll ? "on" : "off"));
+
     public GuiOptions() {
 	setSection(Section.MAIN);
     }
-    
+
     public GuiOptions(GuiScreen last) {
 	this();
 	this.last = last;
     }
-    
+
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 	drawBackground(g2d, width, height);
-        
-        Font f = Font.decode("Helvetica 80");
-        g2d.setFont(f);
-        String title = Client.instance.translation.translate("gui.options" + (section != Section.MAIN ? "." + section.name().toLowerCase() : ""));
-        Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(title, g2d);
-        int titleX = (int) (width/2 - bounds.getCenterX());
-        int titleY = (int) (80 + bounds.getMaxY());
-        g2d.setColor(Color.WHITE);
-        g2d.drawString(title, titleX, titleY);
-        
-	int buttonWidth = width - width/4;
-	int buttonHeight = height/10;
-	int buttonSpacing = buttonHeight/4;
+
+	Font f = Font.decode("Helvetica 80");
+	g2d.setFont(f);
+	String title = Client.instance.translation.translate("gui.options" + (section != Section.MAIN ? "." + section.name().toLowerCase() : ""));
+	Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(title, g2d);
+	int titleX = (int) (width / 2 - bounds.getCenterX());
+	int titleY = (int) (80 + bounds.getMaxY());
+	g2d.setColor(Color.WHITE);
+	g2d.drawString(title, titleX, titleY);
+
+	int buttonWidth = width - width / 4;
+	int buttonHeight = height / 10;
+	int buttonSpacing = buttonHeight / 4;
 	int topMargin = 150;
-	int leftMargin = width/2 - buttonWidth/2;
-	int buttonWidthSmall = (buttonWidth - buttonSpacing)/2;
+	int leftMargin = width / 2 - buttonWidth / 2;
+	int buttonWidthSmall = (buttonWidth - buttonSpacing) / 2;
 	backButton.setX(leftMargin);
 	backButton.setY(height - buttonSpacing - buttonHeight);
 	backButton.setWidth(buttonWidth);
 	backButton.setHeight(buttonHeight);
-	
+
 	if (section == Section.MAIN) {
 	    videoButton.setX(leftMargin);
 	    videoButton.setY(topMargin);
@@ -74,6 +75,10 @@ public class GuiOptions extends GuiScreen {
 	    languageButton.setY(topMargin);
 	    languageButton.setWidth(buttonWidthSmall);
 	    languageButton.setHeight(buttonHeight);
+	    gameButton.setX(leftMargin);
+	    gameButton.setY(topMargin + buttonHeight + buttonSpacing);
+	    gameButton.setWidth(buttonWidthSmall);
+	    gameButton.setHeight(buttonHeight);
 	} else if (section == Section.VIDEO) {
 	    videoVsyncButton.setX(leftMargin);
 	    videoVsyncButton.setY(topMargin);
@@ -85,28 +90,33 @@ public class GuiOptions extends GuiScreen {
 	    videoFullscreenButton.setHeight(buttonHeight);
 	} else if (section == Section.LANGUAGE) {
 	    int i = 0;
-	    for(GuiButton b : languageButtons) {
+	    for (GuiButton b : languageButtons) {
 		b.setX(leftMargin);
-		b.setY(topMargin + (i++)*(buttonHeight+buttonSpacing));
+		b.setY(topMargin + (i++) * (buttonHeight + buttonSpacing));
 		b.setWidth(buttonWidth);
 		b.setHeight(buttonHeight);
 	    }
+	} else if (section == Section.GAME) {
+	    gameCornerScrollButton.setX(leftMargin);
+	    gameCornerScrollButton.setY(topMargin);
+	    gameCornerScrollButton.setWidth(buttonWidthSmall);
+	    gameCornerScrollButton.setHeight(buttonHeight);
 	}
-        super.render(g2d, width, height);
+	super.render(g2d, width, height);
     }
-    
+
     @Override
     public void tick() {
-        super.tick();
+	super.tick();
 	videoFullscreenButton.setText("gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
-	    GuiButton button = (GuiButton)e.getSource();
-	    if(button == backButton) {
-		if(section != Section.MAIN)
+	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
+	    GuiButton button = (GuiButton) e.getSource();
+	    if (button == backButton) {
+		if (section != Section.MAIN)
 		    setSection(Section.MAIN);
 		else {
 		    Client.instance.setGuiScreen(last);
@@ -116,34 +126,40 @@ public class GuiOptions extends GuiScreen {
 			System.err.println("Unable to save preferences");
 		    }
 		}
-	    }else if(button == videoButton) {
+	    } else if (button == videoButton) {
 		setSection(Section.VIDEO);
-	    }else if(button == videoVsyncButton) {
+	    } else if (button == videoVsyncButton) {
 		Client.instance.preferences.video.vsync = !Client.instance.preferences.video.vsync;
 		videoVsyncButton.setText("gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
-	    }else if(button == videoFullscreenButton) {
+	    } else if (button == videoFullscreenButton) {
 		Client.instance.preferences.video.fullscreen = !Client.instance.preferences.video.fullscreen;
 		videoFullscreenButton.setText("gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
 		Client.instance.setFullscreen(Client.instance.preferences.video.fullscreen);
-	    }else if(button == languageButton) {
+	    } else if (button == languageButton) {
 		setSection(Section.LANGUAGE);
-	    }else if(languageButtons.contains(button)) {
+	    } else if (languageButtons.contains(button)) {
 		String lang = button.getText().substring(5);
 		Client.instance.preferences.language = lang;
 		Client.instance.translation.reload("en");
 		Client.instance.translation.load(lang);
 		setSection(Section.LANGUAGE);
+	    } else if (button == gameButton) {
+		setSection(Section.GAME);
+	    } else if (button == gameCornerScrollButton) {
+		Client.instance.preferences.game.CornerScroll = !Client.instance.preferences.game.CornerScroll;
+		gameCornerScrollButton.setText("gui.options.game.CornerScroll." + (Client.instance.preferences.game.CornerScroll ? "on" : "off"));
 	    }
 	}
     }
-    
+
     private void setSection(Section s) {
 	section = s;
 	controlList.clear();
-	switch(s) {
+	switch (s) {
 	case MAIN:
 	    controlList.add(videoButton);
 	    controlList.add(languageButton);
+	    controlList.add(gameButton);
 	    break;
 	case VIDEO:
 	    controlList.add(videoVsyncButton);
@@ -151,24 +167,25 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case LANGUAGE:
 	    languageButtons.clear();
-	    List<String> languages = new Gson().fromJson(new InputStreamReader(
-		    GuiOptions.class.getResourceAsStream("/lang/langs.json")),
-		    new TypeToken<List<String>>() {
-		    }.getType());
+	    List<String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/langs.json")), new TypeToken<List<String>>() {
+	    }.getType());
 	    int i = 0x100;
-	    for(String s1 : languages) {
-		GuiButton button = new GuiButton(this, i, 0, 0, "lang."+s1);
+	    for (String s1 : languages) {
+		GuiButton button = new GuiButton(this, i, 0, 0, "lang." + s1);
 		languageButtons.add(button);
-		if(s1.equals(Client.instance.preferences.language))
+		if (s1.equals(Client.instance.preferences.language))
 		    button.setEnabled(false);
 	    }
 	    controlList.addAll(languageButtons);
+	    break;
+	case GAME:
+	    controlList.add(gameCornerScrollButton);
 	    break;
 	}
 	controlList.add(backButton);
     }
 
     private enum Section {
-	MAIN, VIDEO, LANGUAGE;
+	MAIN, VIDEO, LANGUAGE, GAME;
     }
 }

@@ -84,7 +84,7 @@ public class GuiMainMenu extends GuiScreen{
 	    if(button == newGame)
 		Client.instance.setGuiScreen(new GuiSelectServer(this));
 	    else if(button == test)
-		Client.instance.activateMap(new MapRenderer());
+		Client.instance.activateMap();
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
 	    else if(button == exit)

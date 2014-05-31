@@ -12,10 +12,15 @@ public class Preferences {
     public int version = CURRENT_VERSION;
     public String language = "en";
     public VideoSettings video = new VideoSettings();
+    public GameSettings game = new GameSettings();
     
     public class VideoSettings {
 	public boolean vsync = true;
 	public boolean fullscreen = false;
+    }
+    
+    public class GameSettings {
+	public boolean CornerScroll = true;
     }
 
     public void write(Writer writer) throws IOException {
