@@ -41,14 +41,14 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     public void render(Graphics2D g2d, int width, int height) {
 	this.width = width;
 	this.height = height;
-	AffineTransform tx = g2d.getTransform();
-	tx.translate(-scrollX, -scrollY);
+	//AffineTransform tx = g2d.getTransform();
+	//tx.translate(-scrollX, -scrollY);
 	for (GuiControl c : controlList)
 	    c.render(g2d, width, height);
 
 	Tile[][] map = Client.instance.map;
 	if (this.map == null || !map.equals(mapCache)) {
-	    this.map = new BufferedImage(map.length * tileSize - tileSize * scrollX, map[0].length * tileSize - tileSize * scrollY, BufferedImage.TYPE_INT_ARGB);
+	    this.map = new BufferedImage(map.length * tileSize, map[0].length * tileSize, BufferedImage.TYPE_INT_ARGB);
 	    Graphics2D g = this.map.createGraphics();
 	    for (int x = 0; x < map.length; x++) {
 		for (int y = 0; y < map[x].length; y++) {
@@ -56,7 +56,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		    Texture tex = TileRenderMap.getTexture(tile);
 		    if (tex == null)
 			continue;
-		    g.drawImage(tex.getImage(), x * tileSize - tileSize * scrollX, y * tileSize - tileSize * scrollY, tileSize, tileSize, tex);
+		    g.drawImage(tex.getImage(), x * tileSize, y * tileSize, tileSize, tileSize, tex);
 		}
 	    }
 	    g.dispose();
@@ -83,10 +83,31 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 		    }
 		}
 	    }
-	} catch (NullPointerException n) {
+	} catch (NullPointerException n) {}
+	
+	if(scrollX != 0)
+	{
+	    g2d.drawImage(new StandardTexture("Arrow_left").getImage(), tileSize/2, height/2, tileSize, tileSize, new StandardTexture("Arrow_left"));
+	}
+	if(scrollY !=0)
+	{
+	    g2d.drawImage(new StandardTexture("Arrow_up").getImage(), width/2, tileSize/2, tileSize, tileSize, new StandardTexture("Arrow_up"));
+	}
+	if(this.width < this.map.getWidth())
+	{
+	    g2d.drawImage(new StandardTexture("Arrow_right").getImage(), width - tileSize*3/2, height/2, tileSize, tileSize, new StandardTexture("Arrow_right"));
+	}
+	if(this.height < this.map.getHeight())
+	{
+	    g2d.drawImage(new StandardTexture("Arrow_down").getImage(), width/2, height - tileSize*3/2, tileSize, tileSize, new StandardTexture("Arrow_down"));
 	}
 
-	g2d.setTransform(tx);
+	//g2d.setTransform(tx);
+    }
+    
+    public BufferedImage getMapBackground()
+    {
+	return this.map.getSubimage(scrollX*tileSize, scrollY*tileSize, this.map.getWidth() - scrollX*tileSize, this.map.getHeight()- scrollY*tileSize);
     }
 
     @Override

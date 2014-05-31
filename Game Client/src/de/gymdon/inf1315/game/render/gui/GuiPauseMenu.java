@@ -1,7 +1,13 @@
 package de.gymdon.inf1315.game.render.gui;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
+import java.awt.font.GlyphVector;
+import java.awt.geom.Rectangle2D;
 
 import de.gymdon.inf1315.game.client.Client;
 
@@ -18,10 +24,8 @@ public class GuiPauseMenu extends GuiScreen{
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 	
-	drawBackground(g2d, width, height);
-        //int ticksRunning = Client.instance.getTicksRunning(); //not needed right now. Maybe later?
-        
-        /*Font f = Font.decode("Helvetica Bold 120");
+	g2d.drawImage(Client.instance.mapren.getMapBackground(), 0, 0, null);
+        Font f = Font.decode("Helvetica Bold 120");
         g2d.setFont(f);
         Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.instance.translation.translate("game.title"), g2d);
         int titleX = (int) (width/2 - bounds.getCenterX());
@@ -37,7 +41,7 @@ public class GuiPauseMenu extends GuiScreen{
 	    g2d.setStroke(new BasicStroke(1));
 	    g2d.fill(outline);
         }
-        g2d.translate(-titleX, -titleY);*/
+        g2d.translate(-titleX, -titleY);
         
         
         int topMargin = height/3;
