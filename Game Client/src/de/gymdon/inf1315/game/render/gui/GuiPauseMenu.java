@@ -71,7 +71,7 @@ public class GuiPauseMenu extends GuiScreen{
 	if(e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton)e.getSource();
 	    if(button == continueGame)
-		Client.instance.activateMap();
+		Client.instance.activateMap(false);
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
 	    else if(button == mainMenu)

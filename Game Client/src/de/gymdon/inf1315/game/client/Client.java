@@ -45,7 +45,7 @@ public class Client implements Runnable, WindowListener {
     public Map<Remote, Thread> remoteThreads = new HashMap<Remote, Thread>();
     public MapRenderer mapren;
     public MapGenerator mapgen;
-    public final Tile[][] map;
+    public Tile[][] map;
     public Building[][] buildings;
     public Unit[][] units;
 
@@ -296,7 +296,14 @@ public class Client implements Runnable, WindowListener {
 	}
     }
 
-    public void activateMap() {
+    public void activateMap(boolean newMap) {
+	if(newMap)
+	{
+	    mapgen = new MapGenerator();
+	    mapgen.generateAll();
+	    map = mapgen.getMap();
+	    mapren = new MapRenderer();
+	}
 	setGuiScreen(null);
 	canvas.mapRenderer = mapren;
 	canvas.addMouseListener(canvas.mapRenderer);
