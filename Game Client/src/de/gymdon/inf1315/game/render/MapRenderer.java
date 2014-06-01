@@ -310,10 +310,18 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
+	double z = zoom;
 	zoom *= Math.pow(1.1, e.getWheelRotation());
 	if (zoom < 0.2)
 	    zoom = 0.2;
 	if (zoom > 5)
 	    zoom = 5;
+	double d = zoom - z;
+	scrollX += d*e.getX()*2;
+	scrollY += d*e.getY()*2;
+	if(scrollX < 0)
+	    scrollX = 0;
+	if(scrollY < 0)
+	    scrollY = 0;
     }
 }
