@@ -58,17 +58,17 @@ public class MapGenerator {
 		map[i][k] = Tile.grass;
 	    }
 	}
-	//generateMapOutside();
+	// generateMapOutside();
 	generateMapInside();
 	generateBuildings();
     }
 
     public void generateMapOutside() {
 	/**
-	 * This method is not finished yet
-	 * It is to create the outline of the map
+	 * This method is not finished yet It is to create the outline of the
+	 * map
 	 */
-	
+
 	for (int i = 1; i <= averageSideWater; i++) {
 	    for (int k = 1; k <= i; k++) {
 		for (int l = i; l >= k; l--) {
@@ -190,8 +190,23 @@ public class MapGenerator {
 
     public void generateBuildings() {
 	buildings = new Building[mapWidth][mapHeight];
-	for (int i = 0; i < mines; i++) {
 
+	// Generate superiorMines
+	for (int i = 0; i < superiorMines; i++) {
+	    int xSMine = (int) ((mapWidth / 2) - 4 + random.nextInt(8));
+	    int ySMine = (int) ((mapHeight / 2) - 3 + random.nextInt(6));
+
+	    if (map[xSMine][ySMine] != Tile.grass || marginBuildings(xSMine, ySMine, 5)) {
+		i--;
+	    } else {
+		Mine m = new Mine(xSMine, ySMine);
+		m.superior = true;
+		buildings[xSMine][ySMine] = m;
+	    }
+	}
+
+	// Generate Mines
+	for (int i = 0; i < mines; i++) {
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
 
@@ -203,12 +218,8 @@ public class MapGenerator {
 		buildings[xMine][yMine] = m;
 	    }
 	}
-	
-	//Generate superior mine
-	Mine m = new Mine(mapWidth / 2, mapHeight / 2);
-	m.superior = true;
-	buildings[mapWidth / 2][mapHeight / 2] = m;
 
+	// Generate Castles
 	buildings[1][mapHeight / 2 - 1] = new Castle(null, 1, mapHeight / 2 - 1);
 	buildings[mapWidth - 3][mapHeight / 2 - 1] = new Castle(null, mapWidth - 3, mapHeight / 2 - 1);
     }

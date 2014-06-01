@@ -302,6 +302,7 @@ public class Client implements Runnable, WindowListener {
 	    mapgen = new MapGenerator();
 	    mapgen.generateAll();
 	    map = mapgen.getMap();
+	    buildings = mapgen.getBuildings();
 	    mapren = new MapRenderer();
 	}
 	setGuiScreen(null);
