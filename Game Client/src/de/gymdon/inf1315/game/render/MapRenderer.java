@@ -1,7 +1,6 @@
 package de.gymdon.inf1315.game.render;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,11 +29,10 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     public static final int TILE_SIZE_NORMAL = 64;
     public static final int TILE_SIZE_BIG = 128;
     public int tileSize = TILE_SIZE_NORMAL;
-    public double zoom = 1;
+    public double zoom = 0.1;
     private BufferedImage map = null;
     private BufferedImage cache = null;
     private Tile[][] mapCache = null;
-    public Point p;
     private boolean firstClick = false;
     private int scrollX = 0;
     private int scrollY = 0;
@@ -103,12 +101,14 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    for (int y = 0; y < fieldHover[x].length; y++) {
 		if (fieldHover[x][y]) {
 		    Texture tex = StandardTexture.get("hover");
-		    g2d.drawImage(tex.getImage(), x * tileSize, y * tileSize, tileSize, tileSize, tex);
+		    Building b = buildings[x][y];
+		    g2d.drawImage(tex.getImage(), x * tileSize, y * tileSize, tileSize * b.getSizeX(), tileSize * b.getSizeY(), tex);
 		}
 
 		if (field[x][y]) {
 		    Texture tex = StandardTexture.get("hover_clicked");
-		    g2d.drawImage(tex.getImage(), x * tileSize, y * tileSize, tileSize, tileSize, tex);
+		    Building b = buildings[x][y];
+		    g2d.drawImage(tex.getImage(), x * tileSize, y * tileSize, tileSize * b.getSizeX(), tileSize * b.getSizeY(), tex);
 		}
 	    }
 	}
@@ -151,27 +151,24 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    return;
 	int mapWidth = mapCache.length;
 	int mapHeight = mapCache[0].length;
-	if (field == null || field.length != mapWidth || field[0].length != mapHeight)
-	    field = new boolean[mapWidth][mapHeight];
+	
 	if (e.getButton() == MouseEvent.BUTTON1 && !firstClick) {
 	    int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
 	    int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
+
+	    if (x < 0 || x >= field.length || y < 0 || y >= field[x].length)
+		return;
 	    Building[][] buildings = Client.instance.buildings;
 
-	    if (0 <= x && x < field.length && 0 <= y && y < field[x].length) {
-		p = new Point(x, y);
-		actionPerformed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, ("(" + x + "|" + y + ")")));
-
-		for (int a = 0; a < field.length; a++) {
-		    for (int b = 0; b < field[a].length; b++) {
-			field[a][b] = false;
+	    field = new boolean[mapWidth][mapHeight];
+	    for (int x1 = x; x1 > x1 - 6 && x1 >= 0; x1--) {
+		for (int y1 = y; y1 > y1 - 6 && y1 >= 0; y1--) {
+		    Building b = buildings[x1][y1];
+		    if (b != null && b.getSizeX() + x1 > x && b.getSizeY() + y1 > y) {
+			field[x1][y1] = true;
+			return;
 		    }
 		}
-		if (buildings[x][y] != null) {
-		    field[x][y] = true;
-		}
-	    } else {
-		p = new Point(-1, -1);
 	    }
 	}
 	firstClick = false;
@@ -184,22 +181,25 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	for (GuiControl c : controlList)
 	    c.mouseMoved(e);
 
+	if (mapCache == null)
+	    return;
 	int mapWidth = mapCache.length;
 	int mapHeight = mapCache[0].length;
-	if (fieldHover == null || fieldHover.length != mapWidth || fieldHover[0].length != mapHeight)
-	    fieldHover = new boolean[mapWidth][mapHeight];
+	
 	int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
 	int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
+	
+	if(x < 0 || x >= fieldHover.length || y < 0 || y >= fieldHover[x].length)
+	    return;
 	Building[][] buildings = Client.instance.buildings;
 
-	if (0 <= x && x < fieldHover.length && 0 <= y && y < fieldHover[x].length) {
-	    if (buildings[x][y] != null) {
-		fieldHover[x][y] = true;
-	    } else {
-		for (int a = 0; a < fieldHover.length; a++) {
-		    for (int b = 0; b < fieldHover[a].length; b++) {
-			fieldHover[a][b] = false;
-		    }
+	fieldHover = new boolean[mapWidth][mapHeight];
+	for (int x1 = x; x1 > x1 - 6 && x1 >= 0; x1--) {
+	    for (int y1 = y; y1 > y1 - 6 && y1 >= 0; y1--) {
+		Building b = buildings[x1][y1];
+		if(b != null && b.getSizeX() + x1 > x && b.getSizeY() + y1 > y) {
+		    fieldHover[x1][y1] = true;
+		    return;
 		}
 	    }
 	}

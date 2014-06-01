@@ -7,4 +7,12 @@ public abstract class Building extends GameObject {
 
     public abstract void occupy(Player p);
     public abstract Texture getTexture();
+    
+    public int getSizeX() {
+	return 1;
+    }
+    
+    public int getSizeY() {
+	return 1;
+    }
 }
