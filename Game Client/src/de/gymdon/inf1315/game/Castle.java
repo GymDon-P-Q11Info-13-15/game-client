@@ -22,7 +22,7 @@ public class Castle extends Building {
 
     @Override
     public Texture getTexture() {
-	return owner == null ? new StandardTexture("castle_neutral_big") : new StandardTexture("castle_" + owner.color.name().toLowerCase() + "_small");
+	return owner == null ? new StandardTexture("castle_big_neutral") : new StandardTexture("castle_small_" + owner.color.name().toLowerCase() + "");
     }
     
     public int getSizeX() {
