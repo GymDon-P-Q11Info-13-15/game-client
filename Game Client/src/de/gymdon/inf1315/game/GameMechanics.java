@@ -183,7 +183,7 @@ public class GameMechanics implements ActionListener {
 	    {
 		defender.setHP(defender.hp - r.nextInt(attacker.attack) * attacker.hp / 100);
 		// ranged Schadensberechnung wip
-		System.out.println("defender hp " + defender.hp);
+		
 		return;
 	    } else {
 		if (r.nextInt(81) >= strikechance(attacker, defender)) {
@@ -202,7 +202,13 @@ public class GameMechanics implements ActionListener {
 	    }
 	}
     }
-
+    public void pillage(Unit u,Building b)
+    {
+     if(r.nextInt(101)>=b.defense){
+	b.hp=b.hp-u.attack*125*(int)((75+r.nextInt(51))/100); 
+     }
+	
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
 	String s = e.paramString();
