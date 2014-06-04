@@ -115,23 +115,24 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
 	g2d.setTransform(tx);
 
-	// Rendering Arrows to show where unseen map is
-	if (scrollX != 0) {
-	    Texture tex = StandardTexture.get("arrow_left");
-	    g2d.drawImage(tex.getImage(), tileSize / 2, height / 2, tileSize, tileSize, tex);
+	int[] x = new int[] { width / 2, width - tileSize / 2, width / 2, tileSize / 2 };
+	int[] y = new int[] { tileSize / 2, height / 2, height - tileSize / 2, height / 2 };
+	Texture tex = StandardTexture.get("arrow_1");
+	for (int i = 0; i < 4; i++) {
+	    if (i == 0 && scrollY <= 0)
+		continue;
+	    if (i == 1 && scrollX >= (int) (mapWidth * tileSize * zoom - width))
+		continue;
+	    if (i == 2 && scrollY >= (int) (mapHeight * tileSize * zoom - height))
+		continue;
+	    if (i == 3 && scrollX <= 0)
+		continue;
+	    g2d.translate(x[i], y[i]);
+	    g2d.rotate(Math.toRadians(90 * i));
+	    g2d.drawImage(tex.getImage(), -tileSize / 2, -tileSize / 2, tex);
+	    g2d.setTransform(tx);
 	}
-	if (scrollY != 0) {
-	    Texture tex = StandardTexture.get("arrow_up");
-	    g2d.drawImage(tex.getImage(), width / 2, tileSize / 2, tileSize, tileSize, tex);
-	}
-	if (scrollX < (int) (mapWidth * tileSize * zoom - width)) {
-	    Texture tex = StandardTexture.get("arrow_right");
-	    g2d.drawImage(tex.getImage(), width - tileSize * 3 / 2, height / 2, tileSize, tileSize, tex);
-	}
-	if (scrollY < (int) (mapHeight * tileSize * zoom - height)) {
-	    Texture tex = StandardTexture.get("arrow_down");
-	    g2d.drawImage(tex.getImage(), width / 2, height - tileSize * 3 / 2, tileSize, tileSize, tex);
-	}
+
 	g2d.dispose();
 	g2do.drawImage(cache, 0, 0, null);
     }
@@ -151,7 +152,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    return;
 	int mapWidth = mapCache.length;
 	int mapHeight = mapCache[0].length;
-	
+
 	if (e.getButton() == MouseEvent.BUTTON1 && !firstClick) {
 	    int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
 	    int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
@@ -185,11 +186,11 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    return;
 	int mapWidth = mapCache.length;
 	int mapHeight = mapCache[0].length;
-	
+
 	int x = (int) (((e.getX() + scrollX) / zoom) / tileSize);
 	int y = (int) (((e.getY() + scrollY) / zoom) / tileSize);
-	
-	if(x < 0 || x >= fieldHover.length || y < 0 || y >= fieldHover[x].length)
+
+	if (x < 0 || x >= fieldHover.length || y < 0 || y >= fieldHover[x].length)
 	    return;
 	Building[][] buildings = Client.instance.buildings;
 
@@ -197,7 +198,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	for (int x1 = x; x1 > x1 - 6 && x1 >= 0; x1--) {
 	    for (int y1 = y; y1 > y1 - 6 && y1 >= 0; y1--) {
 		Building b = buildings[x1][y1];
-		if(b != null && b.getSizeX() + x1 > x && b.getSizeY() + y1 > y) {
+		if (b != null && b.getSizeX() + x1 > x && b.getSizeY() + y1 > y) {
 		    fieldHover[x1][y1] = true;
 		    return;
 		}
@@ -317,11 +318,11 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	if (zoom > 5)
 	    zoom = 5;
 	double d = zoom - z;
-	scrollX += d*e.getX()*2;
-	scrollY += d*e.getY()*2;
-	if(scrollX < 0)
+	scrollX += d * e.getX() * 2;
+	scrollY += d * e.getY() * 2;
+	if (scrollX < 0)
 	    scrollX = 0;
-	if(scrollY < 0)
+	if (scrollY < 0)
 	    scrollY = 0;
     }
 }
