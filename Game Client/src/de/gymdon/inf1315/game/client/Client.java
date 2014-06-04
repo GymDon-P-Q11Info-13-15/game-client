@@ -48,8 +48,11 @@ public class Client implements Runnable, WindowListener {
     public Tile[][] map;
     public Building[][] buildings;
     public Unit[][] units;
+    public GameMechanics gm;
+    
 
     public Client() {
+	gm= new GameMechanics();
 	mapgen = new MapGenerator();
 	mapgen.generateAll();
 	map = mapgen.getMap();

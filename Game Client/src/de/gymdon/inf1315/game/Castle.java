@@ -18,6 +18,7 @@ public class Castle extends Building {
 	// cannot be occupied
 	// sure can it be occupied, if occupied the game is over ;)
     }
+    
 
     @Override
     public Texture getTexture() {

@@ -119,7 +119,7 @@ public class GameMechanics implements ActionListener {
     }
 
     public void getAccessibleFields(Unit a) {
-	tempRange = new boolean[map.length][map.length];
+	tempRange = new boolean[Client.instance.map.length][Client.instance.map[0].length];
 	step(a.getSpeed(), a.x, a.y);
 
     }

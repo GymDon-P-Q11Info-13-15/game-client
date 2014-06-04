@@ -10,7 +10,7 @@ public class Knight extends Unit {
 	range = 1;
 	attack = 70;
 	defense = 50;
-	hp = 140;
+	hp = 100;
 	cost = 200;
     }
 
@@ -21,7 +21,7 @@ public class Knight extends Unit {
 
     @Override
     public void attack() {
-
+		
     }
 
     @Override
@@ -35,6 +35,12 @@ public class Knight extends Unit {
     public int getSpeed() {
 
 	return speed;
+    }
+
+    @Override
+    public void clicked() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

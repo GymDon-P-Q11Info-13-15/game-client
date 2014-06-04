@@ -10,7 +10,7 @@ public class Archer extends Unit {
 	range = 4;
 	attack = 20;
 	defense = 20;
-	hp = 70;
+	hp = 120;
 	cost = 60;
     }
 
@@ -38,6 +38,12 @@ public class Archer extends Unit {
 
 	return speed;
 
+    }
+
+    @Override
+    public void clicked() {
+	// TODO Auto-generated method stub
+	
     }
 
 }
