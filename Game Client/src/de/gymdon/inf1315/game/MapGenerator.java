@@ -65,7 +65,7 @@ public class MapGenerator {
 
     public void generateMapOutside() {
 	/**
-	 * This method is not finished yet It is to create the outline of the
+	 * This method is not finished yet. It is to create the outline of the
 	 * map
 	 */
 
@@ -78,10 +78,11 @@ public class MapGenerator {
 	}
     }
 
-    /**
-     * This method will basically generate the map for the game.
-     */
     public void generateMapInside() {
+	/**
+	 * This method will basically generate the map for the game.
+	 */
+
 	int[] xLakes = new int[lakes];
 	int[] yLakes = new int[lakes];
 	int tries = 0;
