@@ -51,8 +51,6 @@ public class Client implements Runnable, WindowListener {
 
     public Client() {
 	mapgen = new MapGenerator();
-	mapgen.generateAll();
-	map = mapgen.getMap();
 	mapren = new MapRenderer();
 	buildings = mapgen.getBuildings();
 	Client.instance = this;
@@ -303,7 +301,6 @@ public class Client implements Runnable, WindowListener {
 	    mapgen.generateAll();
 	    map = mapgen.getMap();
 	    buildings = mapgen.getBuildings();
-	    mapren = new MapRenderer();
 	}
 	setGuiScreen(null);
 	canvas.mapRenderer = mapren;
