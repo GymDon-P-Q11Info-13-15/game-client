@@ -13,6 +13,7 @@ import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.gymdon.inf1315.game.Utils;
 import de.gymdon.inf1315.game.client.Client;
 
 public class GuiOptions extends GuiScreen {
@@ -31,6 +32,7 @@ public class GuiOptions extends GuiScreen {
     private List<GuiButton> languageButtons = new ArrayList<GuiButton>();
     // -- Game Options
     private GuiButton gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
+    private GuiButton gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
 
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -96,6 +98,10 @@ public class GuiOptions extends GuiScreen {
 		b.setHeight(buttonHeight);
 	    }
 	} else if (section == Section.GAME) {
+	    gameArrowButton.setX(leftMargin);
+	    gameArrowButton.setY(topMargin);
+	    gameArrowButton.setWidth(buttonWidthSmall);
+	    gameArrowButton.setHeight(buttonHeight);
 	}
 	super.render(g2d, width, height);
     }
@@ -140,6 +146,16 @@ public class GuiOptions extends GuiScreen {
 		setSection(Section.LANGUAGE);
 	    } else if (button == gameButton) {
 		setSection(Section.GAME);
+	    } else if (button == gameArrowButton) {
+		try {
+		    int arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "/textures/arrow_").size();
+		    //System.out.println("Available arrows: " + arrows);
+		    Client.instance.preferences.game.arrow = (Client.instance.preferences.game.arrow+1)%arrows;
+		    gameArrowButton.setTextData(new Object[]{Client.instance.preferences.game.arrow});
+		} catch (Exception e1) {
+		    e1.printStackTrace();
+		}
+		
 	    }
 	}
     }
@@ -171,6 +187,8 @@ public class GuiOptions extends GuiScreen {
 	    controlList.addAll(languageButtons);
 	    break;
 	case GAME:
+	    controlList.add(gameArrowButton);
+	    gameArrowButton.setTextData(new Object[]{Client.instance.preferences.game.arrow});
 	    break;
 	}
 	controlList.add(backButton);

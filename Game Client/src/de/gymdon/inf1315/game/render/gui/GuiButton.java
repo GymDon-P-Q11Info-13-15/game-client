@@ -21,6 +21,7 @@ public class GuiButton extends GuiControl {
     protected int width;
     protected int height;
     protected String text;
+    protected Object[] textData = new Object[0];
     protected Texture texture;
     protected boolean drawBackground = true;
     protected int bgColor = 0x7B5C3D;
@@ -97,7 +98,7 @@ public class GuiButton extends GuiControl {
 	}
 
 	g2d.setFont(font);
-	String translatedText = Client.instance.translation.translate(text);
+	String translatedText = Client.instance.translation.translate(text, textData);
 	Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(translatedText, g2d);
 	g2d.setColor(new Color(textColor));
 	g2d.drawString(translatedText,
@@ -139,6 +140,10 @@ public class GuiButton extends GuiControl {
 
     public String getText() {
 	return text;
+    }
+    
+    public Object[] getTextData() {
+	return textData;
     }
 
     public Texture getTexture() {
@@ -228,6 +233,11 @@ public class GuiButton extends GuiControl {
 
     public GuiButton setText(String text) {
 	this.text = text;
+	return this;
+    }
+    
+    public GuiButton setTextData(Object... data) {
+	this.textData = data;
 	return this;
     }
 

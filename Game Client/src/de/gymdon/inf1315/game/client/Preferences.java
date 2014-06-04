@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Preferences {
-    public static final int CURRENT_VERSION = 2;
+    public static final int CURRENT_VERSION = 3;
     public int version = CURRENT_VERSION;
     public String language = "en";
     public VideoSettings video = new VideoSettings();
@@ -20,6 +20,7 @@ public class Preferences {
     }
     
     public class GameSettings {
+	public int arrow = 0;
     }
 
     public void write(Writer writer) throws IOException {

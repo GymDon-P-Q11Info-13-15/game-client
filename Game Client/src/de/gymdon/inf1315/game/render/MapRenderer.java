@@ -117,7 +117,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 
 	int[] x = new int[] { width / 2, width - tileSize / 2, width / 2, tileSize / 2 };
 	int[] y = new int[] { tileSize / 2, height / 2, height - tileSize / 2, height / 2 };
-	Texture tex = StandardTexture.get("arrow_1");
+	Texture tex = StandardTexture.get("arrow_" + Client.instance.preferences.game.arrow);
 	for (int i = 0; i < 4; i++) {
 	    if (i == 0 && scrollY <= 0)
 		continue;

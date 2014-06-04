@@ -21,6 +21,7 @@
 	"gui.options.video.fullscreen.off": "Imago solitus",
 	"gui.options.language" : "Instrumentae linguae",
 	"gui.options.game": "Instrumentae aleae",
+	"gui.options.game.arrow": "Sagitta: %d",
 	"gui.server.select": "Selectio Serverorum",
 	"gui.back.mainmenu": "Redire ad primum visificum",
 	"gui.back": "Redire",
