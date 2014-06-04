@@ -27,6 +27,8 @@ public class Barracks extends Building {
 	//TODO Texture
 	return new StandardTexture("grass_old");
     }
+    
+    
 
     
 }
