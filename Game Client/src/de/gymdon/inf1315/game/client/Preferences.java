@@ -19,7 +19,7 @@ public class Preferences {
     public GameSettings game = new GameSettings();
     
     public Preferences() {
-	String lang = Locale.getDefault().getLanguage();
+	String lang = Locale.getDefault().toLanguageTag();
 	if(Preferences.class.getResourceAsStream("/lang/" + lang + ".json") != null)
 	    this.language = lang;
     }
@@ -51,14 +51,16 @@ public class Preferences {
 	try {
 	    List<String> langs = Utils.getResourceListing(Preferences.class.getClassLoader(), "/lang/");
 	    langs.remove("/langs/languages.json");
-	    if(!langs.contains(this.language)) {
+	    if(!langs.contains("/lang/" + language + ".json")) {
+		String last = this.language;
 		for(String lang : langs)
 		    if(lang.startsWith("/lang/" + language + "_")) {
 			language = lang.substring(6);
 			break;
 		    }
-		if(!langs.contains(language))
+		if(!langs.contains("/lang/" + language + ".json"))
 		    language = new Preferences().language;
+		System.out.println(last + " -> " + language);
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
