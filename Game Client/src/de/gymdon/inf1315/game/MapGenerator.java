@@ -17,12 +17,14 @@ public class MapGenerator {
 
     public static Tile[][] map;
     public Building[][] buildings;
-    public final long seed;
+    public long seed;
     public Random random;
-    
+
     int distancesLeft = 0;
     int distancesRight = 0;
     double fairness = 1;
+    
+    private final static double FAIRNESS_FACTOR = 1.05;
 
     public MapGenerator() {
 	this(new Random().nextLong());
@@ -52,6 +54,15 @@ public class MapGenerator {
     public int getMapHeight() {
 	return mapHeight;
     }
+    
+    private void resetAll() {
+	
+	seed = new Random().nextLong();
+	distancesLeft = 0;
+	distancesRight = 0;
+	fairness = 1;
+	
+    }
 
     public void generateAll() {
 	random.setSeed(seed);
@@ -65,6 +76,13 @@ public class MapGenerator {
 	// generateMapOutside();
 	generateMapInside();
 	generateBuildings();
+	
+	if(fairness > FAIRNESS_FACTOR) {
+	    
+	    resetAll();
+	    generateAll();
+	    
+	}
     }
 
     public void generateMapOutside() {
@@ -199,7 +217,7 @@ public class MapGenerator {
 	// Generate Castles
 	buildings[1][mapHeight / 2 - 1] = new Castle(null, 1, mapHeight / 2 - 1);
 	buildings[mapWidth - 3][mapHeight / 2 - 1] = new Castle(null, mapWidth - 3, mapHeight / 2 - 1);
-	
+
 	// Generate superiorMine(s)
 	for (int i = 0; i < superiorMines; i++) {
 	    int xSMine = (int) ((mapWidth / 2) - 4 + random.nextInt(8));
@@ -216,7 +234,9 @@ public class MapGenerator {
 
 	// Generate Mines
 	
-	
+	int lastDistanceLeft;
+	int lastDistanceRight;
+
 	for (int i = 0; i < mines; i++) {
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
@@ -227,15 +247,18 @@ public class MapGenerator {
 		Mine m = new Mine(xMine, yMine);
 		m.superior = false;
 		buildings[xMine][yMine] = m;
-		distancesLeft = distancesLeft + giveDistance(buildings[1][mapHeight / 2 - 1], m);
-		distancesRight = distancesRight + giveDistance(buildings[mapWidth - 3][mapHeight / 2 - 1], m);
+		lastDistanceLeft = giveDistance(buildings[1][mapHeight / 2 - 1], m);
+		lastDistanceRight = giveDistance(buildings[mapWidth - 3][mapHeight / 2 - 1], m);
+		distancesLeft = distancesLeft + lastDistanceLeft;
+		distancesRight = distancesRight + lastDistanceRight;
 	    }
 	}
-	
+
 	System.out.println(distancesLeft);
 	System.out.println(distancesRight);
-	fairness = (double)distancesLeft / distancesRight;
-	if(fairness < 1) fairness = (1 / fairness);
+	fairness = (double) distancesLeft / distancesRight;
+	if (fairness < 1)
+	    fairness = (1 / fairness);
 	System.out.println(fairness);
     }
 
@@ -249,13 +272,19 @@ public class MapGenerator {
 	}
 	return false;
     }
-    
+
     private int giveDistance(Building castle, Building mine) {
-	
+
 	int xDiff = Math.abs(castle.x - mine.x);
 	int yDiff = Math.abs(castle.y - mine.y);
 	int Diff = xDiff + yDiff;
 	return Diff;
+
+    }
+    
+    private void setBuildingWithDistance(int distance, boolean isLeft) {
+	
+	
 	
     }
 }
