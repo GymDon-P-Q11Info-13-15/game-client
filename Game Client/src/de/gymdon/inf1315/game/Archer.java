@@ -10,7 +10,7 @@ public class Archer extends Unit {
 	range = 4;
 	attack = 20;
 	defense = 20;
-	hp = 120;
+	hp = 100;
 	cost = 60;
     }
 
