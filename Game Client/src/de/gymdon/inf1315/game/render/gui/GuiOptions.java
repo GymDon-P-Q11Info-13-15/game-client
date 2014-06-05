@@ -56,7 +56,7 @@ public class GuiOptions extends GuiScreen {
 	languageButtons.clear();
 	gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
 	gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
-	gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom");
+	gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
 	arrowButtons.clear();
 	setSection(section);
     }
@@ -227,7 +227,7 @@ public class GuiOptions extends GuiScreen {
 	    arrowButtons.clear();
 	    int arrows = 0;
 	    try {
-		arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "\\textures\\arrow_").size();
+		arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "/textures/arrow_").size();
 	    } catch (Exception e1) {
 		e1.printStackTrace();
 	    }

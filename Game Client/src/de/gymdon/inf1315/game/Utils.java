@@ -20,7 +20,7 @@ public class Utils {
 	URL dirURL = cl.getResource("");
 	if (dirURL != null && dirURL.getProtocol().equals("file")) {
 	    File f = new File(dirURL.toURI());
-	    return recurse(f, f.getAbsolutePath());
+	    return recurse(f, f.getAbsolutePath().replace('\\', '/'));
 	}
 
 	if (dirURL.getProtocol().equals("jar")) {
@@ -29,7 +29,7 @@ public class Utils {
 	    Enumeration<JarEntry> entries = jar.entries();
 	    Set<String> result = new HashSet<String>();
 	    while (entries.hasMoreElements())
-		result.add("/" + entries.nextElement().getName());
+		result.add("/" + entries.nextElement().getName().replace('\\', '/'));
 	    jar.close();
 	    return new ArrayList<String>(result);
 	}
