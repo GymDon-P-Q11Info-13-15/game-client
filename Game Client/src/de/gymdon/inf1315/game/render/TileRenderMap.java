@@ -15,7 +15,10 @@ public class TileRenderMap {
     
     static {
 	map.put(Tile.grass, new StandardTexture("grass"));
+	map.put(Tile.grass2, new StandardTexture("grass"));
 	map.put(Tile.sand, new StandardTexture("sand"));
+	map.put(Tile.sand2, new StandardTexture("sand"));
 	map.put(Tile.water, new StandardTexture("water"));
+	map.put(Tile.water2, new StandardTexture("water"));
     }
 }
