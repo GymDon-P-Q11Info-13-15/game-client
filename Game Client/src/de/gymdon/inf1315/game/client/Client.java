@@ -126,10 +126,9 @@ public class Client implements Runnable, WindowListener {
     }
 
     private void init() {
-	translation = new Translation("en");
+	translation = new Translation("en_US");
 	readPreferences();
-	if (!preferences.language.equals("en"))
-	    translation.load(preferences.language);
+	translation.load(preferences.language);
 	setGuiScreen(new GuiMainMenu());
 	if (MacOSUtils.iMacOS())
 	    macOsUtils = new MacOSUtils(frame);
@@ -165,10 +164,9 @@ public class Client implements Runnable, WindowListener {
     }
 
     public void reload() {
-	translation = new Translation("en");
+	translation = new Translation("en_US");
 	readPreferences();
-	if (!preferences.language.equals("en"))
-	    translation.load(preferences.language);
+	translation.load(preferences.language);
 	frame.setTitle(Client.instance.translation.translate("game.title"));
 	setFullscreen(preferences.video.fullscreen);
     }

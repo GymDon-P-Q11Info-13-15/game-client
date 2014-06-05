@@ -34,8 +34,11 @@ public class GuiOptions extends GuiScreen {
     // -- Game Options
     private GuiButton gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
     private GuiButton gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
+    private GuiButton gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
     // -- Arrows
     private List<GuiButton> arrowButtons = new ArrayList<GuiButton>();
+    
+    private Stack<Section> sectionStack = new Stack<Section>();
 
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -55,6 +58,7 @@ public class GuiOptions extends GuiScreen {
 	languageButtons.clear();
 	gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
 	gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
+	gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
 	arrowButtons.clear();
 	setSection(section);
     }
@@ -118,11 +122,15 @@ public class GuiOptions extends GuiScreen {
 	    gameArrowButton.setY(topMargin);
 	    gameArrowButton.setWidth(buttonWidthSmall);
 	    gameArrowButton.setHeight(buttonHeight);
+	    gameZoomButton.setX(leftMargin + buttonWidthSmall + buttonSpacing);
+	    gameZoomButton.setY(topMargin);
+	    gameZoomButton.setWidth(buttonWidthSmall);
+	    gameZoomButton.setHeight(buttonHeight);
 	} else if (section == Section.ARROWS) {
 	    int i = 0;
 	    for (GuiButton b : arrowButtons) {
-		b.setX(leftMargin + (i % 4) * (buttonHeight + buttonSpacing));
-		b.setY(topMargin + (i / 4) * (buttonHeight + buttonSpacing));
+		b.setX((int) (width/2 - buttonHeight*2 - buttonSpacing*7.5 + (i % 4) * (buttonHeight + buttonSpacing *5)));
+		b.setY(topMargin + (i / 4) * (buttonHeight + buttonSpacing * 5));
 		b.setWidth(buttonHeight);
 		b.setHeight(buttonHeight);
 		i++;
@@ -142,16 +150,7 @@ public class GuiOptions extends GuiScreen {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton) e.getSource();
 	    if (button == backButton) {
-		if (section != Section.MAIN)
-		    setSection(Section.MAIN);
-		else {
-		    Client.instance.setGuiScreen(last);
-		    try {
-			Client.instance.preferences.write(new FileWriter("preferences.json"));
-		    } catch (IOException e1) {
-			System.err.println("Unable to save preferences");
-		    }
-		}
+		setSection(sectionStack.isEmpty() ? null : sectionStack.peek(), true);
 	    } else if (button == videoButton) {
 		setSection(Section.VIDEO);
 	    } else if (button == videoVsyncButton) {
@@ -164,9 +163,9 @@ public class GuiOptions extends GuiScreen {
 	    } else if (button == languageButton) {
 		setSection(Section.LANGUAGE);
 	    } else if (languageButtons.contains(button)) {
-		String lang = button.getText().substring(5);
+		String lang = (String)button.getTextData()[0];
 		Client.instance.preferences.language = lang;
-		Client.instance.translation.reload("en");
+		Client.instance.translation.reload("en_US");
 		Client.instance.translation.load(lang);
 		this.rebuild();
 		if(last != null)
@@ -175,14 +174,38 @@ public class GuiOptions extends GuiScreen {
 		setSection(Section.GAME);
 	    } else if (button == gameArrowButton) {
 		setSection(Section.ARROWS);
+	    } else if (button == gameZoomButton) {
+		Client.instance.preferences.game.invertZoom = !Client.instance.preferences.game.invertZoom;
+		gameZoomButton.setText("gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
 	    } else if (arrowButtons.contains(button)) {
 		Client.instance.preferences.game.arrow = button.getId();
-		setSection(Section.ARROWS);
+		this.rebuild();
+		if(last != null)
+		    last.rebuild();
 	    }
 	}
     }
-
+    
     private void setSection(Section s) {
+	setSection(s, false);
+    }
+
+    private void setSection(Section s, boolean back) {
+	if(!back && section != null && section != s)
+	    sectionStack.push(section);
+	if(back) {
+	    if(!sectionStack.isEmpty())
+		sectionStack.pop();
+	    else {
+		Client.instance.setGuiScreen(last);
+		try {
+		    Client.instance.preferences.write(new FileWriter("preferences.json"));
+		} catch (IOException e1) {
+		    System.err.println("Unable to save preferences");
+		}
+		return;
+	    }
+	}
 	section = s;
 	controlList.clear();
 	switch (s) {
@@ -197,28 +220,28 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case LANGUAGE:
 	    languageButtons.clear();
-	    List<String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/langs.json")), new TypeToken<List<String>>() {
+	    Map<String,String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/languages.json")), new TypeToken<Map<String, String>>() {
 	    }.getType());
 	    int i = 0x100;
-	    for (String s1 : languages) {
-		GuiButton button = new GuiButton(this, i, 0, 0, "lang." + s1);
+	    for (Map.Entry<String,String> e : languages.entrySet()) {
+		GuiButton button = new GuiButton(this, i, 0, 0, e.getValue()).setTranslate(false).setTextData(e.getKey());
 		languageButtons.add(button);
-		if (s1.equals(Client.instance.preferences.language))
+		if (e.getKey().equals(Client.instance.preferences.language))
 		    button.setEnabled(false);
 	    }
 	    controlList.addAll(languageButtons);
 	    break;
 	case GAME:
 	    controlList.add(gameArrowButton);
+	    controlList.add(gameZoomButton);
 	    break;
 	case ARROWS:
 	    arrowButtons.clear();
-	    int arrows;
+	    int arrows = 0;
 	    try {
 		arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "/textures/arrow_").size();
 	    } catch (Exception e1) {
 		e1.printStackTrace();
-		arrows = 0;
 	    }
 	    for (int j = 0; j < arrows; j++) {
 		GuiButton button = new GuiButton(this, j, 0, 0, null);
