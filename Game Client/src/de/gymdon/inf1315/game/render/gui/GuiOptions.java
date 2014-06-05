@@ -164,9 +164,9 @@ public class GuiOptions extends GuiScreen {
 	    } else if (button == languageButton) {
 		setSection(Section.LANGUAGE);
 	    } else if (languageButtons.contains(button)) {
-		String lang = button.getText().substring(5);
+		String lang = (String)button.getTextData()[0];
 		Client.instance.preferences.language = lang;
-		Client.instance.translation.reload("en");
+		Client.instance.translation.reload("en_US");
 		Client.instance.translation.load(lang);
 		this.rebuild();
 		if(last != null)
@@ -197,13 +197,13 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case LANGUAGE:
 	    languageButtons.clear();
-	    List<String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/langs.json")), new TypeToken<List<String>>() {
+	    Map<String,String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/languages.json")), new TypeToken<Map<String, String>>() {
 	    }.getType());
 	    int i = 0x100;
-	    for (String s1 : languages) {
-		GuiButton button = new GuiButton(this, i, 0, 0, "lang." + s1);
+	    for (Map.Entry<String,String> e : languages.entrySet()) {
+		GuiButton button = new GuiButton(this, i, 0, 0, e.getValue()).setTranslate(false).setTextData(e.getKey());
 		languageButtons.add(button);
-		if (s1.equals(Client.instance.preferences.language))
+		if (e.getKey().equals(Client.instance.preferences.language))
 		    button.setEnabled(false);
 	    }
 	    controlList.addAll(languageButtons);
