@@ -1,5 +1,65 @@
 {
-    "contributers": [
-        "Credits werden von allen zusammen gemacht."
-    ]
+	"contributers": [
+		[
+			{
+				"name": "Simon Wanner",
+				"username": "skyrising",
+				"roles": ["lead", "client", "server"]
+			},
+			{
+				"name": "Simon Klimaschka",
+				"username": "LeMuecke",
+				"roles": ["lead", "client"]
+			},
+			{
+				"name": "Alexander Krabler",
+				"username": "alcros",
+				"roles": ["lead", "server"]
+			}
+		],
+		[
+			{
+				"name": "David Riepold",
+				"username": "Dave34507",
+				"roles": ["client"]
+			},
+			{
+				"name": "Johannes Rieder",
+				"username": "joio",
+				"roles": ["textures", "translations"]
+			},
+			{
+				"name": "Jan Schabesberger",
+				"username": "schabeja",
+				"roles": ["client"]
+			},
+			{
+				"name": "Stefan Schwanecke",
+				"username": "Newton34507",
+				"roles": ["client"]
+			},
+			{
+				"name": "Schiffelholz Noah",
+				"username": "schiffno",
+				"roles": ["textures"]
+			}
+		],
+		[
+			{
+				"name": "René Markl",
+				"username": "Rene1907",
+				"roles": ["client"]
+			},
+			{
+				"name": "Michael Edel",
+				"username": "edelmichi",
+				"roles": ["client"]
+			},
+			{
+				"name": "Gerhard Rauwolf",
+				"roles": ["contribution"]
+			}
+		]
+	]
+
 }
