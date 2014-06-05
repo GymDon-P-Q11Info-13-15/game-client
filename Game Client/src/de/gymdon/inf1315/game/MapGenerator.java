@@ -26,7 +26,7 @@ public class MapGenerator {
 
     boolean advantageLeft;
 
-    private final static double FAIRNESS_FACTOR = 1.05;
+    private final static double FAIRNESS_FACTOR = 1.04;
 
     public MapGenerator() {
 	this(new Random().nextLong());
@@ -77,6 +77,7 @@ public class MapGenerator {
 	}
 	// generateMapOutside();
 	generateMapInside();
+	generateMapGrassMargin();
 	generateBuildings();
 	makeWaterRandom();
 	makeGrassRandom();
@@ -257,8 +258,12 @@ public class MapGenerator {
 	System.out.println(fairness);
 	System.out.println(advantageLeft);
 
+	int tries = 0;
+	
 	// Generate superiorMine(s)
-	for (int i = 0; i < superiorMines; i++) {
+	for (int i = 0; i < superiorMines && tries < 50; i++) {
+	    tries++;
+	    
 	    int xSMine = (int) (mapWidth / 2);
 
 	    if (!advantageLeft) {
@@ -277,6 +282,24 @@ public class MapGenerator {
 		buildings[xSMine][ySMine] = m;
 	    }
 	}
+    }
+    
+    private void generateMapGrassMargin() {
+	
+	for(int i = 0; i < mapWidth; i++) {
+	    
+	    map[i][0] = Tile.grass;
+	    map[i][mapHeight-1] = Tile.grass;
+	    
+	}
+	
+	for(int i = 0; i < mapHeight; i++) {
+	    
+	    map[0][i] = Tile.grass;
+	    map[mapWidth-1][i] = Tile.grass;
+	    
+	}
+	
     }
 
     private void makeWaterRandom() {
