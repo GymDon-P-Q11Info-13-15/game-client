@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 import de.gymdon.inf1315.game.Utils;
 import de.gymdon.inf1315.game.client.Client;
+import de.gymdon.inf1315.game.render.StandardTexture;
 
 public class GuiOptions extends GuiScreen {
 
@@ -33,6 +34,8 @@ public class GuiOptions extends GuiScreen {
     // -- Game Options
     private GuiButton gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
     private GuiButton gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
+    // -- Arrows
+    private List<GuiButton> arrowButtons = new ArrayList<GuiButton>();
 
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -102,6 +105,14 @@ public class GuiOptions extends GuiScreen {
 	    gameArrowButton.setY(topMargin);
 	    gameArrowButton.setWidth(buttonWidthSmall);
 	    gameArrowButton.setHeight(buttonHeight);
+	} else if (section == Section.ARROWS) {
+	    int i = 0;
+	    for (GuiButton b : arrowButtons) {
+		b.setX(leftMargin + (i++) * (buttonHeight + buttonSpacing));
+		b.setY(topMargin + (i % 4 + 1) * (buttonHeight + buttonSpacing));
+		b.setWidth(buttonHeight);
+		b.setHeight(buttonHeight);
+	    }
 	}
 	super.render(g2d, width, height);
     }
@@ -147,15 +158,10 @@ public class GuiOptions extends GuiScreen {
 	    } else if (button == gameButton) {
 		setSection(Section.GAME);
 	    } else if (button == gameArrowButton) {
-		try {
-		    int arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "/textures/arrow_").size();
-		    //System.out.println("Available arrows: " + arrows);
-		    Client.instance.preferences.game.arrow = (Client.instance.preferences.game.arrow+1)%arrows;
-		    gameArrowButton.setTextData(new Object[]{Client.instance.preferences.game.arrow});
-		} catch (Exception e1) {
-		    e1.printStackTrace();
-		}
-		
+		setSection(Section.ARROWS);
+	    } else if (arrowButtons.contains(button)) {
+		//Client.instance.preferences.game.arrow = (Client.instance.preferences.game.arrow + 1) % arrows;
+		//gameArrowButton.setTextData(new Object[] { Client.instance.preferences.game.arrow });
 	    }
 	}
     }
@@ -188,13 +194,30 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case GAME:
 	    controlList.add(gameArrowButton);
-	    gameArrowButton.setTextData(new Object[]{Client.instance.preferences.game.arrow});
+	    break;
+	case ARROWS:
+	    arrowButtons.clear();
+	    int arrows;
+	    try {
+		arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "/textures/arrow_").size();
+	    } catch (Exception e1) {
+		e1.printStackTrace();
+		arrows = 0;
+	    }
+	    for (int j = 0; j < arrows; j++) {
+		GuiButton button = new GuiButton(this, j, 0, 0, "");
+		button.setTexture(StandardTexture.get("arrow_" + j));
+		arrowButtons.add(button);
+		if (j == Client.instance.preferences.game.arrow)
+		    button.setEnabled(false);
+	    }
+	    controlList.addAll(arrowButtons);
 	    break;
 	}
 	controlList.add(backButton);
     }
 
     private enum Section {
-	MAIN, VIDEO, LANGUAGE, GAME;
+	MAIN, VIDEO, LANGUAGE, GAME, ARROWS;
     }
 }

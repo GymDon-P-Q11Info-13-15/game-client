@@ -21,10 +21,12 @@
 	"gui.options.video.fullscreen.off": "Vollbild: Aus",
 	"gui.options.language" : "Spracheinstellungen",
 	"gui.options.game": "Spiel Einstellungen",
-	"gui.options.game.arrow": "Pfeil: %d",
+	"gui.options.game.arrow": "Wählen sie ihren Pfeil",
+	"gui.options.arrows": "Wählen sie ihren Pfeil",
 	"gui.server.select": "Serverauswahl",
 	"gui.back.mainmenu": "Zurück zum Hauptmenü",
 	"gui.back": "Zurück",
 	"gui.test": "Test",
-	"gui.exit": "Beenden"
+	"gui.exit": "Beenden",
+	"": ""
 }
