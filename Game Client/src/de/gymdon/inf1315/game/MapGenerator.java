@@ -288,7 +288,7 @@ public class MapGenerator {
 		if (map[i][k] == Tile.water) {
 		    boolean generateTile = new Random().nextBoolean();
 		    if(generateTile)
-		    map[i][k] = Tile.water;
+		    map[i][k] = Tile.water2;
 		}
 
 	    }
@@ -306,7 +306,7 @@ public class MapGenerator {
 		if (map[i][k] == Tile.grass) {
 		    boolean generateTile = new Random().nextBoolean();
 		    if(generateTile)
-		    map[i][k] = Tile.grass;
+		    map[i][k] = Tile.grass2;
 		}
 
 	    }
@@ -324,7 +324,7 @@ public class MapGenerator {
 		if (map[i][k] == Tile.sand) {
 		    boolean generateTile = new Random().nextBoolean();
 		    if(generateTile)
-		    map[i][k] = Tile.sand;
+		    map[i][k] = Tile.sand2;
 		}
 	    }
 
