@@ -28,6 +28,9 @@ public class Tile {
     }
 
     public static final Tile grass = new Tile(0, "grass").setGroundFactor(1);
+    public static final Tile grass2 = new Tile(0, "grass").setGroundFactor(1);
     public static final Tile sand = new Tile(1, "sand").setGroundFactor(3);
+    public static final Tile sand2 = new Tile(1, "sand").setGroundFactor(3);
     public static final Tile water = new Tile(2, "water").setGroundFactor(2);
+    public static final Tile water2 = new Tile(2, "water").setGroundFactor(2);
 }
