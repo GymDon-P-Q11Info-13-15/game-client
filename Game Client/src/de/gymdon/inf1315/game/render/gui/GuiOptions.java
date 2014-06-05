@@ -127,8 +127,8 @@ public class GuiOptions extends GuiScreen {
 	} else if (section == Section.ARROWS) {
 	    int i = 0;
 	    for (GuiButton b : arrowButtons) {
-		b.setX(leftMargin + (i % 4) * (buttonHeight + buttonSpacing));
-		b.setY(topMargin + (i / 4) * (buttonHeight + buttonSpacing));
+		b.setX((int) (width/2 - buttonHeight*2 - buttonSpacing*7.5 + (i % 4) * (buttonHeight + buttonSpacing *5)));
+		b.setY(topMargin + (i / 4) * (buttonHeight + buttonSpacing * 5));
 		b.setWidth(buttonHeight);
 		b.setHeight(buttonHeight);
 		i++;
@@ -186,7 +186,9 @@ public class GuiOptions extends GuiScreen {
 		gameZoomButton.setText("gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
 	    } else if (arrowButtons.contains(button)) {
 		Client.instance.preferences.game.arrow = button.getId();
-		setSection(Section.ARROWS);
+		this.rebuild();
+		if(last != null)
+		    last.rebuild();
 	    }
 	}
     }
@@ -223,12 +225,11 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case ARROWS:
 	    arrowButtons.clear();
-	    int arrows;
+	    int arrows = 0;
 	    try {
-		arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "/textures/arrow_").size();
+		arrows = Utils.getResourceListing(GuiOptions.class.getClassLoader(), "\\textures\\arrow_").size();
 	    } catch (Exception e1) {
 		e1.printStackTrace();
-		arrows = 0;
 	    }
 	    for (int j = 0; j < arrows; j++) {
 		GuiButton button = new GuiButton(this, j, 0, 0, null);
