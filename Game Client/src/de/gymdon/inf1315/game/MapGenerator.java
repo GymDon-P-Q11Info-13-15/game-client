@@ -23,7 +23,9 @@ public class MapGenerator {
     int distancesLeft = 0;
     int distancesRight = 0;
     double fairness = 1;
-    
+
+    boolean advantageLeft;
+
     private final static double FAIRNESS_FACTOR = 1.05;
 
     public MapGenerator() {
@@ -54,14 +56,14 @@ public class MapGenerator {
     public int getMapHeight() {
 	return mapHeight;
     }
-    
+
     private void resetAll() {
-	
+
 	seed = new Random().nextLong();
 	distancesLeft = 0;
 	distancesRight = 0;
 	fairness = 1;
-	
+
     }
 
     public void generateAll() {
@@ -76,12 +78,15 @@ public class MapGenerator {
 	// generateMapOutside();
 	generateMapInside();
 	generateBuildings();
-	
-	if(fairness > FAIRNESS_FACTOR) {
-	    
+	makeWaterRandom();
+	makeGrassRandom();
+	makeSandRandom();
+
+	if (fairness > FAIRNESS_FACTOR) {
+
 	    resetAll();
 	    generateAll();
-	    
+
 	}
     }
 
@@ -218,22 +223,8 @@ public class MapGenerator {
 	buildings[1][mapHeight / 2 - 1] = new Castle(null, 1, mapHeight / 2 - 1);
 	buildings[mapWidth - 3][mapHeight / 2 - 1] = new Castle(null, mapWidth - 3, mapHeight / 2 - 1);
 
-	// Generate superiorMine(s)
-	for (int i = 0; i < superiorMines; i++) {
-	    int xSMine = (int) ((mapWidth / 2) - 4 + random.nextInt(8));
-	    int ySMine = (int) ((mapHeight / 2) - 3 + random.nextInt(6));
-
-	    if (map[xSMine][ySMine] != Tile.grass || marginBuildings(xSMine, ySMine, 5)) {
-		i--;
-	    } else {
-		Mine m = new Mine(xSMine, ySMine);
-		m.superior = true;
-		buildings[xSMine][ySMine] = m;
-	    }
-	}
-
 	// Generate Mines
-	
+
 	int lastDistanceLeft;
 	int lastDistanceRight;
 
@@ -254,12 +245,91 @@ public class MapGenerator {
 	    }
 	}
 
+	// Calculate fairness things
+
 	System.out.println(distancesLeft);
 	System.out.println(distancesRight);
 	fairness = (double) distancesLeft / distancesRight;
-	if (fairness < 1)
+	if (fairness < 1) {
 	    fairness = (1 / fairness);
+	    advantageLeft = true;
+	}
 	System.out.println(fairness);
+	System.out.println(advantageLeft);
+
+	// Generate superiorMine(s)
+	for (int i = 0; i < superiorMines; i++) {
+	    int xSMine = (int) (mapWidth / 2);
+
+	    if (!advantageLeft) {
+
+		xSMine--;
+
+	    }
+
+	    int ySMine = (int) 5 + random.nextInt(mapHeight - 10);
+
+	    if (map[xSMine][ySMine] != Tile.grass || marginBuildings(xSMine, ySMine, 5)) {
+		i--;
+	    } else {
+		Mine m = new Mine(xSMine, ySMine);
+		m.superior = true;
+		buildings[xSMine][ySMine] = m;
+	    }
+	}
+    }
+
+    private void makeWaterRandom() {
+
+	for (int i = 0; i < mapWidth; i++) {
+
+	    for (int k = 0; k < mapHeight; k++) {
+
+		if (map[i][k] == Tile.water) {
+		    boolean generateTile = new Random().nextBoolean();
+		    if(generateTile)
+		    map[i][k] = Tile.water;
+		}
+
+	    }
+
+	}
+
+    }
+
+    private void makeGrassRandom() {
+
+	for (int i = 0; i < mapWidth; i++) {
+
+	    for (int k = 0; k < mapHeight; k++) {
+
+		if (map[i][k] == Tile.grass) {
+		    boolean generateTile = new Random().nextBoolean();
+		    if(generateTile)
+		    map[i][k] = Tile.grass;
+		}
+
+	    }
+
+	}
+
+    }
+
+    private void makeSandRandom() {
+
+	for (int i = 0; i < mapWidth; i++) {
+
+	    for (int k = 0; k < mapHeight; k++) {
+
+		if (map[i][k] == Tile.sand) {
+		    boolean generateTile = new Random().nextBoolean();
+		    if(generateTile)
+		    map[i][k] = Tile.sand;
+		}
+	    }
+
+	}
+
     }
 
     private boolean marginBuildings(int x, int y, int m) {
@@ -280,11 +350,5 @@ public class MapGenerator {
 	int Diff = xDiff + yDiff;
 	return Diff;
 
-    }
-    
-    private void setBuildingWithDistance(int distance, boolean isLeft) {
-	
-	
-	
     }
 }
