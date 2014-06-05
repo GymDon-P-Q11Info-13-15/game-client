@@ -28,6 +28,8 @@
 		"gui.options.arrows": "wIv 'agh",
 		"gui.server.select": "wIv De' botlh",
 		"gui.back.mainmenu": "Chap tlhopDaq 'elbogh HIDjolev",
+		"gui.options.game.zoom.inverted": "Sum pIm",
+		"gui.options.game.zoom.normal": "Sum motlh",
 		"gui.back": "Chap",
 		"gui.test": "waH",
 		"gui.exit": "mev"
