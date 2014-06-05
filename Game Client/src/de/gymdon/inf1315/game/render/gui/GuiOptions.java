@@ -108,10 +108,11 @@ public class GuiOptions extends GuiScreen {
 	} else if (section == Section.ARROWS) {
 	    int i = 0;
 	    for (GuiButton b : arrowButtons) {
-		b.setX(leftMargin + (i++) * (buttonHeight + buttonSpacing));
-		b.setY(topMargin + (i % 4 + 1) * (buttonHeight + buttonSpacing));
+		b.setX(leftMargin + (i % 4) * (buttonHeight + buttonSpacing));
+		b.setY(topMargin + (i / 4) * (buttonHeight + buttonSpacing));
 		b.setWidth(buttonHeight);
 		b.setHeight(buttonHeight);
+		i++;
 	    }
 	}
 	super.render(g2d, width, height);
@@ -160,8 +161,8 @@ public class GuiOptions extends GuiScreen {
 	    } else if (button == gameArrowButton) {
 		setSection(Section.ARROWS);
 	    } else if (arrowButtons.contains(button)) {
-		//Client.instance.preferences.game.arrow = (Client.instance.preferences.game.arrow + 1) % arrows;
-		//gameArrowButton.setTextData(new Object[] { Client.instance.preferences.game.arrow });
+		Client.instance.preferences.game.arrow = button.getId();
+		setSection(Section.ARROWS);
 	    }
 	}
     }
@@ -205,7 +206,7 @@ public class GuiOptions extends GuiScreen {
 		arrows = 0;
 	    }
 	    for (int j = 0; j < arrows; j++) {
-		GuiButton button = new GuiButton(this, j, 0, 0, "");
+		GuiButton button = new GuiButton(this, j, 0, 0, null);
 		button.setTexture(StandardTexture.get("arrow_" + j));
 		arrowButtons.add(button);
 		if (j == Client.instance.preferences.game.arrow)

@@ -46,6 +46,8 @@ public class Translation {
     public String translate(String code, Object... args) {
 	if(translations.containsKey(code))
 	    return String.format(translations.get(code), args);
+	if(code == null || code.equals(""))
+	    return "";
 	if(translations.containsKey("translation.missing"))
 	    System.err.println(translate("translation.missing", code));
 	else
