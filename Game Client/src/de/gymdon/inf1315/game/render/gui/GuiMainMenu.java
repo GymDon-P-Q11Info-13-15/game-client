@@ -15,12 +15,14 @@ public class GuiMainMenu extends GuiScreen{
 
     private GuiButton newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
     private GuiButton options = new GuiButton(this, 1, 20, 20, "gui.options");
+    private GuiButton credits = new GuiButton(this, 2, 20, 20, "gui.credits");
     private GuiButton test = new GuiButton(this, 2, 20, 20, "gui.test");
     private GuiButton exit = new GuiButton(this, -1, 20, 20, "gui.exit");
     
     public GuiMainMenu() {
 	controlList.add(newGame);
 	controlList.add(options);
+	controlList.add(credits);
 	controlList.add(test);
 	controlList.add(exit);
     }
@@ -28,11 +30,13 @@ public class GuiMainMenu extends GuiScreen{
     public void rebuild() {
 	newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
 	options = new GuiButton(this, 1, 20, 20, "gui.options");
+	credits = new GuiButton(this, 2, 20, 20, "gui.credits");
 	test = new GuiButton(this, 2, 20, 20, "gui.test");
 	exit = new GuiButton(this, -1, 20, 20, "gui.exit");
 	controlList.clear();
 	controlList.add(newGame);
 	controlList.add(options);
+	controlList.add(credits);
 	controlList.add(test);
 	controlList.add(exit);
     }
@@ -78,6 +82,11 @@ public class GuiMainMenu extends GuiScreen{
 	options.setWidth(buttonWidth);
 	options.setHeight(buttonHeight);
 
+	credits.setX(leftMargin);
+	credits.setY(topMargin + 2*(buttonHeight + buttonSpacing));
+	credits.setWidth(buttonWidth);
+	credits.setHeight(buttonHeight);
+	
 	test.setX(leftMargin);
 	test.setY(height - buttonSpacing - buttonHeight);
 	test.setWidth(buttonWidthVerySmall);
@@ -100,6 +109,8 @@ public class GuiMainMenu extends GuiScreen{
 		Client.instance.activateMap(true);
 	    else if(button == options)
 		Client.instance.setGuiScreen(new GuiOptions(this));
+	    else if(button == credits)
+		Client.instance.setGuiScreen(new GuiCredits(this));
 	    else if(button == exit)
 		Client.instance.stop();
 	}
