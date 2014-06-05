@@ -21,6 +21,7 @@
 	"gui.options.video.fullscreen.off": "Fullscreen: Off",
 	"gui.options.language" : "Language settings",
 	"gui.options.game": "Game settings",
+	"gui.options.game.arrow": "Arrow: %d",
 	"gui.server.select": "Server selection",
 	"gui.back.mainmenu": "Back to main menu",
 	"gui.back": "Back",

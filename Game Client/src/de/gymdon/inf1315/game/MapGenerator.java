@@ -19,6 +19,10 @@ public class MapGenerator {
     public Building[][] buildings;
     public final long seed;
     public Random random;
+    
+    int distancesLeft = 0;
+    int distancesRight = 0;
+    double fairness = 1;
 
     public MapGenerator() {
 	this(new Random().nextLong());
@@ -65,7 +69,7 @@ public class MapGenerator {
 
     public void generateMapOutside() {
 	/**
-	 * This method is not finished yet It is to create the outline of the
+	 * This method is not finished yet. It is to create the outline of the
 	 * map
 	 */
 
@@ -78,10 +82,11 @@ public class MapGenerator {
 	}
     }
 
-    /**
-     * This method will basically generate the map for the game.
-     */
     public void generateMapInside() {
+	/**
+	 * This method will basically generate the map for the game.
+	 */
+
 	int[] xLakes = new int[lakes];
 	int[] yLakes = new int[lakes];
 	int tries = 0;
@@ -191,7 +196,11 @@ public class MapGenerator {
     public void generateBuildings() {
 	buildings = new Building[mapWidth][mapHeight];
 
-	// Generate superiorMines
+	// Generate Castles
+	buildings[1][mapHeight / 2 - 1] = new Castle(null, 1, mapHeight / 2 - 1);
+	buildings[mapWidth - 3][mapHeight / 2 - 1] = new Castle(null, mapWidth - 3, mapHeight / 2 - 1);
+	
+	// Generate superiorMine(s)
 	for (int i = 0; i < superiorMines; i++) {
 	    int xSMine = (int) ((mapWidth / 2) - 4 + random.nextInt(8));
 	    int ySMine = (int) ((mapHeight / 2) - 3 + random.nextInt(6));
@@ -206,6 +215,8 @@ public class MapGenerator {
 	}
 
 	// Generate Mines
+	
+	
 	for (int i = 0; i < mines; i++) {
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
@@ -216,12 +227,16 @@ public class MapGenerator {
 		Mine m = new Mine(xMine, yMine);
 		m.superior = false;
 		buildings[xMine][yMine] = m;
+		distancesLeft = distancesLeft + giveDistance(buildings[1][mapHeight / 2 - 1], m);
+		distancesRight = distancesRight + giveDistance(buildings[mapWidth - 3][mapHeight / 2 - 1], m);
 	    }
 	}
-
-	// Generate Castles
-	buildings[1][mapHeight / 2 - 1] = new Castle(null, 1, mapHeight / 2 - 1);
-	buildings[mapWidth - 3][mapHeight / 2 - 1] = new Castle(null, mapWidth - 3, mapHeight / 2 - 1);
+	
+	System.out.println(distancesLeft);
+	System.out.println(distancesRight);
+	fairness = (double)distancesLeft / distancesRight;
+	if(fairness < 1) fairness = (1 / fairness);
+	System.out.println(fairness);
     }
 
     private boolean marginBuildings(int x, int y, int m) {
@@ -233,5 +248,14 @@ public class MapGenerator {
 	    }
 	}
 	return false;
+    }
+    
+    private int giveDistance(Building castle, Building mine) {
+	
+	int xDiff = Math.abs(castle.x - mine.x);
+	int yDiff = Math.abs(castle.y - mine.y);
+	int Diff = xDiff + yDiff;
+	return Diff;
+	
     }
 }

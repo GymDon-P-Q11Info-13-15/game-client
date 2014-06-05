@@ -30,5 +30,10 @@ public class Miner extends Unit {
 	// TODO Auto-generated method stub
 	return speed;
     }
+    @Override
+    public void clicked() {
+	// TODO Auto-generated method stub
+	
+    }
 
 }
