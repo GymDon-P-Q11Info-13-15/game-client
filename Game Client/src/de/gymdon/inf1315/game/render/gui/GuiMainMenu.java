@@ -17,18 +17,32 @@ public class GuiMainMenu extends GuiScreen{
     private GuiButton options = new GuiButton(this, 1, 20, 20, "gui.options");
     private GuiButton test = new GuiButton(this, 2, 20, 20, "gui.test");
     private GuiButton exit = new GuiButton(this, -1, 20, 20, "gui.exit");
+    
     public GuiMainMenu() {
 	controlList.add(newGame);
 	controlList.add(options);
 	controlList.add(test);
 	controlList.add(exit);
     }
+    
+    public void rebuild() {
+	newGame = new GuiButton(this, 0, 20, 20, "gui.game.new");
+	options = new GuiButton(this, 1, 20, 20, "gui.options");
+	test = new GuiButton(this, 2, 20, 20, "gui.test");
+	exit = new GuiButton(this, -1, 20, 20, "gui.exit");
+	controlList.clear();
+	controlList.add(newGame);
+	controlList.add(options);
+	controlList.add(test);
+	controlList.add(exit);
+    }
+    
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 	drawBackground(g2d, width, height);
         //int ticksRunning = Client.instance.getTicksRunning(); //not needed right now. Maybe later?
         
-        Font f = Font.decode("Helvetica Bold 120");
+        Font f = Client.instance.translation.font.deriveFont(Font.BOLD, 120F);
         g2d.setFont(f);
         Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.instance.translation.translate("game.title"), g2d);
         int titleX = (int) (width/2 - bounds.getCenterX());

@@ -45,12 +45,25 @@ public class GuiOptions extends GuiScreen {
 	this();
 	this.last = last;
     }
+    
+    public void rebuild() {
+	backButton = new GuiButton(this, 0, 300, 550, "gui.back");
+	videoButton = new GuiButton(this, 0, 100, 200, "gui.options.video");
+	videoVsyncButton = new GuiButton(this, 0, 100, 200, "gui.options.video.vsync." + (Client.instance.preferences.video.vsync ? "on" : "off"));
+	videoFullscreenButton = new GuiButton(this, 0, 100, 200, "gui.options.video.fullscreen." + (Client.instance.preferences.video.fullscreen ? "on" : "off"));
+	languageButton = new GuiButton(this, 0, 100, 200, "gui.options.language");
+	languageButtons.clear();
+	gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
+	gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
+	arrowButtons.clear();
+	setSection(section);
+    }
 
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 	drawBackground(g2d, width, height);
 
-	Font f = Font.decode("Helvetica 80");
+	Font f = Client.instance.translation.font.deriveFont(Font.BOLD, 80F);
 	g2d.setFont(f);
 	String title = Client.instance.translation.translate("gui.options" + (section != Section.MAIN ? "." + section.name().toLowerCase() : ""));
 	Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(title, g2d);
@@ -155,7 +168,9 @@ public class GuiOptions extends GuiScreen {
 		Client.instance.preferences.language = lang;
 		Client.instance.translation.reload("en");
 		Client.instance.translation.load(lang);
-		setSection(Section.LANGUAGE);
+		this.rebuild();
+		if(last != null)
+		    last.rebuild();
 	    } else if (button == gameButton) {
 		setSection(Section.GAME);
 	    } else if (button == gameArrowButton) {

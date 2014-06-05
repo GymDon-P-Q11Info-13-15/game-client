@@ -26,6 +26,10 @@ public abstract class GuiScreen extends Gui implements ActionListener,
     public void tick() {
 
     }
+    
+    public void rebuild() {
+	
+    }
 
     protected void drawBackground(Graphics2D g2d, int width, int height) {
         LinearGradientPaint gradient = new LinearGradientPaint(width*0.7F, 0, width*0.3F, height, 

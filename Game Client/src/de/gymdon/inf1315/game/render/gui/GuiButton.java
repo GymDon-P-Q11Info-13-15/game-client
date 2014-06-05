@@ -29,7 +29,7 @@ public class GuiButton extends GuiControl {
     protected int borderColor = 0x6C4824;
     protected int borderWidth = 5;
     protected int borderRadius = 20;
-    protected Font font = Font.decode("Helvetica Bold 22");
+    protected Font font = Client.instance.translation.font.deriveFont(Font.BOLD, 22F);
     protected ButtonState lastState = ButtonState.NORMAL;
     protected ButtonState currentState = ButtonState.NORMAL;
     protected boolean enabled = true;

@@ -25,7 +25,7 @@ public class GuiPauseMenu extends GuiScreen{
     public void render(Graphics2D g2d, int width, int height) {
 	
 	g2d.drawImage(Client.instance.mapren.getMapBackground(), 0, 0, null);
-        Font f = Font.decode("Helvetica Bold 120");
+        Font f = Client.instance.translation.font.deriveFont(Font.BOLD, 120F);
         g2d.setFont(f);
         Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(Client.instance.translation.translate("game.title"), g2d);
         int titleX = (int) (width/2 - bounds.getCenterX());

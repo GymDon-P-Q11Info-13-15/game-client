@@ -42,7 +42,7 @@ public class GuiSelectServer extends GuiScreen {
     public void render(Graphics2D g2d, int width, int height) {
 	drawBackground(g2d, width, height);
         
-        Font f = Font.decode("Helvetica 80");
+        Font f = Client.instance.translation.font.deriveFont(Font.BOLD, 80F);
         g2d.setFont(f);
         String title = Client.instance.translation.translate("gui.server.select");
         Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(title, g2d);

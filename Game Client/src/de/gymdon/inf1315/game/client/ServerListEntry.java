@@ -35,9 +35,9 @@ public class ServerListEntry {
 		g2d.setColor(new Color(0x666666));
 		g2d.fillRect(0, 100, width, height - 100);
 		g2d.setColor(Color.WHITE);
-		g2d.setFont(Font.decode("Helvetica Bold 35"));
+		g2d.setFont(Client.instance.translation.font.deriveFont(Font.BOLD, 35F));
 		g2d.drawString(name, 50, 50);
-		g2d.setFont(Font.decode("Helvetica Bold 18"));
+		g2d.setFont(Client.instance.translation.font.deriveFont(Font.BOLD, 18F));
 		g2d.setColor(Color.GRAY);
 		g2d.drawString(ip, 50, 75);
 		if(ping >= 0) {
