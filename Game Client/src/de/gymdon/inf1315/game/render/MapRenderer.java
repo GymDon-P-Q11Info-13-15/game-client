@@ -96,6 +96,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    fieldHover = new boolean[mapWidth][mapHeight];
 	if (field == null || field.length != mapWidth || field[0].length != mapHeight)
 	    field = new boolean[mapWidth][mapHeight];
+	
 	// Rendering Click and Hover
 	for (int x = 0; x < fieldHover.length; x++) {
 	    for (int y = 0; y < fieldHover[x].length; y++) {

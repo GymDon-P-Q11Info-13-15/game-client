@@ -55,7 +55,6 @@ public class Client implements Runnable, WindowListener {
 	//gm = new GameMechanics(); //You throw a NullPointerException
 	mapgen = new MapGenerator();
 	mapren = new MapRenderer();
-	buildings = mapgen.getBuildings();
 	Client.instance = this;
 	frame = new JFrame(TITLE);
 	frame.setSize(1280, 720);

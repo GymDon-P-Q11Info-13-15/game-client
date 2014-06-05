@@ -10,7 +10,7 @@ public class Spearman extends Unit {
 	range = 1;
 	attack = 40;
 	defense = 20;
-	hp = 80;
+	hp = 100;
 	cost = 80;
     }
 
@@ -21,7 +21,7 @@ public class Spearman extends Unit {
 
     @Override
     public void attack() {
-
+	
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Spearman extends Unit {
 
     @Override
     public void clicked() {
-	// TODO Auto-generated method stub
+	
 	
     }
 

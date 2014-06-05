@@ -21,5 +21,13 @@ public abstract class Unit extends GameObject {
     public abstract int getSpeed();
     
     public abstract void clicked();
-
+    
+   /* public boolean[][] attackableFoes(){
+	Player attacker = this.owner;
+	
+	
+	
+	
+    }
+*/
 }

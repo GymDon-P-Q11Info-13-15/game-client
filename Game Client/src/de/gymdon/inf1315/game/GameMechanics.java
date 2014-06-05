@@ -23,9 +23,9 @@ public class GameMechanics implements ActionListener {
      */
     
     public GameMechanics() { // neue Welt mit Breite x und Höhe y
-	this.map = Client.instance.map;
-	buildings = Client.instance.buildings;
-	units = Client.instance.units;
+	//this.map = Client.instance.map;
+	//buildings = Client.instance.buildings;
+	//units = Client.instance.units;
 	won = false;
 	round = 0;
     }
