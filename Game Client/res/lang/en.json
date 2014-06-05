@@ -11,6 +11,7 @@
 	"lang.en" : "English",
 	"lang.de" : "German",
 	"lang.la" : "Latin",
+	"lang.kl" : "Klingon",
 	"gui.game.new": "New Game",
 	"gui.game.continue": "Continue Game",
 	"gui.options": "Options",
