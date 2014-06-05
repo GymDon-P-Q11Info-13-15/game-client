@@ -20,6 +20,8 @@
 		"gui.options.language" : "Lingvaj agordoj",
 		"gui.options.game": "Ludo agordojn",
 		"gui.options.game.arrow": "Sago electi",
+		"gui.options.game.zoom.inverted": "Plivastigo inversiga",
+		"gui.options.game.zoom.normal": "Plivastigo normala",
 		"gui.options.arrows": "Sago electi",
 		"gui.server.select": "Servilo selektado",
 		"gui.back.mainmenu": "Reen al la ĉefa menuo",

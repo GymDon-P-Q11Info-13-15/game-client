@@ -34,6 +34,7 @@ public class GuiOptions extends GuiScreen {
     // -- Game Options
     private GuiButton gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
     private GuiButton gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
+    private GuiButton gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
     // -- Arrows
     private List<GuiButton> arrowButtons = new ArrayList<GuiButton>();
 
@@ -55,6 +56,7 @@ public class GuiOptions extends GuiScreen {
 	languageButtons.clear();
 	gameButton = new GuiButton(this, 0, 100, 200, "gui.options.game");
 	gameArrowButton = new GuiButton(this, 0, 100, 200, "gui.options.game.arrow");
+	gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom");
 	arrowButtons.clear();
 	setSection(section);
     }
@@ -118,6 +120,10 @@ public class GuiOptions extends GuiScreen {
 	    gameArrowButton.setY(topMargin);
 	    gameArrowButton.setWidth(buttonWidthSmall);
 	    gameArrowButton.setHeight(buttonHeight);
+	    gameZoomButton.setX(leftMargin + buttonWidthSmall + buttonSpacing);
+	    gameZoomButton.setY(topMargin);
+	    gameZoomButton.setWidth(buttonWidthSmall);
+	    gameZoomButton.setHeight(buttonHeight);
 	} else if (section == Section.ARROWS) {
 	    int i = 0;
 	    for (GuiButton b : arrowButtons) {
@@ -175,6 +181,9 @@ public class GuiOptions extends GuiScreen {
 		setSection(Section.GAME);
 	    } else if (button == gameArrowButton) {
 		setSection(Section.ARROWS);
+	    } else if (button == gameZoomButton) {
+		Client.instance.preferences.game.invertZoom = !Client.instance.preferences.game.invertZoom;
+		gameZoomButton.setText("gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
 	    } else if (arrowButtons.contains(button)) {
 		Client.instance.preferences.game.arrow = button.getId();
 		setSection(Section.ARROWS);
@@ -210,6 +219,7 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case GAME:
 	    controlList.add(gameArrowButton);
+	    controlList.add(gameZoomButton);
 	    break;
 	case ARROWS:
 	    arrowButtons.clear();

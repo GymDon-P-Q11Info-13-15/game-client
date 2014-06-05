@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder;
 import de.gymdon.inf1315.game.Utils;
 
 public class Preferences {
-    public static final int CURRENT_VERSION = 3;
+    public static final int CURRENT_VERSION = 4;
     public int version = CURRENT_VERSION;
     public String language = "en_US";
     public VideoSettings video = new VideoSettings();
@@ -31,6 +31,7 @@ public class Preferences {
     
     public class GameSettings {
 	public int arrow = 0;
+	public boolean invertZoom = false;
     }
 
     public void write(Writer writer) throws IOException {

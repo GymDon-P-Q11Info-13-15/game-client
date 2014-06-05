@@ -20,6 +20,8 @@
 		"gui.options.language" : "Spracheinstellungen",
 		"gui.options.game": "Spiel Einstellungen",
 		"gui.options.game.arrow": "Wählen sie ihren Pfeil",
+		"gui.options.game.zoom.inverted": "zoom motlh",
+		"gui.options.game.zoom.normal": "zoom muj",
 		"gui.options.arrows": "Wählen sie ihren Pfeil",
 		"gui.server.select": "Serverauswahl",
 		"gui.back.mainmenu": "Chap tlhopDaq 'elbogh HIDjolev",

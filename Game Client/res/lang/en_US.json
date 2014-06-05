@@ -20,6 +20,8 @@
 		"gui.options.language" : "Language settings",
 		"gui.options.game": "Game settings",
 		"gui.options.game.arrow": "Arrow",
+		"gui.options.game.zoom.inverted": "Zoom inverted",
+		"gui.options.game.zoom.normal": "Zoom normal",
 		"gui.options.arrows": "Select Arrow",
 		"gui.server.select": "Server selection",
 		"gui.back.mainmenu": "Back to main menu",

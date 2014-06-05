@@ -24,6 +24,8 @@
 		"gui.options.language" : "Instrumentae Linguae",
 		"gui.options.game": "Instrumentae Aleae",
 		"gui.options.game.arrow": "Sagitta",
+		"gui.options.game.zoom.inverted": "Amplificatio reflecta",
+		"gui.options.game.zoom.normal": "Amplificatio solita",
 		"gui.options.arrows": "Selectio Sagittarum",
 		"gui.server.select": "Selectio Serverorum",
 		"gui.back.mainmenu": "Redire ad primum visificum",
