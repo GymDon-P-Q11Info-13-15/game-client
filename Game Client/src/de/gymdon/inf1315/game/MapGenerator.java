@@ -232,7 +232,7 @@ public class MapGenerator {
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
 
-	    if (map[xMine][yMine] != Tile.grass || marginBuildings(xMine, yMine, 5)) {
+	    if (map[xMine][yMine] != Tile.grass && map[xMine][yMine] != Tile.grass2|| marginBuildings(xMine, yMine, 5)) {
 		i--;
 	    } else {
 		Mine m = new Mine(xMine, yMine);
@@ -269,7 +269,7 @@ public class MapGenerator {
 
 	    int ySMine = (int) 5 + random.nextInt(mapHeight - 10);
 
-	    if (map[xSMine][ySMine] != Tile.grass || marginBuildings(xSMine, ySMine, 5)) {
+	    if (map[xSMine][ySMine] != Tile.grass && map[xSMine][ySMine] != Tile.grass2 || marginBuildings(xSMine, ySMine, 5)) {
 		i--;
 	    } else {
 		Mine m = new Mine(xSMine, ySMine);
@@ -286,9 +286,19 @@ public class MapGenerator {
 	    for (int k = 0; k < mapHeight; k++) {
 
 		if (map[i][k] == Tile.water) {
+
 		    boolean generateTile = new Random().nextBoolean();
-		    if(generateTile)
-		    map[i][k] = Tile.water2;
+		    if (generateTile)
+			map[i][k] = Tile.water2;
+		    
+		    if (map[i - 1][k] == Tile.grass || map[i - 1][k] == Tile.grass2)
+			map[i][k] = Tile.water; // ersetzen mit Wasserübergang
+		    if (map[i + 1][k] == Tile.grass || map[i + 1][k] == Tile.grass2)
+			map[i][k] = Tile.water;
+		    if (map[i][k - 1] == Tile.grass || map[i][k - 1] == Tile.grass2)
+			map[i][k] = Tile.water;
+		    if (map[i][k + 1] == Tile.grass || map[i][k + 1] == Tile.grass2)
+			map[i][k] = Tile.water;
 		}
 
 	    }
@@ -305,8 +315,8 @@ public class MapGenerator {
 
 		if (map[i][k] == Tile.grass) {
 		    boolean generateTile = new Random().nextBoolean();
-		    if(generateTile)
-		    map[i][k] = Tile.grass2;
+		    if (generateTile)
+			map[i][k] = Tile.grass2;
 		}
 
 	    }
@@ -323,8 +333,8 @@ public class MapGenerator {
 
 		if (map[i][k] == Tile.sand) {
 		    boolean generateTile = new Random().nextBoolean();
-		    if(generateTile)
-		    map[i][k] = Tile.sand2;
+		    if (generateTile)
+			map[i][k] = Tile.sand2;
 		}
 	    }
 
