@@ -37,6 +37,8 @@ public class GuiOptions extends GuiScreen {
     private GuiButton gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
     // -- Arrows
     private List<GuiButton> arrowButtons = new ArrayList<GuiButton>();
+    
+    private Stack<Section> sectionStack = new Stack<Section>();
 
     public GuiOptions() {
 	setSection(Section.MAIN);
@@ -148,16 +150,7 @@ public class GuiOptions extends GuiScreen {
 	if (e.getID() == ActionEvent.ACTION_PERFORMED) {
 	    GuiButton button = (GuiButton) e.getSource();
 	    if (button == backButton) {
-		if (section != Section.MAIN)
-		    setSection(Section.MAIN);
-		else {
-		    Client.instance.setGuiScreen(last);
-		    try {
-			Client.instance.preferences.write(new FileWriter("preferences.json"));
-		    } catch (IOException e1) {
-			System.err.println("Unable to save preferences");
-		    }
-		}
+		setSection(sectionStack.isEmpty() ? null : sectionStack.peek(), true);
 	    } else if (button == videoButton) {
 		setSection(Section.VIDEO);
 	    } else if (button == videoVsyncButton) {
@@ -192,8 +185,27 @@ public class GuiOptions extends GuiScreen {
 	    }
 	}
     }
-
+    
     private void setSection(Section s) {
+	setSection(s, false);
+    }
+
+    private void setSection(Section s, boolean back) {
+	if(!back && section != null && section != s)
+	    sectionStack.push(section);
+	if(back) {
+	    if(!sectionStack.isEmpty())
+		sectionStack.pop();
+	    else {
+		Client.instance.setGuiScreen(last);
+		try {
+		    Client.instance.preferences.write(new FileWriter("preferences.json"));
+		} catch (IOException e1) {
+		    System.err.println("Unable to save preferences");
+		}
+		return;
+	    }
+	}
 	section = s;
 	controlList.clear();
 	switch (s) {
