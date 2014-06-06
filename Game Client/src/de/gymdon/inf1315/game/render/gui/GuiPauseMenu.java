@@ -27,6 +27,8 @@ public class GuiPauseMenu extends GuiScreen {
     @Override
     public void render(Graphics2D g2d, int width, int height) {
 
+	if(this.width != width || this.height != height)
+	    Client.instance.mapren.render(g2d, width, height);
 	g2d.drawImage(Client.instance.mapren.getMapBackground(), 0, 0, null);
 	Font f = Client.instance.translation.font.deriveFont(Font.BOLD, 120F);
 	g2d.setFont(f);
@@ -65,6 +67,10 @@ public class GuiPauseMenu extends GuiScreen {
 	mainMenu.setY(topMargin + (buttonHeight + buttonSpacing) * 2);
 	mainMenu.setWidth(buttonWidth);
 	mainMenu.setHeight(buttonHeight);
+	
+	g2d.setColor(Color.WHITE);
+	g2d.setFont(Client.instance.translation.font.deriveFont(Font.BOLD, 12));
+	g2d.drawString("Seed: " + Client.instance.mapgen.getSeed(), buttonWidth, height - height/16);
 	super.render(g2d, width, height);
     }
 

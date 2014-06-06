@@ -62,6 +62,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	AffineTransform tx = g2d.getTransform();
 	g2d.translate(-scrollX, -scrollY);
 	g2d.scale(zoom, zoom);
+
 	// Rendering Map
 	if (this.map == null || !map.equals(mapCache)) {
 	    this.map = new BufferedImage(map.length * tileSize, map[0].length * tileSize, BufferedImage.TYPE_INT_ARGB);
@@ -96,7 +97,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    fieldHover = new boolean[mapWidth][mapHeight];
 	if (field == null || field.length != mapWidth || field[0].length != mapHeight)
 	    field = new boolean[mapWidth][mapHeight];
-	
+
 	// Rendering Click and Hover
 	for (int x = 0; x < fieldHover.length; x++) {
 	    for (int y = 0; y < fieldHover[x].length; y++) {
@@ -313,8 +314,8 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
 	double z = zoom;
-	
-	zoom *= Math.pow(1.1, (Client.instance.preferences.game.invertZoom ? 1 : -1)*e.getWheelRotation());
+
+	zoom *= Math.pow(1.1, (Client.instance.preferences.game.invertZoom ? 1 : -1) * e.getWheelRotation());
 	if (zoom < 0.2)
 	    zoom = 0.2;
 	if (zoom > 5)
@@ -326,5 +327,11 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
 	    scrollX = 0;
 	if (scrollY < 0)
 	    scrollY = 0;
+	int mapWidth = mapCache.length;
+	int mapHeight = mapCache[0].length;
+	if (scrollX > (int) (mapWidth * tileSize * zoom - width))
+	    scrollX = (int) (mapWidth * tileSize * zoom - width);
+	if (scrollY > (int) (mapHeight * tileSize * zoom - height))
+	    scrollY = (int) (mapHeight * tileSize * zoom - height);
     }
 }
