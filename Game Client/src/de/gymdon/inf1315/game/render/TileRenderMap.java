@@ -19,6 +19,6 @@ public class TileRenderMap {
 	map.put(Tile.sand, new StandardTexture("sand"));
 	map.put(Tile.sand2, new StandardTexture("sand_old"));
 	map.put(Tile.water, new StandardTexture("water"));
-	map.put(Tile.water2, new StandardTexture("water"));
+	map.put(Tile.water2, new StandardTexture("water2"));
     }
 }
