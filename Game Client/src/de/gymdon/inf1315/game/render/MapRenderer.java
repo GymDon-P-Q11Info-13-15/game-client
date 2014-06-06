@@ -33,7 +33,7 @@ public class MapRenderer implements Renderable, ActionListener, MouseInputListen
     private BufferedImage map = null;
     private BufferedImage cache = null;
     private Tile[][] mapCache = null;
-    private boolean firstClick = false;
+    public boolean firstClick = false;
     private int scrollX = 0;
     private int scrollY = 0;
     private int diffX = 0;

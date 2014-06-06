@@ -264,8 +264,10 @@ public class GuiOptions extends GuiScreen {
     @Override
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-	if (key == KeyEvent.VK_ESCAPE)
+	if (key == KeyEvent.VK_ESCAPE) {
 	    actionPerformed(new ActionEvent(backButton, ActionEvent.ACTION_PERFORMED, null));
+	    Client.instance.mapren.firstClick = false;
+	}
     }
 
     @Override
