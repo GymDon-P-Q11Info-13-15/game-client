@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 
@@ -114,5 +115,23 @@ public class GuiMainMenu extends GuiScreen{
 	    else if(button == exit)
 		Client.instance.stop();
 	}
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
     }
 }

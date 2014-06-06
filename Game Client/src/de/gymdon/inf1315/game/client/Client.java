@@ -280,6 +280,7 @@ public class Client implements Runnable, WindowListener {
 	if (currentScreen != null) {
 	    canvas.removeMouseListener(currentScreen);
 	    canvas.removeMouseMotionListener(currentScreen);
+	    frame.removeKeyListener(currentScreen);
 	} else {
 	    canvas.removeMouseListener(canvas.mapRenderer);
 	    canvas.removeMouseMotionListener(canvas.mapRenderer);
@@ -291,6 +292,7 @@ public class Client implements Runnable, WindowListener {
 	if (currentScreen != null) {
 	    canvas.addMouseListener(currentScreen);
 	    canvas.addMouseMotionListener(currentScreen);
+	    frame.addKeyListener(currentScreen);
 	}
     }
 

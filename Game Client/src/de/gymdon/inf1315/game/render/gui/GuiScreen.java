@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.*;
 
 import javax.swing.event.MouseInputListener;
 
 public abstract class GuiScreen extends Gui implements ActionListener,
-	MouseInputListener {
+	MouseInputListener, KeyListener {
     public List<GuiControl> controlList = new ArrayList<GuiControl>();
     protected int width;
     protected int height;

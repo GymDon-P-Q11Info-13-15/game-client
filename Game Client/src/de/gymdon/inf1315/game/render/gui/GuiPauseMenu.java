@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 
@@ -77,5 +78,21 @@ public class GuiPauseMenu extends GuiScreen{
 	    else if(button == mainMenu)
 		Client.instance.setGuiScreen(new GuiMainMenu());
 	}
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+	int key = e.getKeyCode();
+	if (key == KeyEvent.VK_ESCAPE)
+	    actionPerformed(new ActionEvent(continueGame, ActionEvent.ACTION_PERFORMED, null));
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
     }
 }

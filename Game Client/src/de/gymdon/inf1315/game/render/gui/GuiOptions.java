@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -258,5 +259,24 @@ public class GuiOptions extends GuiScreen {
 
     private enum Section {
 	MAIN, VIDEO, LANGUAGE, GAME, ARROWS;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+	int key = e.getKeyCode();
+	if (key == KeyEvent.VK_ESCAPE)
+	    actionPerformed(new ActionEvent(backButton, ActionEvent.ACTION_PERFORMED, null));
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
     }
 }
