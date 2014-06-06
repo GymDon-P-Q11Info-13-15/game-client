@@ -1,4 +1,4 @@
-game-client
+game-client [deprecated]
 ===========
 
-For more information see the [wiki](https://github.com/GymDon-P-Q11Info-13-15/game-client/wiki)
+This repository is _deprecated_ do _not_ push up here. Instead push to [game](https://github.com/GymDon-P-Q11Info-13-15/game)
