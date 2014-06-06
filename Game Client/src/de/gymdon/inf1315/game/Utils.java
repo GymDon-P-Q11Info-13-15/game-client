@@ -54,7 +54,7 @@ public class Utils {
 	    if(f.isDirectory())
 		recurse(f, append, relative);
 	    else
-		append.add(f.getAbsolutePath().substring(relative.length()));
+		append.add(f.getAbsolutePath().replace('\\', '/').substring(relative.length()));
 	}
 	return append;
     }
