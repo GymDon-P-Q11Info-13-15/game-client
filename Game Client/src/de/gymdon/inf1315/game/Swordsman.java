@@ -12,6 +12,7 @@ public class Swordsman extends Unit {
 	defense = 70;
 	hp = 110;
 	cost = 130;
+	combined = 0.1;
     }
 
     @Override

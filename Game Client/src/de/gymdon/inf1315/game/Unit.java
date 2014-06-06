@@ -2,7 +2,7 @@ package de.gymdon.inf1315.game;
 
 public abstract class Unit extends GameObject {
     int hp, speed, attack, defense, range, cost, act_speed;
-
+    double combined;
     public void move(int x, int y) {
 	if (this.x + x < 0)
 	    throw new IllegalArgumentException(

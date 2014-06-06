@@ -245,7 +245,7 @@ public class MapGenerator {
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
 
-	    if (map[xMine][yMine] != Tile.grass && map[xMine][yMine] != Tile.grass2|| marginBuildings(xMine, yMine, 5)) {
+	    if (map[xMine][yMine] != Tile.grass && map[xMine][yMine] != Tile.grass2 || marginBuildings(xMine, yMine, 5)) {
 		i--;
 	    } else {
 		Mine m = new Mine(xMine, yMine);
@@ -386,6 +386,22 @@ public class MapGenerator {
 	    }
 	}
 	return false;
+    }
+    
+    private boolean marginWaterAndSand(int x, int y, int m) {
+	for(int i = x - m; i < x + m; i++) {
+	
+	    for(int k =  y - m; k < y + m; k++) {
+		
+		if (i > 0 && k > 0 && map[i][k] != Tile.grass || map[i][k] != Tile.grass2)
+		    return true;
+		
+	    }
+	    
+	}
+	
+	return false;
+	
     }
 
     private int giveDistance(Building castle, Building mine) {

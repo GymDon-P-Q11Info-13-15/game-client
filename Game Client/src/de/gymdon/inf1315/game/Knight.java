@@ -12,6 +12,7 @@ public class Knight extends Unit {
 	defense = 50;
 	hp = 100;
 	cost = 200;
+	combined=0.25;
     }
 
     @Override
