@@ -38,7 +38,7 @@ public class GuiOptions extends GuiScreen {
     private GuiButton gameZoomButton = new GuiButton(this, 0, 100, 200, "gui.options.game.zoom." + (Client.instance.preferences.game.invertZoom ? "inverted" : "normal"));
     // -- Arrows
     private List<GuiButton> arrowButtons = new ArrayList<GuiButton>();
-    
+
     private Stack<Section> sectionStack = new Stack<Section>();
 
     public GuiOptions() {
@@ -49,7 +49,7 @@ public class GuiOptions extends GuiScreen {
 	this();
 	this.last = last;
     }
-    
+
     public void rebuild() {
 	backButton = new GuiButton(this, 0, 300, 550, "gui.back");
 	videoButton = new GuiButton(this, 0, 100, 200, "gui.options.video");
@@ -130,7 +130,7 @@ public class GuiOptions extends GuiScreen {
 	} else if (section == Section.ARROWS) {
 	    int i = 0;
 	    for (GuiButton b : arrowButtons) {
-		b.setX((int) (width/2 - buttonHeight*2 - buttonSpacing*7.5 + (i % 4) * (buttonHeight + buttonSpacing *5)));
+		b.setX((int) (width / 2 - buttonHeight * 2 - buttonSpacing * 7.5 + (i % 4) * (buttonHeight + buttonSpacing * 5)));
 		b.setY(topMargin + (i / 4) * (buttonHeight + buttonSpacing * 5));
 		b.setWidth(buttonHeight);
 		b.setHeight(buttonHeight);
@@ -164,12 +164,12 @@ public class GuiOptions extends GuiScreen {
 	    } else if (button == languageButton) {
 		setSection(Section.LANGUAGE);
 	    } else if (languageButtons.contains(button)) {
-		String lang = (String)button.getTextData()[0];
+		String lang = (String) button.getTextData()[0];
 		Client.instance.preferences.language = lang;
 		Client.instance.translation.reload("en_US");
 		Client.instance.translation.load(lang);
 		this.rebuild();
-		if(last != null)
+		if (last != null)
 		    last.rebuild();
 	    } else if (button == gameButton) {
 		setSection(Section.GAME);
@@ -181,21 +181,21 @@ public class GuiOptions extends GuiScreen {
 	    } else if (arrowButtons.contains(button)) {
 		Client.instance.preferences.game.arrow = button.getId();
 		this.rebuild();
-		if(last != null)
+		if (last != null)
 		    last.rebuild();
 	    }
 	}
     }
-    
+
     private void setSection(Section s) {
 	setSection(s, false);
     }
 
     private void setSection(Section s, boolean back) {
-	if(!back && section != null && section != s)
+	if (!back && section != null && section != s)
 	    sectionStack.push(section);
-	if(back) {
-	    if(!sectionStack.isEmpty())
+	if (back) {
+	    if (!sectionStack.isEmpty())
 		sectionStack.pop();
 	    else {
 		Client.instance.setGuiScreen(last);
@@ -221,10 +221,10 @@ public class GuiOptions extends GuiScreen {
 	    break;
 	case LANGUAGE:
 	    languageButtons.clear();
-	    Map<String,String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/languages.json")), new TypeToken<Map<String, String>>() {
+	    Map<String, String> languages = new Gson().fromJson(new InputStreamReader(GuiOptions.class.getResourceAsStream("/lang/languages.json")), new TypeToken<Map<String, String>>() {
 	    }.getType());
 	    int i = 0x100;
-	    for (Map.Entry<String,String> e : languages.entrySet()) {
+	    for (Map.Entry<String, String> e : languages.entrySet()) {
 		GuiButton button = new GuiButton(this, i, 0, 0, e.getValue()).setTranslate(false).setTextData(e.getKey());
 		languageButtons.add(button);
 		if (e.getKey().equals(Client.instance.preferences.language))
@@ -264,21 +264,19 @@ public class GuiOptions extends GuiScreen {
     @Override
     public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
-	if (key == KeyEvent.VK_ESCAPE) {
+	if (key == KeyEvent.VK_ESCAPE)
 	    actionPerformed(new ActionEvent(backButton, ActionEvent.ACTION_PERFORMED, null));
-	    Client.instance.mapren.firstClick = false;
-	}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
 	// TODO Auto-generated method stub
-	
+
     }
 }
