@@ -14,6 +14,7 @@ public class GameMechanics implements ActionListener {
     boolean[][] tempRange;
     boolean won;
     int round;
+    int phase;
 
     /**
      * Map, Buildings etc wird alle im MapGenerator generiert
@@ -28,6 +29,7 @@ public class GameMechanics implements ActionListener {
 	//units = Client.instance.units;
 	won = false;
 	round = 0;
+	phase = 0;
     }
     
     
@@ -48,6 +50,13 @@ public class GameMechanics implements ActionListener {
 	    round++;
 	}
 
+    }
+    
+    public void nextPhase(){
+	phase++;
+	phase=phase%6;
+	
+	
     }
     
     public void clicked(int x, int y){
@@ -93,7 +102,7 @@ public class GameMechanics implements ActionListener {
      * @return true if move was possible, false otherwise
      */
     public boolean move(Unit u, int x, int y) {
-	getAccessibleFields(u);
+	getAccessableFields(u);
 	if (tempRange[x][y] == true) {
 	    u.x = x;
 	    u.y = y;
@@ -118,16 +127,26 @@ public class GameMechanics implements ActionListener {
 
     }
 
-    public void getAccessibleFields(Unit a) {
+    public void getAccessableFields(Unit a) {
 	tempRange = new boolean[Client.instance.map.length][Client.instance.map[0].length];
 	step(a.getSpeed(), a.x, a.y);
 
     }
+    
+    public boolean isAccessable(Unit u, int x, int y){
+	getAccessableFields(u);
+	if(tempRange[x][y]==true){
+	    return true;
+	}
+	else{
+	    return false;
+	}
+	
+    }
 
     private void step(int actualSpeed, int x, int y) {
 
-	if (map[x][y].isWalkable()) {
-	    int[] position = new int[2];
+	if (map[x][y].isWalkable() && buildings[x][y]==null) { 			//can only walk if no building or walkable
 	    int newSpeed = actualSpeed - map[x][y].getGroundFactor();
 
 	    if (newSpeed >= 1) {
