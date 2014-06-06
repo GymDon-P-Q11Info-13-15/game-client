@@ -56,6 +56,18 @@ public class MapGenerator {
     public int getMapHeight() {
 	return mapHeight;
     }
+    
+    public long getSeed() {
+	
+	return seed;
+	
+    }
+    
+    public void setSeed(long seed) {
+	
+	this.seed = seed;
+	
+    }
 
     private void resetAll() {
 
