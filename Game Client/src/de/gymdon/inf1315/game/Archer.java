@@ -12,6 +12,7 @@ public class Archer extends Unit {
 	defense = 20;
 	hp = 100;
 	cost = 60;
+	combined = 0.2;
     }
 
     @Override

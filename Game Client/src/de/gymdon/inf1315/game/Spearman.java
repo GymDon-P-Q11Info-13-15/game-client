@@ -12,6 +12,7 @@ public class Spearman extends Unit {
 	defense = 20;
 	hp = 100;
 	cost = 80;
+	combined = 0.1;
     }
 
     @Override

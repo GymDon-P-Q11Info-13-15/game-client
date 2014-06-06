@@ -12,6 +12,7 @@ public class Miner extends Unit {
 	defense = 5;
 	hp = 100;
 	cost = 20;
+	combined = 0.01;
     }
     @Override
     public void attack() {

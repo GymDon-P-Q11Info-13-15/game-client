@@ -162,6 +162,17 @@ public class GameMechanics implements ActionListener {
      * 
      * }
      */
+    /*public int getassist(Unit u){
+    Unit x;
+    
+    if (x!=null){
+    return  (int)(Math.round(x.attack * x.combined)) ;
+    }
+    else{
+    return 0;	
+    }
+    }
+    */
     public int strikechance(Unit striker, Unit stroke) {
 	// Berechnet eine zahl die der Rng überschreiten muss um zu treffen
 	int attchance = 80 - (striker.attack + striker.hp / 4 - stroke.defense / 2 - stroke.hp / 4);
