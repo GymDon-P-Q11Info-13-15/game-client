@@ -147,7 +147,7 @@ public class GameMechanics implements ActionListener {
     private void step(int actualSpeed, int x, int y) {
 
 	if (map[x][y].isWalkable() && buildings[x][y]==null) { 			//can only walk if no building or walkable
-	    int newSpeed = actualSpeed - map[x][y].getGroundFactor();
+	    int newSpeed = (int) (actualSpeed - map[x][y].getGroundFactor());   //Hotfix by Simi, because I changed groundFactor to double
 
 	    if (newSpeed >= 1) {
 

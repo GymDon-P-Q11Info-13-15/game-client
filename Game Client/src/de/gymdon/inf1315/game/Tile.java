@@ -1,8 +1,11 @@
 package de.gymdon.inf1315.game;
 
 public class Tile {
-    private int groundFactor;
+    public double groundFactor;
     private boolean walkable;
+    public double f;
+    public double g = groundFactor;
+    public double h;
     
     private Tile(int id, String name) {
 	// TODO use name
@@ -13,7 +16,7 @@ public class Tile {
 	return this;
     }
     
-    public int getGroundFactor() {
+    public double getGroundFactor() {
 	return groundFactor;
     }
     
