@@ -56,17 +56,17 @@ public class MapGenerator {
     public int getMapHeight() {
 	return mapHeight;
     }
-    
+
     public long getSeed() {
-	
+
 	return seed;
-	
+
     }
-    
+
     public void setSeed(long seed) {
-	
+
 	this.seed = seed;
-	
+
     }
 
     private void resetAll() {
@@ -105,8 +105,7 @@ public class MapGenerator {
 
     public void generateMapOutside() {
 	/**
-	 * This method is not finished yet. It is to create the outline of the
-	 * map
+	 * This method is not finished yet. It creates the outline of the map
 	 */
 
 	for (int i = 1; i <= averageSideWater; i++) {
@@ -238,9 +237,6 @@ public class MapGenerator {
 
 	// Generate Mines
 
-	int lastDistanceLeft;
-	int lastDistanceRight;
-
 	for (int i = 0; i < mines; i++) {
 	    int xMine = (int) (random.nextInt(mapWidth - 16) + 8);
 	    int yMine = (int) (random.nextInt(mapHeight - 8) + 4);
@@ -251,10 +247,8 @@ public class MapGenerator {
 		Mine m = new Mine(xMine, yMine);
 		m.superior = false;
 		buildings[xMine][yMine] = m;
-		lastDistanceLeft = giveDistance(buildings[1][mapHeight / 2 - 1], m);
-		lastDistanceRight = giveDistance(buildings[mapWidth - 3][mapHeight / 2 - 1], m);
-		distancesLeft = distancesLeft + lastDistanceLeft;
-		distancesRight = distancesRight + lastDistanceRight;
+		distancesLeft = distancesLeft + giveDistance(buildings[1][mapHeight / 2 - 1], m);
+		distancesRight = distancesRight + giveDistance(buildings[mapWidth - 3][mapHeight / 2 - 1], m);
 	    }
 	}
 
@@ -271,11 +265,11 @@ public class MapGenerator {
 	System.out.println(advantageLeft);
 
 	int tries = 0;
-	
+
 	// Generate superiorMine(s)
 	for (int i = 0; i < superiorMines && tries < 50; i++) {
 	    tries++;
-	    
+
 	    int xSMine = (int) (mapWidth / 2);
 
 	    if (!advantageLeft) {
@@ -295,23 +289,23 @@ public class MapGenerator {
 	    }
 	}
     }
-    
+
     private void generateMapGrassMargin() {
-	
-	for(int i = 0; i < mapWidth; i++) {
-	    
+
+	for (int i = 0; i < mapWidth; i++) {
+
 	    map[i][0] = Tile.grass;
-	    map[i][mapHeight-1] = Tile.grass;
-	    
+	    map[i][mapHeight - 1] = Tile.grass;
+
 	}
-	
-	for(int i = 0; i < mapHeight; i++) {
-	    
+
+	for (int i = 0; i < mapHeight; i++) {
+
 	    map[0][i] = Tile.grass;
-	    map[mapWidth-1][i] = Tile.grass;
-	    
+	    map[mapWidth - 1][i] = Tile.grass;
+
 	}
-	
+
     }
 
     private void makeWaterRandom() {
@@ -325,7 +319,7 @@ public class MapGenerator {
 		    boolean generateTile = new Random().nextBoolean();
 		    if (generateTile)
 			map[i][k] = Tile.water2;
-		    
+
 		    if (map[i - 1][k] == Tile.grass || map[i - 1][k] == Tile.grass2)
 			map[i][k] = Tile.water; // ersetzen mit Wasserübergang
 		    if (map[i + 1][k] == Tile.grass || map[i + 1][k] == Tile.grass2)
@@ -387,29 +381,26 @@ public class MapGenerator {
 	}
 	return false;
     }
-    
+
     private boolean marginWaterAndSand(int x, int y, int m) {
-	for(int i = x - m; i < x + m; i++) {
-	
-	    for(int k =  y - m; k < y + m; k++) {
-		
+	for (int i = x - m; i < x + m; i++) {
+
+	    for (int k = y - m; k < y + m; k++) {
+
 		if (i > 0 && k > 0 && map[i][k] != Tile.grass || map[i][k] != Tile.grass2)
 		    return true;
-		
+
 	    }
-	    
+
 	}
-	
+
 	return false;
-	
+
     }
 
     private int giveDistance(Building castle, Building mine) {
 
-	int xDiff = Math.abs(castle.x - mine.x);
-	int yDiff = Math.abs(castle.y - mine.y);
-	int Diff = xDiff + yDiff;
-	return Diff;
+	return Math.abs(castle.x - mine.x) + Math.abs(castle.y - mine.y);
 
     }
 }
